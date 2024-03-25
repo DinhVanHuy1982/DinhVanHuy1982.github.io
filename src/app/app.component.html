@@ -5,7 +5,7 @@
 </kendo-chart>
 <br><br><br><br><br>
 
-<kendo-dropdownlist [data]="['normal', 'step', 'smooth']" [(ngModel)]="style">
+<kendo-dropdownlist [data]="['normal', 'step', 'smooth']"  [(ngModel)]="style">
 </kendo-dropdownlist>
 <kendo-chart (seriesHover)="onSeriesHover($event)">
   <kendo-chart-legend position="bottom"></kendo-chart-legend>
@@ -47,9 +47,9 @@
 </ng-select>
 
 <!--Using items input-->
-<ng-select [items]="cars" 
-          bindLabel="name" 
-          bindValue="id" 
+<ng-select [items]="cars"
+          bindLabel="name"
+          bindValue="id"
           [(ngModel)]="selectedCar">
 </ng-select>
 
