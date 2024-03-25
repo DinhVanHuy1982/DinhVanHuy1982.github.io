@@ -1,1 +1,131 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-quartz.css";
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+@import 'ngx-toastr/toastr';
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/bootstrap';
+
+
+.ng-select .ng-arrow-wrapper{
+  background-color: #f4f6fa;
+  padding: unset !important;
+  margin-right: 5px;
+  border-radius:4px ;
+}
+.ng-select-container{
+  height: 100% !important;
+}
+.ng-select-searchable.ng-select-single .ng-input{
+  top: calc(50% - 9px)!important;
+}
+
+.toast-container > :not(:last-child){
+  margin-bottom: 8px !important;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.page-loading-class {
+    position: fixed !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 999999;
+
+    background: rgba(121, 121, 121, 0.5);
+
+    .bee-spinner-sc {
+      width: 80px;
+      height: 80px;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 16px;
+      z-index: 999999;
+      // background-image: url(src/assets/media/img/loadingg.gif);
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-color: white;
+      /* justify-items: center; */
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+.ag-tooltip{
+  background-color: #cbd0d3;
+  color:black;
+  padding: 3px;
+  border-radius: 5px;
+}
+.dropdown-fluid {
+  height: 100%;
+
+  .topbar-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+}
+.ag-header-cell-resize{
+  display: none;
+}
+:host::ng-deep{
+  .toast-container .ngx-toastr {
+    pointer-events: none !important;
+    position: fixed !important;
+    z-index: 999999 !important;
+    margin-bottom: 12px !important;
+  }
+
+
+  .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
+    stroke: #f26522 !important;
+  }
+}
+:ng-deep{
+  .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
+    stroke: #f26522 !important;
+  }
+}
+
+.mat-mdc-tab-labels .mat-mdc-tab .mdc-tab__text-label{
+  color: #1a1a27 ;
+  font-weight: 600;
+}
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label{
+  color:#f26522!important;
+}
+.mat-mdc-tab:hover .mdc-tab__text-label{
+  color:#f26522!important;
+}
+.mat-mdc-tab .mdc-tab__ripple::before{
+  background-color: unset !important;
+}
+.mat-tab-header, .mat-tab-nav-bar{
+  border-bottom: 1px  #ebedf3 solid;
+}
+.mat-mdc-tab .mdc-tab-indicator__content--underline{
+  border-color: #f26522 !important;
+}
+body{
+  color: black !important;
+}

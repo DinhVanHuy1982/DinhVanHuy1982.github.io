@@ -1,0 +1,21 @@
+<p>language-selector works!</p>
+<div style="width: 400px;">
+    <ng-select [items]="languages"
+        style="height: 40px; width: 400px !important;"
+        [clearable]="true"
+        bindLabel="name"
+        bindValue="lang"
+        [(ngModel)]="this.languageSelect"
+        (change)="changeLanguage()"
+        [ngModelOptions]="{standalone: true}"
+        >
+        <ng-template ng-option-tmp let-item="item">
+        <div class="text-truncate" [matTooltip]="item.name" [innerText]="item.name"></div>
+        </ng-template>
+    </ng-select>
+ </div>
+
+ <br>
+ <br>
+ <div><p>{{'SYSTEM.NAME' | translate}}</p></div>
+
