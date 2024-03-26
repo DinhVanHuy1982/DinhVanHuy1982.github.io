@@ -14,7 +14,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/bootstrap';
-
+@import "owl.carousel/dist/assets/owl.carousel.css";
+@import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 .ng-select .ng-arrow-wrapper{
   background-color: #f4f6fa;
@@ -94,6 +95,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     position: fixed !important;
     z-index: 999999 !important;
     margin-bottom: 12px !important;
+  }
+
+  .mat-ripple.mat-mdc-tab-ripple {
+    background-color: red !important;
   }
 
 

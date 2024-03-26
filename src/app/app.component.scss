@@ -1,0 +1,87 @@
+:host ::ng-deep {
+  .carousel{
+    .owl-prev {
+      rotate: 180deg;
+      border-radius: 50%;
+      background-color: #fff !important;
+      opacity: 0.25;
+      width: 50px;
+      height: 50px;
+    }
+
+    .owl-next {
+      // rotate: 180deg;
+      border-radius: 50%;
+      opacity: 0.25;
+      background-color: #fff !important;
+      width: 50px;
+      height: 50px;
+    }
+
+    .owl-prev:hover, .owl-next:hover {
+        opacity: 1 !important;
+        box-shadow: -5px -5px 15px black;
+        transition: all 0.3s ease;
+    }
+
+    .owl-nav {
+      position: absolute !important;
+      top: 217px !important;
+      width: 100%;
+      display: flex !important;
+      justify-content: space-between !important;
+      pointer-events: none;
+      padding: 0 40px;
+      pointer-events: all;
+    }
+  }
+
+  .mat-ripple.mat-mdc-tab-ripple *{
+    background-color: #f26522 !important;
+  }
+  .list-item {
+    .owl-prev {
+        rotate: 180deg;
+        border-radius: 50%;
+        background-color: #fff !important;
+        opacity: 0.25;
+        width: 50px;
+        height: 50px;
+      }
+      .item{
+        padding-right: 0px 5px;
+      }
+      .owl-carousel.owl-drag .owl-item{
+        padding: 0 3px;;
+      }
+      .owl-stage-outer{
+        padding: 0 0 ;
+      }
+  
+      .owl-next {
+        // rotate: 180deg;
+        border-radius: 50%;
+        opacity: 0.25;
+        background-color: #fff !important;
+        width: 50px;
+        height: 50px;
+      }
+  
+      .owl-prev:hover, .owl-next:hover {
+          opacity: 1 !important;
+          box-shadow: -5px -5px 15px black;
+          transition: all 0.3s ease;
+      }
+  
+      .owl-nav {
+        position: absolute !important;
+        top: 130px !important;
+        width: 100%;
+        display: flex !important;
+        justify-content: space-between !important;
+        pointer-events: none;
+        padding: 0 40px;
+        pointer-events: all;
+      }
+  }
+}

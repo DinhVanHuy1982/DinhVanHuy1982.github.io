@@ -18,6 +18,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AgGridAngular } from '@ag-grid-community/angular';
 import { AgGridModule } from 'ag-grid-angular';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { OwlModule } from 'ngx-owl-carousel';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
@@ -50,6 +51,7 @@ import { LanguageSelectorComponent } from './views/partials/layout/topbar/langua
       positionClass: 'toast-bottom-right'
     }),
     TranslateModule.forRoot(),
+    OwlModule
   ],
   providers: [],
   bootstrap: [AppComponent]
