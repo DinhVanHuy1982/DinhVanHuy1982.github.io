@@ -11,6 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 import {locale as vnLang} from '../core/_config/i18n/vn';
 import {locale as enLang} from '../core/_config/i18n/en';
 import { TranslationService } from 'src/core/_base/layout/service/translation.service';
+import {OwlCarousel} from 'ngx-owl-carousel';
+
+import { CAROUSEL_OPTION, NO_ROW_GRID_TEMPLATE } from 'src/helpers/constants';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +21,80 @@ import { TranslationService } from 'src/core/_base/layout/service/translation.se
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+  images: string[]=[];
+  myCarouselOptions = {
+    items: 1,
+    dots: true,
+    nav: true,
+    autoplay: true,
+    responsiveClass: true,
+    loop: true,
+    drag: true,
+    navText: [`<svg width="32" height="32" viewBox="-1 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `,`<svg width="32" height="32" viewBox="-2 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `],
+    responsive: {
+      0: this.getOptionByScreen(1),
+      200: this.getOptionByScreen(1),
+      405: this.getOptionByScreen(1),
+    //   600: this.getOptionByScreen(3),
+    //   795: this.getOptionByScreen(4),
+    //   990: this.getOptionByScreen(4),
+    //   992: this.getOptionByScreen(4),
+    //   1187: this.getOptionByScreen(5),
+    //   1382: this.getOptionByScreen(5),
+    //   1577: this.getOptionByScreen(5),
+    //   1772: this.getOptionByScreen(5),
+    //   1967: this.getOptionByScreen(5),
+    //   1846: this.getOptionByScreen(5),
+    //   2162: this.getOptionByScreen(5),
+    },
+  };
+
+  myCarouselOptions1 = {
+    items: 1,
+    dots: true,
+    nav: true,
+    autoplay: true,
+    responsiveClass: true,
+    loop: true,
+    drag: true,
+    navText: [`<svg width="32" height="32" viewBox="-1 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `,`<svg width="32" height="32" viewBox="-2 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `],
+    responsive: {
+      // 0: this.getOptionByScreen(1),
+      // 200: this.getOptionByScreen(1),
+      // 405: this.getOptionByScreen(1),
+    //   600: this.getOptionByScreen(3),
+      795: this.getOptionByScreen(4),
+    //   990: this.getOptionByScreen(4),
+    //   992: this.getOptionByScreen(4),
+    //   1187: this.getOptionByScreen(5),
+    //   1382: this.getOptionByScreen(5),
+    //   1577: this.getOptionByScreen(5),
+    //   1772: this.getOptionByScreen(5),
+    //   1967: this.getOptionByScreen(5),
+    //   1846: this.getOptionByScreen(5),
+    //   2162: this.getOptionByScreen(5),
+    },
+  };
+
+  getOptionByScreen(numberOfItems: number) {
+    return {
+      CAROUSEL_OPTION,
+      slideBy: numberOfItems,
+      items: numberOfItems,
+    };
+  }
 
 
   constructor(private dialog: MatDialog,private toast: ToastrService,

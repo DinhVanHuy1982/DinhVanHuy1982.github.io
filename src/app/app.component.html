@@ -1,29 +1,37 @@
 <kendo-chart>
   <kendo-chart-series>
-      <kendo-chart-series-item [data]="[1, 4, 5, 2, 1, 8]"> </kendo-chart-series-item>
+    <kendo-chart-series-item [data]="[1, 4, 5, 2, 1, 8]">
+    </kendo-chart-series-item>
   </kendo-chart-series>
 </kendo-chart>
-<br><br><br><br><br>
+<br /><br /><br /><br /><br />
 
-<kendo-dropdownlist [data]="['normal', 'step', 'smooth']"  [(ngModel)]="style">
+<kendo-dropdownlist [data]="['normal', 'step', 'smooth']" [(ngModel)]="style">
 </kendo-dropdownlist>
 <kendo-chart (seriesHover)="onSeriesHover($event)">
   <kendo-chart-legend position="bottom"></kendo-chart-legend>
   <kendo-chart-tooltip format="{0} - {1}"></kendo-chart-tooltip>
   <kendo-chart-series>
-    <kendo-chart-series-item [line]="{ style: style }" type="area"
-        [data]="data"
-        [markers]="{ visible: false }" [name]="seriesNames[0]">
+    <kendo-chart-series-item
+      [line]="{ style: style }"
+      type="area"
+      [data]="data"
+      [markers]="{ visible: false }"
+      [name]="seriesNames[0]"
+    >
     </kendo-chart-series-item>
-    <kendo-chart-series-item type="area" [line]="{ style: style }"
-        [data]="data2"
-        [markers]="{ visible: false }" [name]="seriesNames[1]">
+    <kendo-chart-series-item
+      type="area"
+      [line]="{ style: style }"
+      [data]="data2"
+      [markers]="{ visible: false }"
+      [name]="seriesNames[1]"
+    >
     </kendo-chart-series-item>
   </kendo-chart-series>
 </kendo-chart>
 
-
-<br><br><br><br><br><br><br>
+<br /><br /><br /><br /><br /><br /><br />
 <canvas
   baseChart
   [data]="barChartData1"
@@ -31,7 +39,7 @@
   [plugins]="barChartPlugins1"
   [legend]="barChartLegend1"
   [type]="'bar'"
-  style="width: 50%;"
+  style="width: 50%"
 >
 </canvas>
 <mat-tab-group>
@@ -40,40 +48,227 @@
   <mat-tab label="Third"> Content 3 </mat-tab>
 </mat-tab-group>
 
-
-
 <ng-select [(ngModel)]="selectedCar">
-  <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
+  <ng-option *ngFor="let car of cars" [value]="car.id">{{
+    car.name
+  }}</ng-option>
 </ng-select>
 
 <!--Using items input-->
-<ng-select [items]="cars"
-          bindLabel="name"
-          bindValue="id"
-          [(ngModel)]="selectedCar">
+<ng-select
+  [items]="cars"
+  bindLabel="name"
+  bindValue="id"
+  [(ngModel)]="selectedCar"
+>
 </ng-select>
 
-
 <ag-grid-angular
-	style="width: 500px; height: 500px;"
-	class="ag-theme-alpine"
-	[rowData]="rowData"
-	[columnDefs]="columnDefs">
+  style="width: 500px; height: 500px"
+  class="ag-theme-alpine"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+>
 </ag-grid-angular>
 <mat-spinner></mat-spinner>
 
 <div class="example-container" cdkScrollable>
-  <button mat-raised-button #tooltip="matTooltip"
-          matTooltip="Info about the action"
-          [matTooltipPosition]="position.value!"
-          matTooltipHideDelay="10"
-          aria-label="Button that displays a tooltip that hides when scrolled out of the container"
-          class="example-button">
+  <button
+    mat-raised-button
+    #tooltip="matTooltip"
+    matTooltip="Info about the action"
+    [matTooltipPosition]="position.value!"
+    matTooltipHideDelay="10"
+    aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+    class="example-button"
+  >
     Action
   </button>
 </div>
-<button class="btn btn-success" (click)="openToast()" [matTooltip]="'openToast'">click to open toast</button>
+<button
+  class="btn btn-success"
+  (click)="openToast()"
+  [matTooltip]="'openToast'"
+>
+  click to open toast
+</button>
 
 <app-language-selector></app-language-selector>
 
-<div><p>{{'SYSTEM.NAME' | translate}}</p></div>
+<div>
+  <p>{{ "SYSTEM.NAME" | translate }}</p>
+</div>
+<br /><br /><br />
+<div class="carousel container ">
+  <owl-carousel
+    [options]="myCarouselOptions"
+    [items]="images"
+    [carouselClasses]="['owl-theme', 'row', 'sliding']"
+  >
+    <div class="item">
+      <div class="thumbnail-image">
+        <img
+          src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"/>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumbnail-image">
+        <img
+          src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"/>
+      </div>
+    </div>
+    <div class="item">
+      <div class="thumbnail-image">
+        <img
+          src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"/>
+      </div>
+    </div>
+  </owl-carousel>
+</div>
+
+<div class="list-item container">
+  <div class="">
+    <owl-carousel
+      [options]="myCarouselOptions1"
+      [items]="images"
+      [carouselClasses]="['owl-theme', 'row', 'sliding']"
+    >
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class=" item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    
+    <div class="item">
+      <div class="img-item">
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186" width="100%">
+      </div>
+      <div class="infor-item">
+        <div class="infor-name-item">
+          <b>Name Product :</b> ABC XYZ
+        </div>
+        <div class="infor-price-item">
+          <b>Price </b>: 2000$
+        </div>
+        <div class="infor-boughed">
+          <b>Bought</b> 3K+
+        </div>
+      </div>
+    </div>
+    </owl-carousel>
+  </div>
+
+</div>
