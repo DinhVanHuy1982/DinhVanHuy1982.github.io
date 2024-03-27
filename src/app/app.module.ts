@@ -21,13 +21,17 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { OwlModule } from 'ngx-owl-carousel';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTreeModule} from '@angular/material/tree';
 import { ToastrModule } from 'ngx-toastr';
 import { LanguageSelectorComponent } from './views/partials/layout/topbar/language-selector/language-selector.component';
+import { AsideLeftComponent } from './admin/Base/aside-left/aside-left.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LanguageSelectorComponent
+    LanguageSelectorComponent,
+    AsideLeftComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ import { LanguageSelectorComponent } from './views/partials/layout/topbar/langua
       positionClass: 'toast-bottom-right'
     }),
     TranslateModule.forRoot(),
-    OwlModule
+    OwlModule,
+    MatTreeModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

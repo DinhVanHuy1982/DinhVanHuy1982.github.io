@@ -6,7 +6,7 @@ export const CAROUSEL_OPTION = {
     touchDrag: true
   }
 
-  
+
 export let NO_ROW_GRID_TEMPLATE = `
 <div class="template-no-row">
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,3 +25,53 @@ export let NO_ROW_GRID_TEMPLATE = `
   <p style='margin-top: 6px;'>{{field}}</p>
 </div>
 `;
+interface MenuNode{
+  name: string;
+  child?: MenuNode[];
+  class?: string;
+  router:string;
+  hasChild: boolean;
+  isExpand?: boolean;
+}
+
+export const menuleft : MenuNode[]=[
+  {
+    router: "/detail",
+    hasChild: true,
+    name: "Chi tiết",
+    isExpand:false,
+    child: [
+      {
+        router: "/setting",
+        hasChild: true,
+        name:"Cài đặt",
+        child: [
+          {
+            name: "Chi tiết",
+            isExpand:false,
+            router: "/admin",
+            hasChild:false
+          }
+        ],
+        class: "fa-solid fa-gear"
+      },
+      {
+        router: "/setting",
+        hasChild: false,
+        name:"Cài đặt"
+      },
+      {
+        router: "/setting",
+        hasChild: false,
+        name:"Cài đặt"
+      },
+    ],
+    class: "fa-solid fa-circle-info"
+  },
+  {
+    router: "/dasboard",
+    hasChild: false,
+    name: "DASBOARD",
+    class: "fa-solid fa-table-columns",
+  }
+];

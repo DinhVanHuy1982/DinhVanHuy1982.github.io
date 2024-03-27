@@ -1,0 +1,61 @@
+.aside-left{
+  background-color: red;
+  //width: 70px;
+  height: 100vh;
+  float: left;
+}
+.expand{
+  width: 300px !important;
+  transition: all 0.3s ease-in-out;
+}
+.close-nav{
+  width: 70px !important;
+  transition: all 0.3s ease-in-out;
+}
+.base-test{
+  display: flex;
+}
+.menu-child-item{
+  //position: absolute;
+  left: 10px;
+  padding-left:calc(100% - 90px);
+}
+.expand-menu-item{
+  //height: 50px;
+  width: auto;
+  overflow: visible;
+  transition: all 0.3s ease-in-out;
+}
+.close-menu-item{
+  height: 0;
+  overflow: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out;
+}
+.menu-item, menu-left{
+  height: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+::ng-deep{
+  .mat-tree-node {
+    transition: height 0.3s ease-in-out; /* Thêm transition cho chiều cao */
+    justify-content: space-between;
+  }
+  .menu-left{
+    transition: height 0.3s ease-in-out;
+  }
+}
+.display-content-menu{
+  display: contents;
+}
+.display-hidden-content-menu{
+  display: none;
+}
+//:host ::ng-deep{
+//  .mat-tree-node {
+//    transition: height 0.3s ease-in-out; /* Thêm transition cho chiều cao */
+//  }
+//}
+
+
