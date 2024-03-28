@@ -1,0 +1,83 @@
+.aside-left{
+  background-color: #f26522;
+  //width: 70px;
+  height: 100vh;
+  float: left;
+}
+.expand{
+  width: 300px !important;
+  transition: all 0.3s ease-in-out;
+}
+.close-nav{
+  width: 70px !important;
+  transition: all 0.3s ease-in-out;
+}
+.base-test{
+  display: flex;
+}
+.menu-child-item{
+  //position: absolute;
+  left: 10px;
+  padding-left:calc(100% - 90px);
+}
+.expand-menu-item{
+  //height: 50px;
+  width: auto;
+  overflow: visible;
+  transition: all 0.3s ease-in-out;
+}
+.close-menu-item{
+  height: 0;
+  overflow: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out;
+}
+.menu-item, menu-left{
+  height: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+::ng-deep{
+  .mat-tree-node {
+    transition: height 0.3s ease-in-out; /* Thêm transition cho chiều cao */
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 3px 10px;
+    cursor: pointer;
+  }
+  .mat-tree-node:hover{
+    background-color: #ffffff69;
+  }
+  .menu-left{
+    transition: height 0.3s ease-in-out;
+  }
+  .mat-tree{
+    background-color: unset !important;
+    margin: 0 10px;
+  }
+  .nav-link{
+    font-size: 25px;
+    font-weight: 500;
+  }
+}
+.display-content-menu{
+  display: contents;
+}
+.display-hidden-content-menu{
+  display: none;
+}
+i{
+  font-size: 30px;
+}
+.button-navigate{
+  background: unset;
+  border: unset;
+  color: white;
+}
+//:host ::ng-deep{
+//  .mat-tree-node {
+//    transition: height 0.3s ease-in-out; /* Thêm transition cho chiều cao */
+//  }
+//}
+
+

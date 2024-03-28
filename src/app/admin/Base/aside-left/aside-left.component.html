@@ -1,0 +1,65 @@
+<div class="base-test">
+  <div class="aside-left" [ngClass]="isExpand?'expand':'close-nav'">
+      <div class = "header-menu">
+        <div style="display: flex; justify-content: space-between">
+          <img src="favicon.ico" width="30" height="30" *ngIf="isExpand">
+          <button class="btn btn-success" *ngIf="isExpand"  (click)="closeOpenMenu()">Đóng</button>
+          <button class="btn btn-success" *ngIf="!isExpand" (click)="closeOpenMenu()">Mở</button>
+        </div>
+      </div>
+    <div class="menu-left">
+    <ng-container [ngTemplateOutlet]="tree"></ng-container>
+<!--      <ng-container *ngFor="let item of menuItem">-->
+<!--        <ng-container [ngTemplateOutlet]="menuitem"-->
+<!--                      [ngTemplateOutletContext]="{ item: item}">-->
+<!--        </ng-container>-->
+<!--      </ng-container>-->
+    </div>
+  </div>
+</div>
+
+<ng-template #menuitem let-items="item">
+
+  <mat-tree>
+    <mat-tree-node> parent node </mat-tree-node>
+    <mat-tree-node> -- child node1 </mat-tree-node>
+    <mat-tree-node> -- child node2 </mat-tree-node>
+  </mat-tree>
+</ng-template>
+
+<ng-template #tree>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <!-- use a disabled button to provide padding for tree leaf -->
+      <i [ngClass]="node.class"></i>
+      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'">
+        <div *ngIf="node.router; else navLink1">
+          <a class="nav-link" (click)="navLinkComponent(node)" >{{node.name}}</a>
+        </div>
+        <ng-template #navLink1 >
+          <div>{{node.name}}</div>
+        </ng-template>
+        <button class="button-navigate" mat-icon-button disabled></button>
+      </div>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+      <i [ngClass]="node.class"></i>
+      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'" >
+        <div *ngIf="node.router; else navLink">
+          <a class="nav-link" routerLink="{{node.router}}" (click)="navLinkComponent(node)">{{node.name}}</a>
+        </div>
+        <ng-template #navLink >
+          <div>{{node.name}}</div>
+        </ng-template>
+        <button class="button-navigate" mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+</ng-template>
