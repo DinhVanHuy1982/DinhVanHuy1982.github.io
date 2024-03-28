@@ -1,0 +1,20 @@
+.base-display-admin{
+  display: flex;
+  background-color: #f26522;
+  height: 100%;
+}
+.content-right{
+  padding: 20px 0 2px 25px;
+  border-radius: 15px 0 0 15px;
+  background-color: white;
+  //height: 100%;
+  //overflow-y: hidden;
+}
+.router-outlet{
+  overflow: auto;
+  height: 100%;
+}
+//.menu-base-left{
+//  flex: 0 0 auto;
+//  overflow-y: hidden;
+//}

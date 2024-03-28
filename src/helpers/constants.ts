@@ -26,15 +26,34 @@ export let NO_ROW_GRID_TEMPLATE = `
 </div>
 `;
 interface MenuNode{
-  name: string;
+  name: string;// tên nhánh trên breadcrum
   child?: MenuNode[];
   class?: string;
-  router:string;
+  router?:string;
   hasChild: boolean;
   isExpand?: boolean;
 }
 
 export const menuleft : MenuNode[]=[
+  {
+    router: "/dashboard",
+    hasChild: false,
+    name: "DASBOARD",
+    class: "fa-solid fa-table-columns",
+  },
+  {
+    // router: "/dashboard",
+    hasChild: true,
+    name: "Cấu hình hệ thống",
+    class: "fa-solid fa-table-columns",
+    child:[
+      {
+        name: "Quản lý role",
+        hasChild: false,
+        router: "/role-managemment"
+      }
+    ]
+  },
   {
     router: "/detail",
     hasChild: true,
@@ -47,7 +66,7 @@ export const menuleft : MenuNode[]=[
         name:"Cài đặt",
         child: [
           {
-            name: "Chi tiết",
+            name: "Mở rộng",
             isExpand:false,
             router: "/admin",
             hasChild:false
@@ -68,10 +87,4 @@ export const menuleft : MenuNode[]=[
     ],
     class: "fa-solid fa-circle-info"
   },
-  {
-    router: "/dasboard",
-    hasChild: false,
-    name: "DASBOARD",
-    class: "fa-solid fa-table-columns",
-  }
 ];

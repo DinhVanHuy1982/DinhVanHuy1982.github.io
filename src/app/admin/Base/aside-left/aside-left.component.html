@@ -16,10 +16,6 @@
 <!--      </ng-container>-->
     </div>
   </div>
-  <div class="btn-close">
-    <button class="btn btn-success" *ngIf="isExpand"  (click)="closeOpenMenu()">Đóng</button>
-    <button class="btn btn-success" *ngIf="!isExpand" (click)="closeOpenMenu()">Mở</button>
-  </div>
 </div>
 
 <ng-template #menuitem let-items="item">
@@ -44,7 +40,7 @@
         <ng-template #navLink1 >
           <div>{{node.name}}</div>
         </ng-template>
-        <button mat-icon-button disabled></button>
+        <button class="button-navigate" mat-icon-button disabled></button>
       </div>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -57,7 +53,7 @@
         <ng-template #navLink >
           <div>{{node.name}}</div>
         </ng-template>
-        <button mat-icon-button matTreeNodeToggle
+        <button class="button-navigate" mat-icon-button matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.name">
           <mat-icon class="mat-icon-rtl-mirror">
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

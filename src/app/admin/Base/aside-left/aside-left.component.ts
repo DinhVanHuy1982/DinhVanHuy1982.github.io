@@ -18,7 +18,7 @@ interface MenuNode{
   name: string;
   child?: MenuNode[];
   class?: string;
-  router:string;
+  router?:string;
   hasChild: boolean;
   isExpand?: boolean;
 }
@@ -49,7 +49,7 @@ interface ExampleFlatNode {
   name: string;
   level: number;
   class?: string | undefined;
-  router:string;
+  router?:string;
   hasChild: boolean;
   isExpand?: boolean;
 }

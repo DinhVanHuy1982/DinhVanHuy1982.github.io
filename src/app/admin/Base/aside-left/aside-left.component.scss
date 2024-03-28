@@ -1,5 +1,5 @@
 .aside-left{
-  background-color: red;
+  background-color: #f26522;
   //width: 70px;
   height: 100vh;
   float: left;
@@ -41,9 +41,23 @@
   .mat-tree-node {
     transition: height 0.3s ease-in-out; /* Thêm transition cho chiều cao */
     justify-content: space-between;
+    border-radius: 10px;
+    padding: 3px 10px;
+    cursor: pointer;
+  }
+  .mat-tree-node:hover{
+    background-color: #ffffff69;
   }
   .menu-left{
     transition: height 0.3s ease-in-out;
+  }
+  .mat-tree{
+    background-color: unset !important;
+    margin: 0 10px;
+  }
+  .nav-link{
+    font-size: 25px;
+    font-weight: 500;
   }
 }
 .display-content-menu{
@@ -51,6 +65,14 @@
 }
 .display-hidden-content-menu{
   display: none;
+}
+i{
+  font-size: 30px;
+}
+.button-navigate{
+  background: unset;
+  border: unset;
+  color: white;
 }
 //:host ::ng-deep{
 //  .mat-tree-node {

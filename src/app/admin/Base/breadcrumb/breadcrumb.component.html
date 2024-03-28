@@ -1,0 +1,37 @@
+<ng-container *ngIf="receivedData.length > 0">
+  <div style="width:100%; display:flex">
+    <button style="padding: 0; border: none !important;" class="btn" (click)="back()" *ngIf="canBack">
+      <!-- <img src="/assets/media/icons/arrow-left.svg" style="transform: translateY(-1px);" /> -->
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.97484 4.94165L2.9165 9.99998L7.97484 15.0583" stroke="#8F95B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17.0831 10H3.05811" stroke="#8F95B2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 hide-mobile"
+        *ngIf="!notShowBreadcrumb && !hide"
+    >
+      <!-- <li class="breadcrumb-item"><a href="#"><i class="flaticon2-shelter text-muted icon-1x"></i></a></li> -->
+      <li class="breadcrumb-item">
+                <span class="breadcrumb-item item-home" *ngIf="!isParentUser; else parentUser">
+                {{'SUBHEADER.HOME'|translate}}
+                </span>
+        <ng-template #parentUser>
+          <!--                <a [routerLink]="'/system/parents/home'" class="text-muted">-->
+          <a [ngClass]="notRouter?'pointer':''" (click)="routerLink('/system/parents/home')" class="text-muted">
+            {{'SUBHEADER.HOME'|translate}}
+          </a>
+        </ng-template>
+      </li>
+      <ng-container *ngFor="let item of receivedData,let i = index">
+        <li class="breadcrumb-item">
+          <i class="fa-solid fa-angle-right" style="color: #8F95B2;"></i>
+          <a [ngClass]=" i === (receivedData.length-1) ? 'link-end': 'breadcum'" [ngClass]="checkRouter(item, i)" (click)="routerLink(item + '')" class="text-muted">
+            {{item}}
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+
+  </div>
+</ng-container>
+

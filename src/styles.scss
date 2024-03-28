@@ -2,7 +2,9 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-@import "~@ng-select/ng-select/themes/material.theme.css";
+/* styles.scss hoặc file SASS chính của ứng dụng */
+@import '@ng-select/ng-select/themes/default.theme.css';
+
 @import "ag-grid-community/styles/ag-grid.css";
 @import "ag-grid-community/styles/ag-theme-quartz.css";
 @import 'ag-grid-community/styles/ag-grid.css';
@@ -97,10 +99,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-bottom: 12px !important;
   }
 
-  .mat-ripple.mat-mdc-tab-ripple {
-    background-color: red !important;
-  }
-
 
   .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
     stroke: #f26522 !important;
@@ -134,3 +132,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body{
   color: black !important;
 }
+//.btn-hover:hover{
+//  background-color: #ffffff69 !important;
+//}

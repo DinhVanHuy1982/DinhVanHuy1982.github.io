@@ -1,0 +1,12 @@
+.breadcum{
+  color: #0D6EFD !important;
+  text-decoration: none;
+}
+.link-end{
+  text-decoration: none;
+  color: #8F95B2 !important;
+  font-weight: 500;
+}
+.breadcrumb-item + .breadcrumb-item::before{
+  content: unset;
+}

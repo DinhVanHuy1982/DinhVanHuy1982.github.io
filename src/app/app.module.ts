@@ -26,12 +26,24 @@ import { ToastrModule } from 'ngx-toastr';
 import { LanguageSelectorComponent } from './views/partials/layout/topbar/language-selector/language-selector.component';
 import { AsideLeftComponent } from './admin/Base/aside-left/aside-left.component';
 import {MatIconModule} from "@angular/material/icon";
+import { BaseComponent } from './admin/Base/base/base.component';
+import { HeaderComponent } from './admin/Base/header/header.component';
+import { BreadcrumbComponent } from './admin/Base/breadcrumb/breadcrumb.component';
+import { DashboardComponent } from './admin/Views/Pages/dashboard/dashboard.component';
+import { RoleManagementComponent } from './admin/Views/Pages/role-management/role-management.component';
+import { ActionRoleManagementComponent } from './admin/Views/Pages/role-management/action-role-management/action-role-management.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LanguageSelectorComponent,
-    AsideLeftComponent
+    AsideLeftComponent,
+    BaseComponent,
+    HeaderComponent,
+    BreadcrumbComponent,
+    DashboardComponent,
+    RoleManagementComponent,
+    ActionRoleManagementComponent
   ],
   imports: [
     BrowserModule,

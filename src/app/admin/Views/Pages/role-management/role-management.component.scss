@@ -1,0 +1,20 @@
+.btn-search, .btn-search:hover{
+  background-color: #f26522;
+  align-content: flex-end;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  margin-right: 20px;
+}
+.form-search{
+  align-content: space-between;
+}
+::ng-deep{
+  .cell-action{
+    z-index: 99999;
+    position: relative !important;
+  }
+  .ag-row-hover:hover{
+    z-index: 5 !important;
+  }
+}
