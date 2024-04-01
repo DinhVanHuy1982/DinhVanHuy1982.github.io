@@ -2,11 +2,14 @@
   display: flex;
   background-color: #f26522;
   height: 100%;
+  position: relative;
 }
 .content-right{
   padding: 20px 0 2px 25px;
   border-radius: 15px 0 0 15px;
   background-color: white;
+  width: 100% !important;
+  display: grid;
   //height: 100%;
   //overflow-y: hidden;
 }

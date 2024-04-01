@@ -61,10 +61,25 @@ interface ExampleFlatNode {
 export class AsideLeftComponent {
   isExpand = true;
 
-  menuItem = menuleft
+  // menuItem = menuleft
+    menuItem = menuleft.map(item => ({ ...item }));
   closeOpenMenu(){
     this.isExpand=!this.isExpand;
-    this.treeControl.collapseAll();
+    if(!this.isExpand){
+      // this.menuItem = this.menuItem.forEach(item =>  item.targetitem.target=null)
+        this.menuItem = menuleft.map(item => ({ ...item }));
+      for(let item of this.menuItem){
+        if(item.target){
+          item.target=undefined;
+        }
+      }
+
+        console.log("Close menu :", this.menuItem);
+    }else{
+        this.menuItem = menuleft.map(item => ({ ...item }));
+        console.log("Open menu : ", this.menuItem);
+    }
+    // this.treeControl.collapseAll();
   }
   expandMenuItem(item : any){
     item.isExpand=!item.isExpand;
@@ -96,17 +111,18 @@ export class AsideLeftComponent {
   constructor(private breadCrumService: BreadcrumbService, private router: Router) {
     this.dataSource.data = this.menuItem;
     console.log("Data source: ",this.dataSource)
+    console.log("Menu Item: ",this.menuItem)
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.hasChild;
-
-  navLinkComponent(router : any){
-    console.log("Navigate to: ", router);
-
-    this.getLocationMenu(this.menuItem, router.name);
-
-    this.router.navigate([router.router], {})
-  }
+  // hasChild = (_: number, node: ExampleFlatNode) => node.hasChild;
+  //
+  // navLinkComponent(router : any){
+  //   console.log("Navigate to: ", router);
+  //
+  //   this.getLocationMenu(this.menuItem, router.name);
+  //
+  //   this.router.navigate([router.router], {})
+  // }
 
   getLocationMenu(node: any, nameNode: string):string[]{
     const arrNode : string[] = [];
@@ -148,4 +164,9 @@ export class AsideLeftComponent {
 
     return [];
   }
+    navigateMenu(router:any, name: string){
+        console.log("Navigate to : ", router)
+        this.getLocationMenu(this.menuItem, name);
+        this.router.navigate([router],{})
+    }
 }

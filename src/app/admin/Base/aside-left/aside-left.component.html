@@ -1,65 +1,324 @@
-<div class="base-test">
-  <div class="aside-left" [ngClass]="isExpand?'expand':'close-nav'">
-      <div class = "header-menu">
-        <div style="display: flex; justify-content: space-between">
-          <img src="favicon.ico" width="30" height="30" *ngIf="isExpand">
-          <button class="btn btn-success" *ngIf="isExpand"  (click)="closeOpenMenu()">Đóng</button>
-          <button class="btn btn-success" *ngIf="!isExpand" (click)="closeOpenMenu()">Mở</button>
-        </div>
-      </div>
-    <div class="menu-left">
-    <ng-container [ngTemplateOutlet]="tree"></ng-container>
-<!--      <ng-container *ngFor="let item of menuItem">-->
-<!--        <ng-container [ngTemplateOutlet]="menuitem"-->
-<!--                      [ngTemplateOutletContext]="{ item: item}">-->
-<!--        </ng-container>-->
-<!--      </ng-container>-->
-    </div>
+<!--<div class="base-test">-->
+<!--  <div class="aside-left" [ngClass]="isExpand?'expand':'close-nav'">-->
+<!--      <div class = "header-menu">-->
+<!--        <div style="display: flex; justify-content: space-between">-->
+<!--          <img src="favicon.ico" width="30" height="30" *ngIf="isExpand">-->
+<!--          <button class="btn btn-success" *ngIf="isExpand"  (click)="closeOpenMenu()">Đóng</button>-->
+<!--          <button class="btn btn-success" *ngIf="!isExpand" (click)="closeOpenMenu()">Mở</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    <div class="menu-left">-->
+<!--    <ng-container [ngTemplateOutlet]="tree"></ng-container>-->
+<!--&lt;!&ndash;      <ng-container *ngFor="let item of menuItem">&ndash;&gt;-->
+<!--&lt;!&ndash;        <ng-container [ngTemplateOutlet]="menuitem"&ndash;&gt;-->
+<!--&lt;!&ndash;                      [ngTemplateOutletContext]="{ item: item}">&ndash;&gt;-->
+<!--&lt;!&ndash;        </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ng-container>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<ng-template #menuitem let-items="item">-->
+
+<!--  <mat-tree>-->
+<!--    <mat-tree-node> parent node </mat-tree-node>-->
+<!--    <mat-tree-node> &#45;&#45; child node1 </mat-tree-node>-->
+<!--    <mat-tree-node> &#45;&#45; child node2 </mat-tree-node>-->
+<!--  </mat-tree>-->
+<!--</ng-template>-->
+
+<!--<ng-template #tree>-->
+<!--  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">-->
+<!--    &lt;!&ndash; This is the tree node template for leaf nodes &ndash;&gt;-->
+<!--    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>-->
+<!--      &lt;!&ndash; use a disabled button to provide padding for tree leaf &ndash;&gt;-->
+<!--      <i [ngClass]="node.class"></i>-->
+<!--      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'">-->
+<!--        <div *ngIf="node.router; else navLink1">-->
+<!--          <a class="nav-link" (click)="navLinkComponent(node)" >{{node.name}}</a>-->
+<!--        </div>-->
+<!--        <ng-template #navLink1 >-->
+<!--          <div>{{node.name}}</div>-->
+<!--        </ng-template>-->
+<!--        <button class="button-navigate" mat-icon-button disabled></button>-->
+<!--      </div>-->
+<!--    </mat-tree-node>-->
+<!--    &lt;!&ndash; This is the tree node template for expandable nodes &ndash;&gt;-->
+<!--    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>-->
+<!--      <i [ngClass]="node.class"></i>-->
+<!--      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'" >-->
+<!--        <div *ngIf="node.router; else navLink">-->
+<!--          <a class="nav-link" routerLink="{{node.router}}" (click)="navLinkComponent(node)">{{node.name}}</a>-->
+<!--        </div>-->
+<!--        <ng-template #navLink >-->
+<!--          <div>{{node.name}}</div>-->
+<!--        </ng-template>-->
+<!--        <button class="button-navigate" mat-icon-button matTreeNodeToggle-->
+<!--                [attr.aria-label]="'Toggle ' + node.name">-->
+<!--          <mat-icon class="mat-icon-rtl-mirror">-->
+<!--            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}-->
+<!--          </mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-tree-node>-->
+<!--  </mat-tree>-->
+<!--</ng-template>-->
+<aside id="sidebar" class="sidebar" [ngClass]="isExpand?'expand':'close-nav'">
+
+  <ul class="sidebar-nav" id="sidebar-nav" *ngIf="menuItem">
+
+    <li class="nav-item" *ngFor="let item of menuItem; let i = index;" [attr.data-bs-target]="'#' + item.target"  data-bs-auto-close="false"  data-bs-toggle="collapse" >
+      <a class="nav-link" *ngIf="item.hasChild">
+        <i class="{{item.class}}"></i>
+        <span *ngIf="isExpand">{{item.name}}</span>
+        <i class="bi bi-chevron-down ms-auto" *ngIf="item.hasChild && isExpand"></i>
+      </a>
+      <a class="nav-link" *ngIf="!item.hasChild" (click)="navigateMenu(item.router, item.name)">
+        <i class="{{item.class}}"></i>
+        <span *ngIf="isExpand">{{item.name}}</span>
+        <i class="bi bi-chevron-down ms-auto" *ngIf="item.hasChild && isExpand"></i>
+      </a>
+      <ul *ngIf="item.hasChild" id="{{item.target}}" class="nav-content collapse"   data-bs-parent="#sidebar-nav">
+        <li *ngFor="let item2 of item.child; let j = index;">
+          <a (click)="navigateMenu(item2.router, item2.name)">
+            <i class="bi bi-circle"></i><span>{{item2.name}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link " href="index.html">-->
+<!--        <i class="bi bi-grid"></i>-->
+<!--        <span>Dashboard</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Dashboard Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">-->
+<!--        <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--      </a>-->
+<!--      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--        <li>-->
+<!--          <a href="components-alerts.html">-->
+<!--            <i class="bi bi-circle"></i><span>Alerts</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-accordion.html">-->
+<!--            <i class="bi bi-circle"></i><span>Accordion</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-badges.html">-->
+<!--            <i class="bi bi-circle"></i><span>Badges</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-breadcrumbs.html">-->
+<!--            <i class="bi bi-circle"></i><span>Breadcrumbs</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-buttons.html">-->
+<!--            <i class="bi bi-circle"></i><span>Buttons</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-cards.html">-->
+<!--            <i class="bi bi-circle"></i><span>Cards</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-carousel.html">-->
+<!--            <i class="bi bi-circle"></i><span>Carousel</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-list-group.html">-->
+<!--            <i class="bi bi-circle"></i><span>List group</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-modal.html">-->
+<!--            <i class="bi bi-circle"></i><span>Modal</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-tabs.html">-->
+<!--            <i class="bi bi-circle"></i><span>Tabs</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-pagination.html">-->
+<!--            <i class="bi bi-circle"></i><span>Pagination</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-progress.html">-->
+<!--            <i class="bi bi-circle"></i><span>Progress</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-spinners.html">-->
+<!--            <i class="bi bi-circle"></i><span>Spinners</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="components-tooltips.html">-->
+<!--            <i class="bi bi-circle"></i><span>Tooltips</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>&lt;!&ndash; End Components Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">-->
+<!--        <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--      </a>-->
+<!--      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--        <li>-->
+<!--          <a href="forms-elements.html">-->
+<!--            <i class="bi bi-circle"></i><span>Form Elements</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="forms-layouts.html">-->
+<!--            <i class="bi bi-circle"></i><span>Form Layouts</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="forms-editors.html">-->
+<!--            <i class="bi bi-circle"></i><span>Form Editors</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="forms-validation.html">-->
+<!--            <i class="bi bi-circle"></i><span>Form Validation</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>&lt;!&ndash; End Forms Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">-->
+<!--        <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--      </a>-->
+<!--      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--        <li>-->
+<!--          <a href="tables-general.html">-->
+<!--            <i class="bi bi-circle"></i><span>General Tables</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="tables-data.html">-->
+<!--            <i class="bi bi-circle"></i><span>Data Tables</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>&lt;!&ndash; End Tables Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">-->
+<!--        <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--      </a>-->
+<!--      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--        <li>-->
+<!--          <a href="charts-chartjs.html">-->
+<!--            <i class="bi bi-circle"></i><span>Chart.js</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="charts-apexcharts.html">-->
+<!--            <i class="bi bi-circle"></i><span>ApexCharts</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="charts-echarts.html">-->
+<!--            <i class="bi bi-circle"></i><span>ECharts</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>&lt;!&ndash; End Charts Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">-->
+<!--        <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>-->
+<!--      </a>-->
+<!--      <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">-->
+<!--        <li>-->
+<!--          <a href="icons-bootstrap.html">-->
+<!--            <i class="bi bi-circle"></i><span>Bootstrap Icons</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="icons-remix.html">-->
+<!--            <i class="bi bi-circle"></i><span>Remix Icons</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a href="icons-boxicons.html">-->
+<!--            <i class="bi bi-circle"></i><span>Boxicons</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>&lt;!&ndash; End Icons Nav &ndash;&gt;-->
+
+<!--    <li class="nav-heading">Pages</li>-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="users-profile.html">-->
+<!--        <i class="bi bi-person"></i>-->
+<!--        <span>Profile</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Profile Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-faq.html">-->
+<!--        <i class="bi bi-question-circle"></i>-->
+<!--        <span>F.A.Q</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End F.A.Q Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-contact.html">-->
+<!--        <i class="bi bi-envelope"></i>-->
+<!--        <span>Contact</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Contact Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-register.html">-->
+<!--        <i class="bi bi-card-list"></i>-->
+<!--        <span>Register</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Register Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-login.html">-->
+<!--        <i class="bi bi-box-arrow-in-right"></i>-->
+<!--        <span>Login</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Login Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-error-404.html">-->
+<!--        <i class="bi bi-dash-circle"></i>-->
+<!--        <span>Error 404</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Error 404 Page Nav &ndash;&gt;-->
+
+<!--    <li class="nav-item">-->
+<!--      <a class="nav-link collapsed" href="pages-blank.html">-->
+<!--        <i class="bi bi-file-earmark"></i>-->
+<!--        <span>Blank</span>-->
+<!--      </a>-->
+<!--    </li>&lt;!&ndash; End Blank Page Nav &ndash;&gt;-->
+
+  </ul>
+  <div style="position: absolute; bottom: 10px">
+    <button class="btn btn-success" *ngIf="isExpand"  (click)="closeOpenMenu()">Đóng</button>
+    <button class="btn btn-success" *ngIf="!isExpand" (click)="closeOpenMenu()">Mở</button>
   </div>
-</div>
 
-<ng-template #menuitem let-items="item">
-
-  <mat-tree>
-    <mat-tree-node> parent node </mat-tree-node>
-    <mat-tree-node> -- child node1 </mat-tree-node>
-    <mat-tree-node> -- child node2 </mat-tree-node>
-  </mat-tree>
-</ng-template>
-
-<ng-template #tree>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-      <!-- use a disabled button to provide padding for tree leaf -->
-      <i [ngClass]="node.class"></i>
-      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'">
-        <div *ngIf="node.router; else navLink1">
-          <a class="nav-link" (click)="navLinkComponent(node)" >{{node.name}}</a>
-        </div>
-        <ng-template #navLink1 >
-          <div>{{node.name}}</div>
-        </ng-template>
-        <button class="button-navigate" mat-icon-button disabled></button>
-      </div>
-    </mat-tree-node>
-    <!-- This is the tree node template for expandable nodes -->
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-      <i [ngClass]="node.class"></i>
-      <div [ngClass]="isExpand?'display-content-menu':'display-hidden-content-menu'" >
-        <div *ngIf="node.router; else navLink">
-          <a class="nav-link" routerLink="{{node.router}}" (click)="navLinkComponent(node)">{{node.name}}</a>
-        </div>
-        <ng-template #navLink >
-          <div>{{node.name}}</div>
-        </ng-template>
-        <button class="button-navigate" mat-icon-button matTreeNodeToggle
-                [attr.aria-label]="'Toggle ' + node.name">
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button>
-      </div>
-    </mat-tree-node>
-  </mat-tree>
-</ng-template>
+</aside><!-- End Sidebar-->

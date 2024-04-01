@@ -32,6 +32,7 @@ interface MenuNode{
   router?:string;
   hasChild: boolean;
   isExpand?: boolean;
+  target?:string;
 }
 
 export const menuleft : MenuNode[]=[
@@ -46,6 +47,7 @@ export const menuleft : MenuNode[]=[
     hasChild: true,
     name: "Cấu hình hệ thống",
     class: "fa-solid fa-table-columns",
+    target: "roleManagement",
     child:[
       {
         name: "Quản lý role",
@@ -59,6 +61,7 @@ export const menuleft : MenuNode[]=[
     hasChild: true,
     name: "Chi tiết",
     isExpand:false,
+    target: "settingManagement",
     child: [
       {
         router: "/setting",
