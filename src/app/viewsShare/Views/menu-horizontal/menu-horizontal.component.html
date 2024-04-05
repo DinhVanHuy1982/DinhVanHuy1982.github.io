@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="language">
-          <img [src]="srcFlag" class="flag-selected">
+          <img src='{{this.domainFileLocal + this.srcFlag}}' alt="Ngôn ngữ" class="flag-selected"/>
           <i class="fa-solid fa-angle-down fa-sm"  style="color: white;"></i>
           <div class="language-selector">
             <div class="arrow"></div>
@@ -124,6 +124,20 @@
             </div>
           </div>
         </div>
+        <div class="uer-login" (click)="showUserPopup = !showUserPopup">
+          <img *ngIf="!checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
+          <img *ngIf="checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
+          <div class="show-choose" *ngIf="this.showUserPopup">
+            <div class="arrow"></div>
+            <div class="choose"><i class="fa-solid fa-circle-user fa-2xl" style="color: #9a9da2;"></i>Tài khoản của tôi</div>
+            <div class="choose"><i class="fa-solid fa-money-check-dollar fa-2xl"  style="color: #9a9da2;"></i> Đơn hàng đã mua</div>
+            <div class="choose"><i class="fa-solid fa-right-from-bracket fa-2xl"  style="color: #9a9da2;"></i>Đăng xuất</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 categories">
+        
       </div>
     </div>
+
 </div>

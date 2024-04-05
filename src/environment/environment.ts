@@ -10,6 +10,7 @@ const DOMAIN_SOCKET: string = browserWindowEnv['DOMAIN_SOCKET'] || '';
 const DOMAIN_SOCKET_RX: string = browserWindowEnv['DOMAIN_SOCKET_RX'] || '';
 const SCHOOL_CODE: string = browserWindowEnv['SCHOOL_CODE'] || '';
 const DOMAIN_FILE: string = browserWindowEnv['DOMAIN_FILE'] || '';
+const DOMAIN_FILE_LOCAL: string = browserWindowEnv['DOMAIN_FILE_LOCAL'] || '';
 const DOMAIN_DELETE_FILE: string = browserWindowEnv['DOMAIN_DELETE_FILE'] || '';
 const DOMAIN_ULEARN: string = browserWindowEnv['DOMAIN_ULEARN'] || '';
 const CONNECT_SOCKET_USER: string = browserWindowEnv['CONNECT_SOCKET_SELLER'] || '';
@@ -17,6 +18,7 @@ const TIME_RECONNECT_SOCKET: string = browserWindowEnv['TIME_RECONNECT_SOCKET'] 
 
 export const environment = {
   // API_GATEWAY_ENDPOINT: DOMAIN+'/api/',
+  DOMAIN_FILE_LOCAL: 'http://localhost:4211',
   URL_SERVER_SOCKET: DOMAIN_SOCKET + '/websocket',
   authTokenKey: 'authce9d77b308c149d5992a80073637e4d5',
   URL_SERVER_SOCKET_RX: DOMAIN_SOCKET_RX,

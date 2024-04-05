@@ -14,6 +14,7 @@
 
     var SCHOOL_CODE = 'MEDIA';
     var DOMAIN_FILE = 'https://cdn-migi-2.laosedu.la/f';
+    var DOMAIN_FILE_LOCAL = 'http://localhost:4211';
     var DOMAIN_DELETE_FILE = 'https://cdn-migi-2.laosedu.la/d';
     var DOMAIN_ULEARN = 'https://ulearn.laosedu.la/seller';
     var DOMAIN_SOCKET = 'http://localhost:8080';
@@ -27,6 +28,7 @@
     window.__env.DOMAIN_SOCKET_RX = DOMAIN_SOCKET_RX;
     window.__env.SCHOOL_CODE = SCHOOL_CODE;
     window.__env.DOMAIN_FILE = DOMAIN_FILE;
+    window.__env.DOMAIN_FILE_LOCAL = DOMAIN_FILE_LOCAL;
     window.__env.DOMAIN_DELETE_FILE = DOMAIN_DELETE_FILE;
     window.__env.DOMAIN_ULEARN = DOMAIN_ULEARN;
     window.__env.CONNECT_SOCKET_SELLER = CONNECT_SOCKET_USER;

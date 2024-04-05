@@ -1,6 +1,7 @@
-import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {CommonFunction} from "../../../../core/service/utils/common-function";
 import {TranslationService} from "../../../../core/_base/layout/service/translation.service";
+import {environment} from "../../../../environment/environment";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -8,20 +9,23 @@ import {TranslationService} from "../../../../core/_base/layout/service/translat
   styleUrls: ['./menu-horizontal.component.scss']
 })
 export class MenuHorizontalComponent {
-    @ViewChild('inputSearch') inputSearch: ElementRef;
-
-  listHistory : any[];
-  keyword : any;
+  @ViewChild('inputSearch') inputSearch!: ElementRef;
+  domainFileLocal = environment.DOMAIN_FILE_LOCAL;
+  listHistory: string[];
+  keyword = '';
   currentUser : any;
   checkLogin: boolean = false;
-  listHistoryFilter : any[];
+  listHistoryFilter : string[];
   showHistory : boolean=false;
   showAllHistory = false;
-  srcFlag = "../../../../assets/media/img/h2Shop/flag_vn.png";
+  srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
+
+  showUserPopup = false;
+
   constructor(private cdr : ChangeDetectorRef, private translationService: TranslationService) {
     this.listHistory=[];
     this.listHistoryFilter = [];
-    this.srcFlag = "../../../../assets/media/img/h2Shop/flag_vn.png";
+    this.srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
   }
 
   getHistory(){
@@ -120,10 +124,20 @@ export class MenuHorizontalComponent {
     changeLanguage(language:string){
         this.translationService.setLanguage(language);
         if(language==='vn'){
-          this.srcFlag = '../../../../assets/media/img/h2Shop/flag_vn.png';
+          this.srcFlag = '/assets/media/img/h2Shop/flag_vn.png';
         }else{
-          this.srcFlag = '../../../../assets/media/img/h2Shop/flag_en.png'
+          this.srcFlag = '/assets/media/img/h2Shop/flag_en.png'
         }
-        console.log("Flag: ", this.srcFlag)
+        console.log("Flag: ",this.domainFileLocal + this.srcFlag)
+    }
+    @HostListener('document:click', ['$event.target'])
+    onClickOutside(targetElement: any) {
+        // if (!targetElement.closest('.header-search')) {
+        //     this.showHistory = false;
+        //     this.showAllHistory = false;
+        // }
+        if(!targetElement.closest('.uer-login')){
+            this.showUserPopup = false;
+        }
     }
 }
