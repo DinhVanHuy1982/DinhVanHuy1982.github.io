@@ -1,0 +1,289 @@
+.header{
+  background-color: #c2185b;
+  height: 119px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .logo-icon{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .input-search{
+    min-width: 101px;
+    flex: 1;
+    box-sizing: border-box;
+    height: 40px;
+    background: #F0F0F0;
+    border-radius: 40px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #8F95B2;
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+    position: relative;
+    .icon-search{
+      position: absolute;
+      left: 20px;
+    }
+    input{
+      width: calc(100% - 45px);
+      border: none;
+      background: #F0F0F0;
+      line-height: 16px;
+      &:focus{
+        outline: none !important;
+        border: none !important;
+        box-shadow: none,
+      }
+    }
+    .header-search {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      position: absolute;
+      left: 39px;
+    }
+    &:focus-within{
+      outline: none !important;
+      border: 1px solid #007eff !important;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08),0 0 0 3px rgba(0, 126, 255, 0.1);
+    }
+    .list-history{
+      min-width: 250px;
+      position: absolute;
+      width: 100%;
+      top: 40px;
+      background: #FFFFFF;
+      border-radius: 0px 0px 16px 16px;
+      filter: drop-shadow(0px 4px 8px rgba(16, 24, 64, 0.08));
+      padding: 24px;
+      .item-history{
+        display: flex;
+        border-bottom: 1px solid #E6E8F0;
+        align-items: center;
+        &:first-child{
+          .value{
+            padding-top: 0;
+          }
+        }
+        .value{
+          cursor: pointer;
+          padding: 12px 0px;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          color: #101840;
+          flex: 1;
+          max-width: calc(100% - 24px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          svg{
+            margin-right: 12px;
+          }
+          &.no-footer:last-child{
+            border: none;
+          }
+        }
+        .delete-item{
+          background: #FFFFFF;
+          border: none;
+          box-shadow: none;
+        }
+
+      }
+      .footer-history{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 24px;
+        button{
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          background: #FFFFFF;
+          border: none !important;
+          box-shadow: unset;
+        }
+        .see-more-history{
+          color: #F26522;
+        }
+        .delete-history{
+          color: #D14343;
+        }
+        svg{
+          margin-left: 8px;
+        }
+      }
+      svg{
+        margin: 0;
+      }
+    }
+  }
+}
+.infor-user{
+  display: flex;
+  align-items: center;
+  .cart, .notifi{
+    position: relative;
+    margin-right: 30px;
+    cursor: pointer;
+    .number-cart{
+      position: absolute;
+      top:-10px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .list-notifi{
+      display: none;
+      width: 400px;
+      position: absolute;
+      left: -131px;
+      background: white;
+      top: 40px;
+      padding: 20px 15px;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      .footer-notify{
+        height: 40px;
+        width: 100%;
+        padding-top: 10px;
+        .see-more{
+          padding: 0 10px;
+          width: 100%;
+          height: 30px;
+          border-radius: 3px;
+          border: 1px solid #777474;
+        }
+      }
+      .arrow{
+        background-color: white;
+        height: 45px;
+        width: 45px;
+        rotate: 45deg;
+        position: absolute;
+        top:-10px;
+        z-index: 1;
+        left: 118px;
+      }
+      .title{
+        height: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        z-index: 2;
+        position: relative;
+      }
+      .contains-all-notifi{
+        overflow-y: auto;
+        max-height: 450px;
+        .item-notifi{
+          height: 85px;
+          overflow: hidden;
+          .title-notifi{
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 5px;
+          }
+          .content-notifi{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-content: center;
+            height: 55px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            text-align: justify;
+          }
+
+        }
+      }
+    }
+  }
+  .language{
+    position: relative;
+    margin-right: 30px;
+    cursor: pointer;
+    margin-right: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45px;
+    .flag-selected{
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .language-selector{
+      display: none;
+      top: 40px;
+      background-color: white;
+      position: absolute;
+      align-content: space-around;
+      flex-wrap: wrap;
+      width: 200px;
+      height: 100px;
+      border-radius: 6px;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+      .arrow{
+        height: 20px;
+        width: 20px;
+        rotate: 45deg;
+        position: absolute;
+        top: -9px;
+        left: 7px;
+        z-index: 1;
+        background-color: white;
+      }
+      .flag{
+        width: 100%;
+        padding: 10px 10px;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        height: 50%;
+        z-index: 2;
+        position: relative;
+        img{
+          width: 30px;
+          height: 20px;
+        }
+        .nation{
+          margin-left: 15px;
+        }
+      }
+      .flag:hover{
+        background-color: #c2185b;;
+      }
+    }
+  }
+}
+.language:hover .language-selector{
+  display: block !important;
+}
+.notifi:hover .list-notifi{
+  display: block !important;
+}
+
+

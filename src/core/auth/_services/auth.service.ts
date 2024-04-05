@@ -41,12 +41,12 @@ export class AuthService {
     private storageSessionService: StorageSessionService) { }
 
   public get currentUserValue() {
-    // this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.get(this.localStorageService.CURRENT_USER));
-    // // this.currentUser = this.currentUserSubject.asObservable();
-    // if (this.currentUser) {
-    //   // localStorage.setItem('currentUser', this.currentUser);
-    //   this.localStorageService.set(this.localStorageService.CURRENT_USER, JSON.parse(this.currentUser))
-    // }
+    this.currentUserSubject = new BehaviorSubject<any>(this.localStorageService.get(this.localStorageService.CURRENT_USER));
+    // this.currentUser = this.currentUserSubject.asObservable();
+    if (this.currentUser) {
+      // localStorage.setItem('currentUser', this.currentUser);
+      this.localStorageService.set(this.localStorageService.CURRENT_USER, JSON.parse(this.currentUser))
+    }
     return this.currentUserSubject.value;
   }
 }

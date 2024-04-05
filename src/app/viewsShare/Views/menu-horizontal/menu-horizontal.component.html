@@ -1,0 +1,129 @@
+<div class="header">
+    <div class="row container">
+      <div class="col-2 logo-icon">
+        <img src="favicon.ico">
+      </div>
+      <div class="col-8">
+        <div class="input-search" tabindex="0" (blur)="showHistory = false" >
+          <svg class="icon-search" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.66537 8.06862L11.6666 10.0774C11.869 10.2797 11.9964 10.5646 11.9964 10.8719C11.9964 11.494 11.4942 11.9962 10.8721 11.9962C10.5648 11.9962 10.28 11.8687 10.0776 11.6664L8.06886 9.66512C7.25937 10.1823 6.29248 10.4971 5.25063 10.4971C2.34994 10.4971 0.00390625 8.15107 0.00390625 5.25038C0.00390625 2.3497 2.34994 0.00366211 5.25063 0.00366211C8.15131 0.00366211 10.4973 2.3497 10.4973 5.25038C10.4973 6.28474 10.19 7.25163 9.66537 8.06862ZM1.50297 5.25038C1.50297 7.31909 3.18192 8.99804 5.25063 8.99804C7.31933 8.99804 8.99829 7.31909 8.99829 5.25038C8.99829 3.18168 7.31933 1.50273 5.25063 1.50273C3.18192 1.50273 1.50297 3.18168 1.50297 5.25038Z" fill="#8F95B2"/>
+          </svg>
+          <input class="header-search" #inputSearch   (keyup.enter)="search()" [(ngModel)]="keyword" (ngModelChange)="changeInputSearch($event)" (focus)="showHistory = true" type="text"  placeholder="Tìm kiếm..." [matTooltip]="keyword"
+                matTooltipClass="material-tooltip">
+          <div class="list-history" *ngIf="(listHistory.length > 0 && showHistory && keyword.length === 0) || (keyword.length > 0 && listHistoryFilter.length > 0 && showHistory && listHistory.length > 0)">
+            <div class="item-history" (click)="clickItemHistory(item)"  *ngFor="let item of keyword.length > 0 ?listHistoryFilter: listHistory | slice:0:showAllHistory?10:3; let index = index">
+                <span class="value" > <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_35497_50448)">
+                  <path d="M15.3334 7.33333C15.1566 7.33333 14.987 7.40357 14.862 7.5286C14.737 7.65362 14.6667 7.82319 14.6667 8C14.6721 9.55018 14.139 11.0541 13.1584 12.2548C12.1778 13.4554 10.8107 14.2782 9.29065 14.5825C7.77063 14.8869 6.19209 14.6538 4.82485 13.9232C3.45761 13.1927 2.38655 12.0099 1.79475 10.5771C1.20294 9.14433 1.12713 7.55049 1.58027 6.06801C2.03341 4.58552 2.98737 3.30644 4.27909 2.44938C5.57081 1.59232 7.12011 1.2105 8.66216 1.36918C10.2042 1.52786 11.6433 2.21718 12.7334 3.31933C12.7115 3.32531 12.6892 3.32999 12.6667 3.33333H10.6667C10.4899 3.33333 10.3203 3.40357 10.1953 3.5286C10.0703 3.65362 10.0001 3.82319 10.0001 4C10.0001 4.17681 10.0703 4.34638 10.1953 4.47141C10.3203 4.59643 10.4899 4.66667 10.6667 4.66667H12.6667C13.1972 4.66667 13.7059 4.45595 14.0809 4.08088C14.456 3.70581 14.6667 3.1971 14.6667 2.66667V0.666667C14.6667 0.489856 14.5965 0.320286 14.4715 0.195262C14.3464 0.0702379 14.1769 0 14.0001 0C13.8232 0 13.6537 0.0702379 13.5287 0.195262C13.4036 0.320286 13.3334 0.489856 13.3334 0.666667V2.04333C11.9684 0.82302 10.226 0.108111 8.39729 0.0180684C6.56858 -0.0719742 4.76436 0.468305 3.28611 1.54862C1.80787 2.62894 0.745149 4.18386 0.275543 5.95354C-0.194063 7.72322 -0.0421112 9.60046 0.706008 11.2716C1.45413 12.9427 2.75309 14.3064 4.38585 15.1349C6.0186 15.9634 7.88623 16.2065 9.67666 15.8235C11.4671 15.4405 13.0718 14.4547 14.2228 13.0307C15.3737 11.6067 16.0011 9.83093 16.0001 8C16.0001 7.82319 15.9298 7.65362 15.8048 7.5286C15.6798 7.40357 15.5102 7.33333 15.3334 7.33333Z" fill="#374957"/>
+                  <path d="M8.00016 4C7.82335 4 7.65378 4.07024 7.52876 4.19526C7.40373 4.32029 7.3335 4.48986 7.3335 4.66667V8C7.33353 8.1768 7.4038 8.34634 7.52883 8.47133L9.52883 10.4713C9.65456 10.5928 9.82297 10.66 9.99776 10.6584C10.1726 10.6569 10.3398 10.5868 10.4634 10.4632C10.587 10.3396 10.6571 10.1724 10.6586 9.9976C10.6601 9.8228 10.5929 9.6544 10.4715 9.52867L8.66683 7.724V4.66667C8.66683 4.48986 8.59659 4.32029 8.47157 4.19526C8.34654 4.07024 8.17697 4 8.00016 4Z" fill="#374957"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_35497_50448">
+                  <rect width="16" height="16" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                  {{item}}
+                </span>
+              <a class="delete-item" (click)="deleteItem(index,$event);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 7L7 17" stroke="#8F95B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7 7L17 17" stroke="#8F95B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+            <div class="footer-history" >
+              <button class="see-more-history"  *ngIf="(keyword.length === 0 && !showAllHistory && this.listHistory.length>3) || (keyword.length > 0 && this.listHistoryFilter.length>3 && !showAllHistory)" show (click)="showAllHistoryFunc($event)">
+<!--                {{'INFOR_SELLER.VIEW_MORE'|translate}}-->
+                Xem thêm
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.0324 6.1574C13.9627 6.0871 13.8798 6.0313 13.7884 5.99323C13.697 5.95515 13.5989 5.93555 13.4999 5.93555C13.4009 5.93555 13.3029 5.95515 13.2115 5.99323C13.1201 6.0313 13.0371 6.0871 12.9674 6.1574L9.53242 9.59239C9.4627 9.66268 9.37975 9.71848 9.28836 9.75656C9.19696 9.79463 9.09893 9.81424 8.99992 9.81424C8.90091 9.81424 8.80289 9.79463 8.71149 9.75656C8.6201 9.71848 8.53715 9.66268 8.46742 9.59239L5.03242 6.1574C4.9627 6.0871 4.87975 6.0313 4.78836 5.99323C4.69696 5.95515 4.59893 5.93555 4.49992 5.93555C4.40091 5.93555 4.30288 5.95515 4.21149 5.99323C4.1201 6.0313 4.03715 6.0871 3.96742 6.1574C3.82773 6.29792 3.74933 6.48801 3.74933 6.68614C3.74933 6.88428 3.82773 7.07437 3.96742 7.21489L7.40992 10.6574C7.8318 11.0787 8.40367 11.3154 8.99992 11.3154C9.59618 11.3154 10.168 11.0787 10.5899 10.6574L14.0324 7.21489C14.1721 7.07437 14.2505 6.88428 14.2505 6.68614C14.2505 6.48801 14.1721 6.29792 14.0324 6.1574Z" fill="#F26522"/>
+                </svg>
+              </button>
+              <button class="delete-history"  *ngIf="showAllHistory || this.listHistory.length<=3" (click)="deleteAllHistory($event)">
+<!--                {{'ULEARN.LANDING_PAGE.HEADER.DELETE_HISTORY'|translate}}-->
+                Xóa
+                <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4059 3.36654C14.7301 3.36654 15 3.6357 15 3.9782V4.29486C15 4.62902 14.7301 4.90652 14.4059 4.90652H0.594878C0.269883 4.90652 0 4.62902 0 4.29486V3.9782C0 3.6357 0.269883 3.36654 0.594878 3.36654H3.02464C3.51821 3.36654 3.94775 3.01571 4.05879 2.52071L4.18603 1.95238C4.38378 1.17822 5.03458 0.664062 5.77939 0.664062H9.22061C9.95732 0.664062 10.6154 1.17822 10.8059 1.91155L10.942 2.51988C11.0522 3.01571 11.4818 3.36654 11.9762 3.36654H14.4059ZM13.1723 14.9435C13.426 12.5794 13.8701 6.96275 13.8701 6.90609C13.8863 6.73442 13.8304 6.57192 13.7194 6.44109C13.6002 6.31859 13.4495 6.24609 13.2834 6.24609H1.72457C1.55761 6.24609 1.39876 6.31859 1.28854 6.44109C1.17669 6.57192 1.12158 6.73442 1.12969 6.90609C1.13118 6.9165 1.14711 7.11434 1.17376 7.4451C1.29211 8.91446 1.62177 13.007 1.83479 14.9435C1.98553 16.3702 2.92162 17.2668 4.27752 17.2993C5.32382 17.3235 6.40173 17.3318 7.50396 17.3318C8.54216 17.3318 9.59657 17.3235 10.6753 17.2993C12.0782 17.2751 13.0135 16.3943 13.1723 14.9435Z" fill="#D14343"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2 infor-user">
+        <div class = "cart">
+          <div class="number-cart">10</div>
+          <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
+        </div>
+        <div class="notifi">
+          <div class="number-cart">10</div>
+          <i class="fa-regular fa-bell fa-xl" style="color:white;"></i>
+          <div class="list-notifi">
+            <div class="arrow"></div>
+            <div class="title">Thông báo mới</div>
+            <div class="contains-all-notifi">
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+              <div class="item-notifi">
+                <div class="title-notifi">Sản phẩm yêu thích</div>
+                <div class="content-notifi">Trong lễ nhậm chức ở đội U23 Việt Nam sáng nay, HLV Hoàng Anh Tuấn cho rằng vấn đề của bóng đá nước nhà lúc này là niềm tin, chứ không phải chuyên môn.</div>
+              </div>
+            </div>
+            <div class="footer-notify">
+              <button class="see-more btn">Xem thêm</button>
+            </div>
+          </div>
+        </div>
+        <div class="language">
+          <img [src]="srcFlag" class="flag-selected">
+          <i class="fa-solid fa-angle-down fa-sm"  style="color: white;"></i>
+          <div class="language-selector">
+            <div class="arrow"></div>
+            <div class="flag" style="border-radius: 6px 6px 0 0" (click)="changeLanguage('vn')">
+              <img src="../../../../assets/media/img/h2Shop/flag_vn.png">
+              <span  class="nation">Việt Nam</span>
+            </div>
+            <div class="flag" style="border-radius:  0 0 6px 6px" (click)="changeLanguage('en')">
+              <img src="../../../../assets/media/img/h2Shop/flag_en.png">
+              <span class="nation">English</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

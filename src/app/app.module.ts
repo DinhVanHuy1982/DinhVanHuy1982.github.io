@@ -32,6 +32,8 @@ import { BreadcrumbComponent } from './admin/Base/breadcrumb/breadcrumb.componen
 import { DashboardComponent } from './admin/Views/Pages/dashboard/dashboard.component';
 import { RoleManagementComponent } from './admin/Views/Pages/role-management/role-management.component';
 import { ActionRoleManagementComponent } from './admin/Views/Pages/role-management/action-role-management/action-role-management.component';
+import { HomePageComponent } from './viewsShare/Views/home-page/home-page.component';
+import { MenuHorizontalComponent } from './viewsShare/Views/menu-horizontal/menu-horizontal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ActionRoleManagementComponent } from './admin/Views/Pages/role-manageme
     BreadcrumbComponent,
     DashboardComponent,
     RoleManagementComponent,
-    ActionRoleManagementComponent
+    ActionRoleManagementComponent,
+    HomePageComponent,
+    MenuHorizontalComponent
   ],
   imports: [
     BrowserModule,
