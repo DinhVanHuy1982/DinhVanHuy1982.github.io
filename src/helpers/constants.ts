@@ -91,3 +91,5 @@ export const menuleft : MenuNode[]=[
     class: "fa-solid fa-circle-info"
   },
 ];
+
+export const PAGE_SIZE = 20;

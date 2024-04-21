@@ -16,6 +16,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {MatTabsModule} from '@angular/material/tabs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AgGridAngular } from '@ag-grid-community/angular';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { AgGridModule } from 'ag-grid-angular';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { OwlModule } from 'ngx-owl-carousel';
@@ -34,6 +35,10 @@ import { RoleManagementComponent } from './admin/Views/Pages/role-management/rol
 import { ActionRoleManagementComponent } from './admin/Views/Pages/role-management/action-role-management/action-role-management.component';
 import { HomePageComponent } from './viewsShare/Views/home-page/home-page.component';
 import { MenuHorizontalComponent } from './viewsShare/Views/menu-horizontal/menu-horizontal.component';
+import { ContentShopComponent } from './viewsShare/Views/content-shop/content-shop.component';
+import { DetailProductComponent } from './client/detail-product/detail-product.component';
+import { PanigationComponent } from './core/compontnts/panigation/panigation.component';
+import { FileDetailComponent } from './core/compontnts/file-detail/file-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,11 @@ import { MenuHorizontalComponent } from './viewsShare/Views/menu-horizontal/menu
     RoleManagementComponent,
     ActionRoleManagementComponent,
     HomePageComponent,
-    MenuHorizontalComponent
+    MenuHorizontalComponent,
+    ContentShopComponent,
+    DetailProductComponent,
+    PanigationComponent,
+    FileDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +82,8 @@ import { MenuHorizontalComponent } from './viewsShare/Views/menu-horizontal/menu
     TranslateModule.forRoot(),
     OwlModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

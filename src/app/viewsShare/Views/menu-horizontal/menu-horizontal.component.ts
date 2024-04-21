@@ -132,12 +132,85 @@ export class MenuHorizontalComponent {
     }
     @HostListener('document:click', ['$event.target'])
     onClickOutside(targetElement: any) {
-        // if (!targetElement.closest('.header-search')) {
-        //     this.showHistory = false;
-        //     this.showAllHistory = false;
-        // }
+        if (!targetElement.closest('.header-search')) {
+            this.showHistory = false;
+            this.showAllHistory = false;
+        }
         if(!targetElement.closest('.uer-login')){
             this.showUserPopup = false;
         }
     }
+
+    CategoriesTemplate = [
+      {
+        id: 1,
+        categoriName: 'Bóng đá',
+        categoriCode: 'FBALL',
+        parentId: null,
+        createTime: null,
+        description: null,
+        categoriesDTOList: [
+          {
+            id: 2,
+            categoriName: 'Áo đấu',
+            categoriCode: 'FBALLSHIRT',
+            parentId: 1,
+            createTime: null,
+            description: null,
+          },
+          {
+            id: 3,
+            categoriName: 'Quần đấu',
+            categoriCode: 'FBALLSHORT',
+            parentId: 1,
+            createTime: null,
+            description: null,
+          }
+        ]
+      },
+      {
+        id: 4,
+        categoriName: 'Quần vợt',
+        categoriCode: 'TENIST',
+        parentId: null,
+        createTime: null,
+        description: null,
+        categoriesDTOList: [
+          {
+            id: 5,
+            categoriName: 'Áo đấu',
+            categoriCode: 'FBALLSHIRTTN',
+            parentId: 4,
+            createTime: null,
+            description: null,
+          },
+          {
+            id: 6,
+            categoriName: 'Quần đấu',
+            categoriCode: 'FBALLSHORTTN',
+            parentId: 4,
+            createTime: null,
+            description: null,
+            categoriesDTOList: [
+              {
+                id: 7,
+                categoriName: 'Quần rộng',
+                categoriCode: 'BIG',
+                parentId: 6,
+                createTime: null,
+                description: null,
+              },
+              {
+                id: 8,
+                categoriName: 'Quần bó',
+                categoriCode: 'SMALL',
+                parentId: 6,
+                createTime: null,
+                description: null,
+              }
+            ]
+          }
+        ]
+      }
+    ]
 }

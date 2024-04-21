@@ -1,9 +1,9 @@
 <div class="header">
     <div class="row container">
-      <div class="col-2 logo-icon">
+      <div class="col-3 logo-icon">
         <img src="favicon.ico">
       </div>
-      <div class="col-8">
+      <div class="col-6 input-search-col">
         <div class="input-search" tabindex="0" (blur)="showHistory = false" >
           <svg class="icon-search" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.66537 8.06862L11.6666 10.0774C11.869 10.2797 11.9964 10.5646 11.9964 10.8719C11.9964 11.494 11.4942 11.9962 10.8721 11.9962C10.5648 11.9962 10.28 11.8687 10.0776 11.6664L8.06886 9.66512C7.25937 10.1823 6.29248 10.4971 5.25063 10.4971C2.34994 10.4971 0.00390625 8.15107 0.00390625 5.25038C0.00390625 2.3497 2.34994 0.00366211 5.25063 0.00366211C8.15131 0.00366211 10.4973 2.3497 10.4973 5.25038C10.4973 6.28474 10.19 7.25163 9.66537 8.06862ZM1.50297 5.25038C1.50297 7.31909 3.18192 8.99804 5.25063 8.99804C7.31933 8.99804 8.99829 7.31909 8.99829 5.25038C8.99829 3.18168 7.31933 1.50273 5.25063 1.50273C3.18192 1.50273 1.50297 3.18168 1.50297 5.25038Z" fill="#8F95B2"/>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="col-2 infor-user">
+      <div class="col-3 infor-user">
         <div class = "cart">
           <div class="number-cart">10</div>
           <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
@@ -125,8 +125,8 @@
           </div>
         </div>
         <div class="uer-login" (click)="showUserPopup = !showUserPopup">
-          <img *ngIf="!checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
-          <img *ngIf="checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
+          <img style="width: 25px" *ngIf="!checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
+          <img style="width: 25px"  *ngIf="checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
           <div class="show-choose" *ngIf="this.showUserPopup">
             <div class="arrow"></div>
             <div class="choose"><i class="fa-solid fa-circle-user fa-2xl" style="color: #9a9da2;"></i>Tài khoản của tôi</div>
@@ -136,8 +136,33 @@
         </div>
       </div>
       <div class="col-12 categories">
-        
+        <div class="row" style="line-height: 50px;position: relative;top: 7px;">
+          <div class="col-2">
+            Danh mục
+          </div>
+          <div class="categories col-10">
+            <div class="row">
+              <div *ngFor="let item of CategoriesTemplate; let i index"  class="categori-item categories-parent">
+                <div class="nameCategories">
+                  <span>{{item.categoriName}}</span><i *ngIf="item.categoriesDTOList " class="fa-solid fa-angle-right"></i>
+                </div>
+                <div *ngIf="item.categoriesDTOList " class="categories-child">
+                  <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item.categoriesDTOList}"></ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
 </div>
+<ng-template #categiries let-item="item">
+  <div *ngFor="let item1 of item; let i index" class="categori-item ">
+    <div class="nameCategories">
+      <span>{{item1.categoriName}}</span><i *ngIf="item1.categoriesDTOList " class="fa-solid fa-angle-right"></i>
+    </div>
+    <div *ngIf="item1.categoriesDTOList  "  class="categories-child">
+      <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item1.categoriesDTOList}"></ng-container>
+    </div>
+  </div>
+</ng-template>
