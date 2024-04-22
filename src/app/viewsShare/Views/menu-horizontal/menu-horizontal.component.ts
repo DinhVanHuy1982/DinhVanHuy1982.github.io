@@ -2,6 +2,9 @@ import {ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild} from 
 import {CommonFunction} from "../../../../core/service/utils/common-function";
 import {TranslationService} from "../../../../core/_base/layout/service/translation.service";
 import {environment} from "../../../../environment/environment";
+import {MatDialog} from "@angular/material/dialog";
+import {HomePageComponent} from "../home-page/home-page.component";
+import {RegisterAccountComponent} from "../register-account/register-account.component";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -19,10 +22,14 @@ export class MenuHorizontalComponent {
   showHistory : boolean=false;
   showAllHistory = false;
   srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
+  // modalRef!: BsModalRef;
 
   showUserPopup = false;
 
-  constructor(private cdr : ChangeDetectorRef, private translationService: TranslationService) {
+  constructor(private cdr : ChangeDetectorRef,
+              private translationService: TranslationService,
+              private matdialog: MatDialog
+              ) {
     this.listHistory=[];
     this.listHistoryFilter = [];
     this.srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
@@ -213,4 +220,11 @@ export class MenuHorizontalComponent {
         ]
       }
     ]
+  openRegister(){
+    this.matdialog.open(RegisterAccountComponent,{
+      minWidth:'550px',
+      minHeight:'30vh',
+      maxWidth:'30vw'
+    })
+  }
 }

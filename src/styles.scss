@@ -104,9 +104,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     stroke: #f26522 !important;
   }
 }
-:ng-deep{
+::ng-deep{
   .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
     stroke: #f26522 !important;
+  }
+  .mat-mdc-dialog-container .mdc-dialog__surface{
+    background-color: white;
   }
 }
 

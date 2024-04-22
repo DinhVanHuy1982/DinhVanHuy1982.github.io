@@ -1,0 +1,58 @@
+<div class="register">
+  <form [formGroup]="formRegis">
+    <div class="header-register">Đăng ký</div>
+    <div class="body-register row">
+      <div class="col-6 label-field">
+        <label>Tên đăng nhập<small>*</small></label>
+        <input formControlName="username" (input)="validatorUserName()" type="text" class="form-control">
+        <small class="error-validate" *ngIf="messErrUserName">
+          {{messErrUserName}}
+        </small>
+      </div>
+      <div class="col-6 label-field">
+        <label>Họ và tên<small>*</small></label>
+        <input formControlName="fullName" (input)="validatorFullName()" type="text" class="form-control">
+        <small class="error-validate" *ngIf="messErrFullName">
+          {{messErrFullName}}
+        </small>
+      </div>
+      <div class="col-6 label-field">
+        <label>Mật khẩu<small>*</small></label>
+        <input formControlName="password"  (input)="validatorPassWord()" type="text" class="form-control">
+        <small class="error-validate" *ngIf="messErrPassword">
+          {{messErrPassword}}
+        </small>
+      </div>
+      <div class="col-6 label-field">
+        <label>Nhập lại mật khẩu<small>*</small></label>
+        <input formControlName="rePassword" (input)="validatorRePass()" type="text" class="form-control">
+        <small class="error-validate" *ngIf="messErrRePassword">
+          {{messErrRePassword}}
+        </small>
+      </div>
+      <div class="col-6 label-field">
+        <label>Email<small>*</small></label>
+        <input formControlName="email" (input)="validatorEmail()" type="text" class="form-control" >
+        <small class="error-validate" *ngIf="messErrEmail">
+          {{messErrEmail}}
+        </small>
+      </div>
+      <div class="col-6 label-field">
+        <label>Địa chỉ<small>*</small></label>
+        <input formControlName="address" type="text" class="form-control">
+      </div>
+      <div class="col-6 label-field">
+        <label>Ảnh đại diện:</label>
+        <input type='file' id="imageUpload" accept=".jpg, .png, .bmp, .tiff,.tif, .jpeg, .JPG, .PNG, .JPEG" #fileInput
+               (change)="uploadFile($event)"/>
+        <small class="error-validate" *ngIf="messErrFileAvatar">
+          {{messErrFileAvatar}}
+        </small>
+      </div>
+    </div>
+    <div class="footer-register">
+      <button class="btn-cancel btn btn-gray" (click)="close()">Hủy đăng ký</button>
+      <button class="btn-submit btn" (click)="register()">Đăng ký</button>
+    </div>
+  </form>
+</div>

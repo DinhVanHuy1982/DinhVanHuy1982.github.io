@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col-3 infor-user">
-        <div class = "cart">
+        <div class = "cart" routerLink="/h2shop/cart">
           <div class="number-cart">10</div>
           <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
         </div>
@@ -124,7 +124,7 @@
             </div>
           </div>
         </div>
-        <div class="uer-login" (click)="showUserPopup = !showUserPopup">
+        <div class="uer-login" *ngIf="checkLogin" (click)="showUserPopup = !showUserPopup">
           <img style="width: 25px" *ngIf="!checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
           <img style="width: 25px"  *ngIf="checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
           <div class="show-choose" *ngIf="this.showUserPopup">
@@ -132,6 +132,14 @@
             <div class="choose"><i class="fa-solid fa-circle-user fa-2xl" style="color: #9a9da2;"></i>Tài khoản của tôi</div>
             <div class="choose"><i class="fa-solid fa-money-check-dollar fa-2xl"  style="color: #9a9da2;"></i> Đơn hàng đã mua</div>
             <div class="choose"><i class="fa-solid fa-right-from-bracket fa-2xl"  style="color: #9a9da2;"></i>Đăng xuất</div>
+          </div>
+        </div>
+        <div class="uer-login" *ngIf="!checkLogin" (click)="showUserPopup = !showUserPopup">
+          <img style="width: 25px" *ngIf="!checkLogin" src="../../../../assets/media/img/h2Shop/logo-user.jpg">
+          <div class="show-choose" *ngIf="this.showUserPopup">
+            <div class="arrow"></div>
+            <div class="choose" (click)="openRegister()"><i class="fa-solid fa-circle-user fa-2xl" style="color: #9a9da2;"></i>Đăng ký</div>
+            <div class="choose"><i class="fa-solid fa-money-check-dollar fa-2xl"  style="color: #9a9da2;"></i>Đăng nhập</div>
           </div>
         </div>
       </div>
@@ -165,4 +173,15 @@
       <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item1.categoriesDTOList}"></ng-container>
     </div>
   </div>
+</ng-template>
+
+<ng-template #registerAccount >
+  <div class="header-register">Đăng ký</div>
+  <div class="body-register">
+    <div class="col-6">
+      <label>Tên đăng nhập</label>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="footer-register"></div>
 </ng-template>

@@ -30,12 +30,12 @@
               "src/assets"
             ],
             "styles": [
+              "src/styles.scss",
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               {
                 "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
-              },
-              "src/styles.scss"
+              }
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -104,12 +104,12 @@
               "src/assets"
             ],
             "styles": [
+              "src/styles.scss",
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               {
                 "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
-              },
-              "src/styles.scss"
+              }
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

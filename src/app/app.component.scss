@@ -1,4 +1,7 @@
 :host ::ng-deep {
+  .error-validate{
+    color:red;
+  }
   .carousel{
     .owl-prev {
       rotate: 180deg;
@@ -57,7 +60,7 @@
       .owl-stage-outer{
         padding: 0 0 ;
       }
-  
+
       .owl-next {
         // rotate: 180deg;
         border-radius: 50%;
@@ -66,13 +69,13 @@
         width: 50px;
         height: 50px;
       }
-  
+
       .owl-prev:hover, .owl-next:hover {
           opacity: 1 !important;
           box-shadow: -5px -5px 15px black;
           transition: all 0.3s ease;
       }
-  
+
       .owl-nav {
         position: absolute !important;
         top: 130px !important;
@@ -83,5 +86,14 @@
         padding: 0 40px;
         pointer-events: all;
       }
+  }
+
+}
+::ng-deep{
+  .mat-mdc-dialog-container .mdc-dialog__surface{
+    background-color: white !important;
+  }
+  .error-validate{
+    color:red;
   }
 }

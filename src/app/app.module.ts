@@ -39,6 +39,9 @@ import { ContentShopComponent } from './viewsShare/Views/content-shop/content-sh
 import { DetailProductComponent } from './client/detail-product/detail-product.component';
 import { PanigationComponent } from './core/compontnts/panigation/panigation.component';
 import { FileDetailComponent } from './core/compontnts/file-detail/file-detail.component';
+import { CartComponent } from './client/cart/cart.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { RegisterAccountComponent } from './viewsShare/Views/register-account/register-account.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ import { FileDetailComponent } from './core/compontnts/file-detail/file-detail.c
     ContentShopComponent,
     DetailProductComponent,
     PanigationComponent,
-    FileDetailComponent
+    FileDetailComponent,
+    CartComponent,
+    RegisterAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +88,8 @@ import { FileDetailComponent } from './core/compontnts/file-detail/file-detail.c
     OwlModule,
     MatTreeModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
