@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {RegisterAccountService} from "./register-account.service";
 import {ToastrService} from "ngx-toastr";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-register-account',
@@ -20,7 +21,7 @@ export class RegisterAccountComponent implements OnInit{
   messErrEmail='';
   constructor(private fb: FormBuilder,
               private dialogRef: MatDialogRef<RegisterAccountComponent>,
-              private registerService: RegisterAccountService,
+              private userService: UserService,
               private toastService: ToastrService) {
   }
   formRegis!:FormGroup;
@@ -147,7 +148,7 @@ export class RegisterAccountComponent implements OnInit{
 
       this.formDataSent.append('userDto', new Blob([JSON.stringify(this.formRegis.value)],{type:'application/json'}))
 
-      this.registerService.registerAccountClient(this.formDataSent).subscribe((data:any)=>{
+      this.userService.registerAccountClient(this.formDataSent).subscribe((data:any)=>{
         if(data?.status === 'OK'){
           this.toastService.success('Đăng kí tài khoản thành công');
         }else{

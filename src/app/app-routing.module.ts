@@ -7,6 +7,9 @@ import {DetailProductComponent} from "./client/detail-product/detail-product.com
 import {AppComponent} from "./app.component";
 import {ContentShopComponent} from "./viewsShare/Views/content-shop/content-shop.component";
 import {CartComponent} from "./client/cart/cart.component";
+import {UserService} from "./viewsShare/Views/user.service";
+
+// const userLogin =
 
 const routes: Routes = [
   {path: "dashboard", component: DashboardComponent},
@@ -21,4 +24,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  constructor(private userService:UserService) {
+  }
+}

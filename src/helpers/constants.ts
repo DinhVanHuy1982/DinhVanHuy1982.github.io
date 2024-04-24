@@ -1,3 +1,10 @@
+import {DashboardComponent} from "../app/admin/Views/Pages/dashboard/dashboard.component";
+import {Routes} from "@angular/router";
+import {RoleManagementComponent} from "../app/admin/Views/Pages/role-management/role-management.component";
+import {HomePageComponent} from "../app/viewsShare/Views/home-page/home-page.component";
+import {DetailProductComponent} from "../app/client/detail-product/detail-product.component";
+import {CartComponent} from "../app/client/cart/cart.component";
+
 export const CAROUSEL_OPTION = {
     nav: true,
     loop: false,
@@ -91,5 +98,7 @@ export const menuleft : MenuNode[]=[
     class: "fa-solid fa-circle-info"
   },
 ];
+
+
 
 export const PAGE_SIZE = 20;

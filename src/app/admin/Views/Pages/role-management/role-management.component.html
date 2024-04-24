@@ -25,21 +25,24 @@
       </div>
     </div>
     <div class="col-md-6  text-end">
-      <button class="btn-search btn btn-hover">Tìm kiếm</button>
+      <button class="btn-search btn btn-hover" (click)="search()">Tìm kiếm</button>
     </div>
   </div>
   <div class="row">
     <ag-grid-angular
       style="width: 100%; height: 500px !important;"
-      [rowData]="roles"
+      [rowData]="rowData"
       class="ag-theme-alpine"
       [columnDefs]="columdef"
       [tooltipShowDelay]="0"
       (gridSizeChanged)="gridSizeChanged($event)"
-
       [overlayNoRowsTemplate]="noRowsTemplate"
     >
 
     </ag-grid-angular>
+    <app-panigation [total]="totalRecord" [totalPage]="1" [dataLength]="rowData?.length"
+                    [currentPage]="1" [collapse]="false" [pageSize]="10"
+                    (paginate)="callInforReview(null, $event)">
+    </app-panigation>
   </div>
 </div>

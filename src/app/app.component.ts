@@ -14,6 +14,14 @@ import { TranslationService } from 'src/core/_base/layout/service/translation.se
 import {OwlCarousel} from 'ngx-owl-carousel';
 
 import { CAROUSEL_OPTION, NO_ROW_GRID_TEMPLATE } from 'src/helpers/constants';
+import {UserService} from "./viewsShare/Views/user.service";
+import {Router, Routes} from "@angular/router";
+import {DashboardComponent} from "./admin/Views/Pages/dashboard/dashboard.component";
+import {RoleManagementComponent} from "./admin/Views/Pages/role-management/role-management.component";
+import {HomePageComponent} from "./viewsShare/Views/home-page/home-page.component";
+import {DetailProductComponent} from "./client/detail-product/detail-product.component";
+import {CartComponent} from "./client/cart/cart.component";
+import {ContentShopComponent} from "./viewsShare/Views/content-shop/content-shop.component";
 
 @Component({
   selector: 'app-root',
@@ -97,16 +105,74 @@ export class AppComponent implements OnInit{
   }
 
 
+  userLogin=null;
+  roleManager=false;
   constructor(private dialog: MatDialog,private toast: ToastrService,
-    private translationService: TranslationService,
-   ){
+              private userService:UserService,
+              private translationService: TranslationService,
+              private router: Router){
     this.translationService.loadTranslations(enLang, vnLang);
   }
   ngOnInit(): void {
     console.log('da vaoooooooooooo-----------')
-
     sessionStorage.setItem('routingStack', JSON.stringify([]));
+    this.setUserLogin()
   }
+
+  setUserLogin(){
+    this.userService.getUserCurrent().subscribe((user:any)=>{
+      const checkLogin = localStorage.getItem('user');
+      console.log(checkLogin)
+      if(checkLogin){ // kiểm tra đã đăng nhập trước đó hay chưa
+        const userLogin = JSON.parse(checkLogin)
+        if(userLogin!=null){
+          console.log("userLogin",userLogin)
+          if(userLogin?.roles){
+            this.roleManager=true;
+            // this.router.resetConfig(this.routesManager);
+          }else{
+            this.roleManager=false;
+          }
+        }else{
+          // this.router.resetConfig(this.routesClient);
+        }
+      }else {
+        if(user){
+          this.userLogin=user;
+          localStorage.setItem('user',JSON.stringify(user))
+          if(user?.roles){
+            this.roleManager=true;
+            // this.router.resetConfig(this.routesManager);
+          }else{
+            this.roleManager=false;
+            // this.router.resetConfig(this.routesClient);
+          }
+        }else{
+          localStorage.setItem('user',JSON.stringify(null))
+          this.roleManager=false;
+          // this.router.resetConfig(this.routesClient);
+        }
+      }
+    })
+  }
+
+  // routesManager: Routes = [
+  //   { path: 'dashboard', component: DashboardComponent },
+  //   { path: 'role-management', component: RoleManagementComponent },
+  //   { path: '**', component: DashboardComponent }
+  // ];
+  //
+  // routesClient: Routes = [
+  //   // {path: "dashboard", component: DashboardComponent},
+  //   // {path:"role-managemment",component:RoleManagementComponent},
+  //   {path: "home-page",component: HomePageComponent},
+  //   {path: "details", component:DetailProductComponent},
+  //   {path:"h2shop/cart",component:CartComponent},
+  //   {path: "**", component: ContentShopComponent}
+  // ];
+
+
+
   style: LineStyle = 'smooth';
   public data = [
     20, 1, 18, 3, 15, 5, 10, 6, 9, 6, 10, 5, 13, 3, 16, 1, 19, 1, 20, 2, 18, 5,
@@ -175,7 +241,7 @@ export class AppComponent implements OnInit{
       { headerName: 'Model', field: 'model' },
       { headerName: 'Price', field: 'price' }
     ];
-  
+
     rowData = [
       { make: 'Toyota', model: 'Celica', price: 35000 },
       { make: 'Ford', model: 'Mondeo', price: 32000 },
@@ -187,5 +253,5 @@ export class AppComponent implements OnInit{
     openToast(){
       this.toast.success("Thành công")
     }
-    
+
 }

@@ -1,2 +1,2 @@
-<app-base style="display: none;"></app-base>
-<app-home-page></app-home-page>
+<app-base *ngIf="roleManager"></app-base>
+<app-home-page *ngIf="!roleManager"></app-home-page>

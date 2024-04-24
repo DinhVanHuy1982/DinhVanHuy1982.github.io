@@ -5,6 +5,7 @@ import {environment} from "../../../../environment/environment";
 import {MatDialog} from "@angular/material/dialog";
 import {HomePageComponent} from "../home-page/home-page.component";
 import {RegisterAccountComponent} from "../register-account/register-account.component";
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -222,6 +223,13 @@ export class MenuHorizontalComponent {
     ]
   openRegister(){
     this.matdialog.open(RegisterAccountComponent,{
+      minWidth:'550px',
+      minHeight:'30vh',
+      maxWidth:'30vw'
+    })
+  }
+  openLogin(){
+    this.matdialog.open(LoginComponent,{
       minWidth:'550px',
       minHeight:'30vh',
       maxWidth:'30vw'

@@ -1,0 +1,18 @@
+<div class="loginUser">
+  <div class="login-header">Đăng nhập</div>
+  <div class="login-body">
+
+    <div class="user-name row">
+      <label for="userName">Tên đăng nhập<small>*</small></label>
+      <input id="userName" type="text" class="form-control" [(ngModel)]="userName">
+    </div>
+    <div class="password row">
+      <label for="password">Mật khẩu<small>*</small></label>
+      <input type="text" class="form-control" [(ngModel)]="password" id="password">
+    </div>
+  </div>
+  <div class="login-footer">
+    <button class="btn-cancel btn btn-gray" (click)="close()">Hủy đăng ký</button>
+    <button class="btn-submit btn" (click)="login()" >Đăng nhập</button>
+  </div>
+</div>

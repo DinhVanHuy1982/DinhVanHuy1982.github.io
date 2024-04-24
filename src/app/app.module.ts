@@ -42,6 +42,8 @@ import { FileDetailComponent } from './core/compontnts/file-detail/file-detail.c
 import { CartComponent } from './client/cart/cart.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { RegisterAccountComponent } from './viewsShare/Views/register-account/register-account.component';
+import { LoginComponent } from './viewsShare/Views/login/login.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { RegisterAccountComponent } from './viewsShare/Views/register-account/re
     PanigationComponent,
     FileDetailComponent,
     CartComponent,
-    RegisterAccountComponent
+    RegisterAccountComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,7 @@ import { RegisterAccountComponent } from './viewsShare/Views/register-account/re
     MatGridListModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
