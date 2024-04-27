@@ -1,0 +1,84 @@
+<div class="create-update">
+  <div class="header">
+    <div class="create" *ngIf="data?.isCreate==true">TẠO MỚI ROLE ngx-treeview</div>
+    <div class="update" *ngIf="data?.isCreate!==true">CẬP NHẬT ROLE</div>
+  </div>
+  <div class="row body">
+    <div class="col-md-6">
+      <label>Mã role</label>
+      <input type="text" [(ngModel)]="roleCode" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <label>Tên role</label>
+      <input type="text" [(ngModel)]="roleName" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <label>Trạng thái</label>
+      <ng-select
+        [items]='itemActive'
+        bindLabel="name"
+        bindValue="code"
+        placeholder="Lựa chọn..."
+        [clearable]="true"
+        [(ngModel)]="roleStatus"
+      >
+        <ng-template let-item="item" ng-option-tmp>
+          <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="col-md-6">
+      <label>Mô tả</label>
+      <input type="text" [(ngModel)]="roleDescription" class="form-control">
+    </div>
+    <div class="col-12">
+      <div>Chọn quyền cho role *</div>
+      <table>
+        <tr>
+          <th class="stt">STT</th>
+          <th class="functionName">Tên chức năng</th>
+          <th class="applyFunction">Áp dụng</th>
+          <th class="action">Action</th>
+        </tr>
+        <tr *ngFor="let function of roleData ,let index = index">
+          <td>{{index}}</td>
+          <td>{{function?.functionName}}</td>
+          <td>
+            <div class="function-apply">
+              <mat-checkbox id="checkbox-{{index}}" class="ng-select-checkbox" [(ngModel)]="function.checkApplyFunction" (change)="toggleApply(function, $event)"></mat-checkbox>
+            </div>
+          </td>
+          <td>
+            <ng-select
+              [items]="function.listActionDTO"
+              bindLabel="name"
+              [multiple]="true"
+              (change)="changeAction($event)"
+              [closeOnSelect]="false"
+              [(ngModel)]="function.optionSelected"
+              [selectableGroupAsModel]="false"
+              matTooltipClass="material-tooltip"
+              [searchable]="false"
+              [clearable]="true"
+              [placeholder]="'Lựa chọn'"
+              [ngClass]="{'disabel':!function.checkApplyFunction }"
+              class="body_action_select"
+            >
+              <ng-template let-index="index"  let-item="item" let-item$="item$" ng-option-tmp>
+                <div class="ng-value" >
+                  <span  class="ng-value-label" >{{item.name}}</span>
+                  <!--                      <span class="ng-value-icon right" (click)="clear(items[0])" aria-hidden="true">×</span>-->
+                </div>
+              </ng-template>
+            </ng-select>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="footer">
+    <button (click)="closeCreateUpdate()">Hủy bỏ</button>
+    <button (click)="createRole()" *ngIf="data?.isCreate==true">Tạo mới</button>
+    <button (click)="update()" *ngIf="data?.isCreate!==true">Cập nhật</button>
+  </div>
+</div>

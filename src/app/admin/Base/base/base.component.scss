@@ -9,13 +9,14 @@
   border-radius: 15px 0 0 15px;
   background-color: white;
   width: 100% !important;
-  display: grid;
+  //display: grid;
   //height: 100%;
   //overflow-y: hidden;
 }
 .router-outlet{
   overflow: auto;
   height: 100%;
+  overflow-x: hidden;
 }
 //.menu-base-left{
 //  flex: 0 0 auto;

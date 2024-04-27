@@ -8,12 +8,14 @@ import {AppComponent} from "./app.component";
 import {ContentShopComponent} from "./viewsShare/Views/content-shop/content-shop.component";
 import {CartComponent} from "./client/cart/cart.component";
 import {UserService} from "./viewsShare/Views/user.service";
+import {ProductManagementComponent} from "./admin/Views/Pages/product-management/product-management.component";
 
 // const userLogin =
 
 const routes: Routes = [
   {path: "dashboard", component: DashboardComponent},
-  {path:"role-managemment",component:RoleManagementComponent},
+  {path: "product-management", component: ProductManagementComponent},
+  {path:"role-management",component:RoleManagementComponent},
   {path: "home-page",component: HomePageComponent},
   {path: "details", component:DetailProductComponent},
   {path:"h2shop/cart",component:CartComponent},

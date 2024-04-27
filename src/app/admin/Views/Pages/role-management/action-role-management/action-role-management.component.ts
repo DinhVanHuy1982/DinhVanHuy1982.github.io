@@ -1,9 +1,12 @@
 import {ChangeDetectorRef, Component, TemplateRef, ViewChild} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core";
 import {ITooltipAngularComp} from "ag-grid-angular";
 import {ITooltipParams} from "ag-grid-community";
+import {CreateUpdateRoleComponent} from "../create-update-role/create-update-role.component";
+import {RolesService} from "../roles.service";
+import {RoleManagementComponent} from "../role-management.component";
 
 @Component({
   selector: 'app-action-role-management',
@@ -26,49 +29,34 @@ export class ActionRoleManagementComponent implements ITooltipAngularComp {
 
   agInit(params: any): void {
     this.params = params;
-    this.data = params.columnData || '';
-    this.renderContent.mathml = params.columnData || '';
-    this.color = this.params.color || '#cbcedc';
-    if (params.columnData && params.columnData.includes('<img')) {
-      this.hasImage = true;
-    }
-
-
-    if (params?.data?.type === 'TN' && params.colDef.type === '3' && params.columnData) {
-      this.renderContent.mathml = this.translate.instant('QUESTION_BANK.CHOOSE_ANSWER') + ' ' + this.translate.instant('QUESTION_BANK.ANSWER' + params.columnData);
-    }
-
-    if(params?.positionFixed){
-      this.positionFixed = params.positionFixed;
-    }
+    this.data = params.data;
   }
 
   constructor(
               private toast: ToastrService,
               public matDialog: MatDialog,
               private translate: TranslateService,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private roleService: RolesService,
+              private roleManagement: RoleManagementComponent
+  ) {
 
   }
 
 
-  updateLibCategory() {
-    // this.matDialog.open(CreateUpdateTopicExamPackageComponent, {
-    //   data:JSON.parse(JSON.stringify(this.item)) ,
-    //   disableClose: false,
-    //   hasBackdrop: true,
-    //   width: '760px',
-    //   maxHeight: '90vh',
-    //   autoFocus: false
-    // }).afterClosed().subscribe(res => {
-    //   if (!res || res.event === 'cancel'){
-    //
-    //   } else {
-    //     this.topicExamPackageComponent.searchData(this.topicExamPackageComponent.topicExamPackage);
-    //   }
-    //
-    //
-    // })
+  updateRole() {
+    const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
+      height: '60vh',
+      maxHeight: '90vh',
+      maxWidth: '90vw',
+      data: {
+        isCreate: false,
+        itemData: this.data
+      }
+    };
+    this.matDialog.open(CreateUpdateRoleComponent, dialogConfig).afterClosed().subscribe((data:any)=>
+      {}
+    )
   }
   disableDelete = true;
   deleteLibCategory(){
@@ -90,6 +78,22 @@ export class ActionRoleManagementComponent implements ITooltipAngularComp {
     })
   }
   @ViewChild('template') template :any;
+
+  deleteRole(){
+    if(this.data.userUse>0){
+      this.toast.warning("Có tài khoản đang sử dụng role này")
+    }else{
+      this.roleService.deleteRole(this.data.id).subscribe((data:any)=>{
+        if(data.status==='OK'){
+          this.roleManagement.search();
+          this.toast.success(data.message);
+          this.matDialog.closeAll();
+        }else{
+          this.toast.error(data.message)
+        }
+      })
+    }
+  }
 }
 export interface MathContent {
   latex?: string;

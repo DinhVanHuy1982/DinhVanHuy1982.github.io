@@ -59,7 +59,20 @@ export const menuleft : MenuNode[]=[
       {
         name: "Quản lý role",
         hasChild: false,
-        router: "/role-managemment"
+        router: "/role-management"
+      }
+    ]
+  },{
+    // router: "/dashboard",
+    hasChild: true,
+    name: "Quản lý bán hàng",
+    class: "fa-solid fa-table-columns",
+    target: "productManagement",
+    child:[
+      {
+        name: "Quản lý sản phẩm",
+        hasChild: false,
+        router: "/product-management"
       }
     ]
   },

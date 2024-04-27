@@ -96,4 +96,14 @@
   .error-validate{
     color:red;
   }
+  .mdc-form-field{
+    label{
+      color: black !important;
+    }
+    .mdc-checkbox{
+      .mdc-checkbox__background{
+        border: 2px solid gray !important;
+      }
+    }
+  }
 }

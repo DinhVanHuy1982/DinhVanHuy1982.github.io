@@ -1,0 +1,45 @@
+.create-update{
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 0 10px;
+
+  .header{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    align-content: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid gray;
+    .create, .update{
+      font-weight: 500;
+      font-size: 18px;
+      color: gray;
+    }
+  }
+  .body{
+    overflow-y: auto;
+  }
+  .footer{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    align-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid gray;
+  }
+}
+.stt{
+  width: 20px;
+}
+.functionName{
+  width: 200px;
+}
+.applyFunction{
+  width: 40px;
+}
+.action{
+  width: 300px;
+}
+.disabel{
+  pointer-events: none
+}

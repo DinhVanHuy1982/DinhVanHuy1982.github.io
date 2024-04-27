@@ -44,6 +44,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { RegisterAccountComponent } from './viewsShare/Views/register-account/register-account.component';
 import { LoginComponent } from './viewsShare/Views/login/login.component';
 import { DatePipe } from '@angular/common';
+import { CreateUpdateRoleComponent } from './admin/Views/Pages/role-management/create-update-role/create-update-role.component';
+import { ProductManagementComponent } from './admin/Views/Pages/product-management/product-management.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { DatePipe } from '@angular/common';
     FileDetailComponent,
     CartComponent,
     RegisterAccountComponent,
-    LoginComponent
+    LoginComponent,
+    CreateUpdateRoleComponent,
+    ProductManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,7 @@ import { DatePipe } from '@angular/common';
     MatTooltipModule,
     MatDialogModule,
     ToastrModule.forRoot({
-      timeOut: 400000,
+      timeOut: 4000,
       positionClass: 'toast-bottom-right'
     }),
     TranslateModule.forRoot(),

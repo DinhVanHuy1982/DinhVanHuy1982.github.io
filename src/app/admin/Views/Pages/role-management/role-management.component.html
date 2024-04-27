@@ -1,8 +1,14 @@
 <div class="role-management">
-  <div class="row role-action">
+  <div class="role-action">
     <div class="title-screen">QUẢN LÝ ROLE NGƯỜI DÙNG</div>
-    <hr>
+    <div class="action">
+      <div class="action-create">
+        <button (click)="openCreate()">Tạo mới</button>
+      </div>
+    </div>
+
   </div>
+  <hr>
   <div class="row form-search">
     <div class="col-md-6">
       <div class="row">
@@ -13,6 +19,7 @@
             bindValue="code"
             placeholder="Lựa chọn..."
             [clearable]="true"
+            [(ngModel)]="dataSearch.status"
           >
             <ng-template let-item="item" ng-option-tmp>
               <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
@@ -20,7 +27,7 @@
           </ng-select>
         </div>
         <div class="col-md-5">
-          <input type="text" placeholder="Nhập mã hoặc tên role" class="w-100 form-control">
+          <input type="text" placeholder="Nhập mã hoặc tên role" class="w-100 form-control" [(ngModel)]="dataSearch.roleSearchName">
         </div>
       </div>
     </div>
@@ -40,7 +47,7 @@
     >
 
     </ag-grid-angular>
-    <app-panigation [total]="totalRecord" [totalPage]="1" [dataLength]="rowData?.length"
+    <app-panigation [total]="totalRecord" [totalPage]="this.totalPage" [dataLength]="rowData?.length"
                     [currentPage]="1" [collapse]="false" [pageSize]="10"
                     (paginate)="callInforReview(null, $event)">
     </app-panigation>

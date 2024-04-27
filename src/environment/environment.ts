@@ -25,7 +25,7 @@ export const environment = {
   CONNECT_SOCKET_USER: CONNECT_SOCKET_USER,
   URL_IMAGE_LOADING: DOMAIN + '/upload',
   URL_LOGOUT:'logout-mobile.com',
-  API_GATEWAY_ENDPOINT: 'http://localhost:8080'+'/api/',
+  API_GATEWAY_ENDPOINT: 'http://localhost:8085'+'/api/',
   // SCHOOL_NAME: 'Trường THPT Chuyên Nguyễn Huệ',
   SCHOOL_NAME: 'ໂຮງຮຽນມິດຕະພາບລາວ-ຫວຽດນາມ',
   SCHOOL_CODE: `${SCHOOL_CODE}`,
