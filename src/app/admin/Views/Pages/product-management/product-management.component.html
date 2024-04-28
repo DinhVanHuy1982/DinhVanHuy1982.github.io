@@ -1,1 +1,46 @@
+<!--<ngx-treeview [items]="treeItems"></ngx-treeview>-->
+<div class="product-management">
+  <div class="title-manangement">
+    <div class="title-screen">Quản lý sản phẩm</div>
+    <div class="action">
+      <div class="action-create"><button (click)="createProduct()">Tạo mới</button></div>
+    </div>
+  </div>
+  <div class=" row form-search">
+    <div class="col-md-3">
+      <ng-select
+        [items]="listBrand"
+        bindLabel="nameTranform"
+        bindValue="id"
+        placeholder="Nhãn hiệu"
+        [clearable]="true"
+        [(ngModel)]="formSearch.brandId"
+      >
+
+      </ng-select>
+    </div>
+    <div class="col-md-3">
+      <input class="form-control" placeholder="Mã hoặc tên sản phẩm..." [(ngModel)]="formSearch.nameSearch">
+    </div>
+    <div class="action-search">
+      <button class="search" (click)="search()">Tìm kiếm</button>
+    </div>
+  </div>
+  <ag-grid-angular
+    [columnDefs]="columnDef"
+    [rowData]="rowData"
+    style="width: 100%; height: 500px !important;"
+    class="ag-theme-alpine"
+    [tooltipShowDelay]="0"
+    (gridSizeChanged)="gridSizeChanged($event)"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+  >
+
+  </ag-grid-angular>
+  <app-panigation [total]="totalElement" [totalPage]="this.totalPage" [dataLength]="rowData?.length"
+                  [currentPage]="1" [collapse]="false" [pageSize]="10"
+                  (paginate)="callInforReview(null, $event)">
+  </app-panigation>
+
+</div>
 

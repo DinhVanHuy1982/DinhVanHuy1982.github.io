@@ -46,7 +46,17 @@ import { LoginComponent } from './viewsShare/Views/login/login.component';
 import { DatePipe } from '@angular/common';
 import { CreateUpdateRoleComponent } from './admin/Views/Pages/role-management/create-update-role/create-update-role.component';
 import { ProductManagementComponent } from './admin/Views/Pages/product-management/product-management.component';
-
+import {TreeviewModule,
+  DropdownTreeviewComponent,
+  TreeviewConfig,
+  DefaultTreeviewI18n,
+  TreeviewI18n,
+  DefaultTreeviewEventParser,
+  TreeviewEventParser} from "ngx-treeview";
+import { ActionProductComponent } from './admin/Views/Pages/product-management/action-product/action-product.component';
+import { CreateUpdateProductComponent } from './admin/Views/Pages/product-management/create-update-product/create-update-product.component';
+import {MatSelectModule} from "@angular/material/select";
+import { BrandManagementComponent } from './admin/Views/Pages/brand-management/brand-management.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,9 +78,13 @@ import { ProductManagementComponent } from './admin/Views/Pages/product-manageme
     RegisterAccountComponent,
     LoginComponent,
     CreateUpdateRoleComponent,
-    ProductManagementComponent
+    ProductManagementComponent,
+    ActionProductComponent,
+    CreateUpdateProductComponent,
+    BrandManagementComponent
   ],
   imports: [
+    TreeviewModule,
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
@@ -96,9 +110,12 @@ import { ProductManagementComponent } from './admin/Views/Pages/product-manageme
     MatTreeModule,
     MatIconModule,
     MatGridListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,TreeviewConfig,
+    { provide: TreeviewI18n, useClass: DefaultTreeviewI18n },
+    { provide: TreeviewEventParser, useClass: DefaultTreeviewEventParser }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

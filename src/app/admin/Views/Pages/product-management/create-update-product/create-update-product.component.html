@@ -1,0 +1,120 @@
+<div class="create-update-product">
+  <mat-tab-group (selectedTabChange)="changeTab($event)" >
+    <mat-tab label="First">
+      <div class="row">
+        <div class="col-md-6">
+          <label>Mã sản phẩm: </label>
+          <input type="text" [(ngModel)]="productInfor.productCode" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Tên sản phẩm: </label>
+          <input type="text" [(ngModel)]="productInfor.productName"  class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Giá bán: </label>
+          <input type="text"  [(ngModel)]="productInfor.price" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Danh mục: </label>
+          <input type="text" [(ngModel)]="productInfor.categoriesID"  class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Nhãn hiệu: </label>
+          <ng-select
+            [items]="listBrand"
+            bindLabel="nameTranform"
+            bindValue="id"
+            placeholder="Nhãn hiệu"
+            [clearable]="true"
+            [(ngModel)]="productInfor.brandId"
+          >
+
+          </ng-select>
+        </div>
+        <div class="col-md-6">
+          <label>Mô tả: </label>
+          <input type="text" [(ngModel)]="productInfor.description"  class="form-control">
+        </div>
+        <div>
+          <label>Ảnh sản phẩm: </label><br>
+          <label for="upload-img-product" class="img">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_58032_143468)">
+                <rect x="0.3125" y="0.3125" width="99.375" height="99.375" rx="4.6875" fill="#F3F5F6"/>
+                <rect x="0.3125" y="0.3125" width="99.375" height="99.375" rx="4.6875" stroke="#D7DBE0" stroke-width="0.625" stroke-dasharray="3.12 3.12"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M50.002 74.0544C48.7007 74.0544 47.394 73.7158 46.2313 73.0384C42.866 71.1051 37.6047 68.7078 31.7087 68.2838C27.7593 68.0224 24.666 64.7664 24.666 60.8731V33.2997C24.666 31.201 25.5647 29.193 27.13 27.793C28.7193 26.369 30.8607 25.6784 32.9833 25.9237C39.0687 26.5824 44.274 29.0037 47.5727 30.921C49.0713 31.7957 50.9327 31.793 52.426 30.9237C55.722 29.0037 60.93 26.5824 67.0207 25.9237C69.1567 25.689 71.282 26.369 72.8713 27.793C74.4367 29.193 75.3327 31.201 75.3327 33.2997V60.8731C75.3327 64.7691 72.2393 68.0251 68.2873 68.2838C62.3967 68.7078 57.138 71.1051 53.762 73.0438C52.6047 73.7158 51.3033 74.0544 50.002 74.0544ZM48.0004 61.7016C48.0004 62.8056 48.8964 63.7016 50.0004 63.7016C51.1044 63.7016 52.0004 62.8056 52.0004 61.7016V43.7016C52.0004 42.5976 51.1044 41.7016 50.0004 41.7016C48.8964 41.7016 48.0004 42.5976 48.0004 43.7016V61.7016Z" fill="white"/>
+              </g>
+              <rect width="100" height="100" rx="10" fill="black" fill-opacity="0.1"/>
+              <rect x="40" y="40" width="20" height="20" rx="10" fill="white"/>
+              <path d="M46.25 50H53.75" stroke="black" stroke-width="0.9375" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M50 53.75V46.25" stroke="black" stroke-width="0.9375" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <clipPath id="clip0_58032_143468">
+                  <rect width="100" height="100" rx="10" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+          </label>
+          <input type="file" id="upload-img-product" style="display: none" (change)="onFileSelected($event)" multiple accept=".png, .jpg, .jpeg">
+          <div class="list-image-selected">
+            <div class="img-item" *ngFor="let imageUrl of imageUrls;let index=index">
+              <img [src]="imageUrl" class="img-selected" alt="Selected Image">
+              <div class="icon" (click)="removeImgProduct(imageUrl,index)">
+                <i class="fa-regular fa-trash-can" style="color: red; width: 10px;left: -1.5px;position: relative;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Kích cỡ">
+      <div class="row" *ngFor="let size of listSize; let index = index">
+        <div class="col-md-6">
+          <label>Tên size: </label>
+          <input type="text" [(ngModel)]="size.sizeName" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Mô tả: </label><button (click)="removeSize(size)">Xóa</button>
+          <input type="text" [(ngModel)]="size.description" class="form-control">
+        </div>
+      </div>
+      <div>
+        <button (click)="addSize()">Thêm size</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Loại sản phẩm">
+      <div class="row" *ngFor="let type of listType; let index = index">
+        <div class="col-md-6">
+          <label>Tên size: </label>
+          <input type="text" [(ngModel)]="type.typeName" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Mô tả: </label><button (click)="removeType(type)">Xóa</button>
+          <input type="text" [(ngModel)]="type.description" class="form-control">
+        </div>
+      </div>
+      <div>
+        <button (click)="addType()">Thêm size</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Số lượng">
+      <table>
+        <tr>
+          <th>Tên size</th>
+          <th>Tên loại</th>
+          <th>Số lượng</th>
+        </tr>
+        <tr *ngFor="let productDetail of listProductDetail;let index=index;">
+          <td>{{productDetail.sizeName}}</td>
+          <td>{{productDetail.typeName}}</td>
+          <td>
+            <input type="number" class="form-control" [(ngModel)]="productDetail.quantity">
+          </td>
+        </tr>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+  <div class="footer">
+    <button (click)="submit()">Thêm mới</button>
+  </div>
+</div>

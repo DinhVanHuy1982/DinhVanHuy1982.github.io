@@ -1,0 +1,31 @@
+.list-image-selected{
+  display: flex;
+  margin-top: 10px;
+}
+.img-item{
+  margin-right: 10px;
+  position: relative;
+  .icon{
+    top: 40%;
+    left: 40%;
+    position: absolute;
+    display: none;
+    background-color: white;
+    align-content: center;
+    border-radius: 50%;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
+.img-item:hover{
+  .icon{
+    display: block;
+  }
+}
+.img-selected{
+  width: 100px;
+  height:100px;
+  border-radius: 6px;
+}
