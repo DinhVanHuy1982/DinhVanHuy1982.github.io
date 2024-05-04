@@ -73,6 +73,18 @@ export const menuleft : MenuNode[]=[
         name: "Quản lý sản phẩm",
         hasChild: false,
         router: "/product-management"
+      },{
+        name: "Quản lý nhãn hàng",
+        hasChild: false,
+        router: "/brand-management"
+      },{
+        name: "Quản lý danh mục",
+        hasChild: false,
+        router: "/categories-management"
+      },{
+        name: "Quản lý đặt hàng",
+        hasChild: false,
+        router: "/order-management"
       }
     ]
   },

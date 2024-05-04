@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ProductService} from "../product.service";
 import {BrandService} from "../../brand-management/brand.service";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create-update-product',
@@ -9,7 +10,10 @@ import {BrandService} from "../../brand-management/brand.service";
 })
 export class CreateUpdateProductComponent implements OnInit{
 
-  constructor(private productService: ProductService, private brandService:BrandService) {
+  constructor(private productService: ProductService,
+              private brandService:BrandService,
+              @Inject(MAT_DIALOG_DATA) public data:any
+  ) {
   }
   productInfor:any={
     description:"",
@@ -44,27 +48,56 @@ export class CreateUpdateProductComponent implements OnInit{
       description: "",
       position: this.listSize.length+1
     }
+    const indexSize=sizeAdd.position;
     this.listSize.push(sizeAdd);
+    this.listType.forEach((item:any)=>{
+      const productDetail ={
+        quantity: 0,
+        positionSize: this.listSize[indexSize-1].position,
+        sizeName: this.listSize[indexSize-1].sizeName,
+        positionType: item.typeName,
+        typeName: item.position,
+      }
+      this.listProductDetail.push(productDetail);
+    })
   }
   removeSize(size:any){
     this.listSize = this.listSize.filter((item:any)=>
       item.position != size.position
     )
+    this.listProductDetail.filter((item:any)=>{
+      item.positionSize != size.position
+    })
     this.listSize.forEach((item: any,index :number)=> item.position=index+1)
+
   }
 
   addType(){
-    const sizeAdd:typeProduct={
+    const typeAdd:typeProduct={
       typeName: "",
       description: "",
       position: this.listType.length+1
     }
-    this.listType.push(sizeAdd);
+    const indexType=typeAdd.position;
+    this.listType.push(typeAdd);
+    this.listSize.forEach((item:any)=>{
+      const productDetail ={
+        quantity: 0,
+        positionSize: item.position,
+        sizeName: item.sizeName,
+        positionType: this.listType[indexType-1].position,
+        typeName: this.listType[indexType-1].typeName
+      }
+      this.listProductDetail.push(productDetail);
+    })
   }
   removeType(type: any){
     this.listType = this.listType.filter((item:any)=>
       item.position != type.position
     )
+    this.listProductDetail.filter((item:any)=>{
+      item.positionType != type.position
+    })
     this.listType.forEach((item: any,index :number)=> item.position=index+1)
   }
 
@@ -94,8 +127,8 @@ export class CreateUpdateProductComponent implements OnInit{
     }
   }
   changeTab(event:any){
-    if(event.index===3){
-      this.listProductDetail=[]
+    if(event.index===3 && this.data?.isCreate){
+      const listProductDetailChange=[]
       for(let i = 0; i< this.listSize.length;i++){
         for(let j =0; j<this.listType.length;j++){
           const productDetail = {
@@ -105,12 +138,13 @@ export class CreateUpdateProductComponent implements OnInit{
             positionType: this.listType[j].position,
             typeName: this.listType[j].typeName
           }
-          this.listProductDetail.push(productDetail);
+          listProductDetailChange.push(productDetail);
         }
       }
       console.log("Product detail: ", this.listProductDetail)
     }
-    // console.log(event)
+
+    console.log(event)
   }
   submit(){
     if(this.lstFileProduct){
@@ -137,6 +171,31 @@ export class CreateUpdateProductComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if(this.data?.isCreate){
+      const productDetail = {
+        quantity: 0,
+        positionSize: this.listSize[0].position,
+        sizeName: this.listSize[0].sizeName,
+        positionType: this.listType[0].position,
+        typeName: this.listType[0].typeName
+      }
+      this.listProductDetail[0]={
+        quantity: 0,
+        positionSize: this.listSize[0].position,
+        sizeName: this.listSize[0].sizeName,
+        positionType: this.listType[0].position,
+        typeName: this.listType[0].typeName
+      }
+      console.log("crea detail: ", this.listProductDetail)
+    }else{
+      this.productService.getDetailProduct(this.data.itemData.id).subscribe((res:any)=>{
+        console.log(res)
+        this.productInfor = res.data;
+        this.listSize = res.data.sizeDTOS;
+        this.listType = res.data.typeProductDTOS;
+        this.listProductDetail = res.data.typeSizeDTOS
+      })
+    }
     this.brandService.getListBrand().subscribe((data:any)=>{
       this.listBrand=data.map((item:any)=>{
         return {
@@ -145,6 +204,7 @@ export class CreateUpdateProductComponent implements OnInit{
         }
       });
     })
+
   }
 }
 interface sizeProduct{

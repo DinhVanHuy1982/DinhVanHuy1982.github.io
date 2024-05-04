@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
+import {CartService} from "./cart.service";
+import {environment} from "../../../environment/environment";
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +9,12 @@ import {ThemePalette} from '@angular/material/core';
   styleUrls: ['./cart.component.scss']
 })
 
-export class CartComponent {
+export class CartComponent implements OnInit{
   allComplete: boolean = false;
+  domainFile = environment.DOMAIN_FILE_SERVER
 
+  constructor(private cartService:CartService) {
+  }
   task:Task  = {
     name: 'Indeterminate',
     completed: false,
@@ -34,8 +39,19 @@ export class CartComponent {
     this.task.subtasks.forEach((t:any) => (t.completed = completed));
   }
   updateAllComplete() {
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
+    this.allComplete = this.task.subtasks != null && this.task.subtasks.every((t:any) => t.completed);
   }
+
+  ngOnInit(): void {
+    const userStr = localStorage.getItem("user");
+    if(userStr) {
+      const user = JSON.parse(userStr)
+      this.cartService.getAllCart(user?.id).subscribe((data:any)=>{
+        this.rowData=data.data;
+      })
+    }
+  }
+  rowData:any;
 }
 export interface Task {
   name: string;

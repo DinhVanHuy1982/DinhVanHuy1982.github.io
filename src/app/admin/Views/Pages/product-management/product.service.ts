@@ -19,4 +19,8 @@ export class ProductService {
     headers.append('Content-Type', 'multipart/form-data');
     return  this.http.post(this.api+"/createProduct", data, {headers})
   }
+
+  public getDetailProduct(productId:any){
+    return this.http.get(this.api+"/get-detail/"+productId);
+  }
 }

@@ -1,0 +1,80 @@
+<div class="create-update-brand">
+  <div class="header">
+    <div *ngIf="data.isCreate" class="title">Thêm mới</div>
+    <div *ngIf="!data.isCreate" class="title">Cập nhật</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-md-6">
+        <label>Mã nhãn hàng</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.brandCode" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Tên nhãn hàng</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.brandName"  class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Địa chỉ</label>
+        <input type="text"  [(ngModel)]="formCreateUpdate.address" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Số điện thoại</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Email</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.email"  class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Trạng thái</label>
+        <ng-select
+          [items]='itemActive'
+          bindLabel="name"
+          bindValue="code"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.status"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-12">
+        <label>Mô tả</label>
+        <textarea  [(ngModel)]="formCreateUpdate.description"  class="form-control"></textarea>
+      </div>
+      <div class="col-md-12">
+        <label>Ảnh đại diện</label>
+        <label for="avartar">
+          <span class="upload-file">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
+              <path d="M10.206 3.11183C10.1751 2.69169 10.0045 2.29975 9.70413 1.99935C9.24981 1.54503 8.56588 1.40917 7.96511 1.57689C7.38742 0.647962 6.39362 0.078125 5.29689 0.078125C3.64824 0.078125 2.29041 1.34532 2.14861 2.98642C0.918471 3.29713 0 4.41738 0 5.70314C0 7.25393 1.28515 8.51564 2.83594 8.51564H4.2422V7.75245C3.99774 7.66627 3.79004 7.49152 3.66369 7.25496C3.48001 6.91197 3.50026 6.49725 3.71588 6.17315L5.12249 4.06342C5.31439 3.77537 5.64261 3.60372 6.00001 3.60372C6.35741 3.60372 6.68563 3.77537 6.87754 4.06342L8.28379 6.1728C8.49974 6.49725 8.51999 6.91197 8.33631 7.25496C8.20996 7.49152 8.00226 7.66627 7.7578 7.75245V8.51564H9.16406C10.7148 8.51564 12 7.25393 12 5.70314C12 4.54286 11.2722 3.53645 10.206 3.11183Z" fill="white"/>
+            </svg>
+            Upload file
+          </span>
+        </label>
+        <input type="file" id="avartar" style="display: none" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
+        <div class="list-image-selected">
+          <div class="img-item" *ngIf="formCreateUpdate.avatar">
+            <img [src]="formCreateUpdate.avatar" class="img-selected" alt="Selected Image">
+            <div class="icon" (click)="removeImgProduct()">
+              <i class="fa-regular fa-trash-can" style="color: red; width: 10px;left: -1.5px;position: relative;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
+    <button class="submit" *ngIf="data.isCreate" (click)="create()">
+      <span *ngIf="data.isCreate">Thêm mới</span>
+      <span *ngIf="!data.isCreate">Cập nhật</span>
+    </button>
+    <button class="submit" *ngIf="!data.isCreate"  (click)="update()">
+      <span *ngIf="data.isCreate">Thêm mới</span>
+      <span *ngIf="!data.isCreate">Cập nhật</span>
+    </button>
+  </div>
+</div>

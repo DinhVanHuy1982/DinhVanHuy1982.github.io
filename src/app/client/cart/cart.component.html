@@ -18,6 +18,26 @@
       <i class="fa-regular fa-calendar-check" style="font-size: 50px;"></i> Hoàn thành
     </div>
   </div>
+  <table>
+    <tr>
+      <th>Chọn</th>
+      <th>Ảnh</th>
+      <th>Tên sản phẩm</th>
+      <th>Số lượng đặt</th>
+      <th>Size</th>
+      <th>Type</th>
+      <th>Số lượng còn lại</th>
+    </tr>
+    <tr *ngFor="let cart of rowData; let index = index">
+      <th></th>
+      <th><img [src] ="domainFile+cart.fileName"></th>
+      <th>{{cart.productName}}</th>
+      <th>{{cart.quantity}}</th>
+      <th>{{cart.sizeProductName}}</th>
+      <th>{{cart.typeProductName}}</th>
+      <th>{{cart.residualQuantity}}</th>
+    </tr>
+  </table>
 
 </div>
 <section class="example-section">

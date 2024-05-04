@@ -9,12 +9,18 @@ import {ContentShopComponent} from "./viewsShare/Views/content-shop/content-shop
 import {CartComponent} from "./client/cart/cart.component";
 import {UserService} from "./viewsShare/Views/user.service";
 import {ProductManagementComponent} from "./admin/Views/Pages/product-management/product-management.component";
+import {BrandManagementComponent} from "./admin/Views/Pages/brand-management/brand-management.component";
+import {CategoriesManagementComponent} from "./admin/Views/Pages/categories-management/categories-management.component";
+import {OrderManagementComponent} from "./admin/Views/Pages/order-management/order-management.component";
 
 // const userLogin =
 
 const routes: Routes = [
   {path: "dashboard", component: DashboardComponent},
   {path: "product-management", component: ProductManagementComponent},
+  {path: "categories-management", component: CategoriesManagementComponent},
+  {path: "order-management", component: OrderManagementComponent},
+  {path: "brand-management", component: BrandManagementComponent},
   {path:"role-management",component:RoleManagementComponent},
   {path: "home-page",component: HomePageComponent},
   {path: "details", component:DetailProductComponent},

@@ -57,6 +57,16 @@ import { ActionProductComponent } from './admin/Views/Pages/product-management/a
 import { CreateUpdateProductComponent } from './admin/Views/Pages/product-management/create-update-product/create-update-product.component';
 import {MatSelectModule} from "@angular/material/select";
 import { BrandManagementComponent } from './admin/Views/Pages/brand-management/brand-management.component';
+import { ActionBrandManagementComponent } from './admin/Views/Pages/brand-management/action-brand-management/action-brand-management.component';
+import { OrderManagementComponent } from './admin/Views/Pages/order-management/order-management.component';
+import { ActionOrderManagementComponent } from './admin/Views/Pages/order-management/action-order-management/action-order-management.component';
+import { OrderDetailComponent } from './admin/Views/Pages/order-management/order-detail/order-detail.component';
+import { CategoriesManagementComponent } from './admin/Views/Pages/categories-management/categories-management.component';
+import { ActionCategoriesComponent } from './admin/Views/Pages/categories-management/action-categories/action-categories.component';
+import { CreateUpdateCategoriesComponent } from './admin/Views/Pages/categories-management/create-update-categories/create-update-categories.component';
+import { BannerManagementComponent } from './admin/Views/Pages/banner-management/banner-management.component';
+import { CreateUpdateBrandComponent } from './admin/Views/Pages/brand-management/create-update-brand/create-update-brand.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +91,16 @@ import { BrandManagementComponent } from './admin/Views/Pages/brand-management/b
     ProductManagementComponent,
     ActionProductComponent,
     CreateUpdateProductComponent,
-    BrandManagementComponent
+    BrandManagementComponent,
+    ActionBrandManagementComponent,
+    OrderManagementComponent,
+    ActionOrderManagementComponent,
+    OrderDetailComponent,
+    CategoriesManagementComponent,
+    ActionCategoriesComponent,
+    CreateUpdateCategoriesComponent,
+    BannerManagementComponent,
+    CreateUpdateBrandComponent
   ],
   imports: [
     TreeviewModule,

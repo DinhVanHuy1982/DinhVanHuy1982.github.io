@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CAROUSEL_OPTION} from "../../../../helpers/constants";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
+import {ContentHomePageService} from "./content-home-page.service";
 
 @Component({
   selector: 'app-content-shop',
@@ -11,7 +12,9 @@ import {Router} from "@angular/router";
 export class ContentShopComponent implements OnInit{
 
   isLogin = false;
-  constructor(private toastService: ToastrService, private router: Router) {
+  constructor(private toastService: ToastrService,
+              private router: Router,
+              private contentHomePageService: ContentHomePageService) {
   }
 
   myCarouselOptions = {
@@ -47,36 +50,36 @@ export class ContentShopComponent implements OnInit{
     },
   };
 
-  myCarouselOptions1 = {
+  myCarouselOptions1:any = {
     items: 5,
-    dots: false,
+    dots: true,
     nav: true,
-    autoplay: false,
-    responsiveClass: true,
-    loop: true,
-    drag: true,
     navText: [`<svg width="32" height="32" viewBox="-1 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    `,`<svg width="32" height="32" viewBox="-2 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    `, `<svg width="32" height="32" viewBox="-2 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#F26522" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     `],
+    autoplay: false,
+    responsiveClass: true,
+    loop: false,
+    mouseDrag: true,
     responsive: {
-      0: this.getOptionByScreen(5),
-      200: this.getOptionByScreen(5),
-      405: this.getOptionByScreen(5),
-      //   600: this.getOptionByScreen(3),
-      //   795: this.getOptionByScreen(4),
-      //   990: this.getOptionByScreen(4),
-      //   992: this.getOptionByScreen(4),
-      //   1187: this.getOptionByScreen(5),
-      //   1382: this.getOptionByScreen(5),
-      //   1577: this.getOptionByScreen(5),
-      //   1772: this.getOptionByScreen(5),
-      //   1967: this.getOptionByScreen(5),
-      //   1846: this.getOptionByScreen(5),
-      //   2162: this.getOptionByScreen(5),
+      0: this.getOptionByScreen(1),
+      200: this.getOptionByScreen(3),
+      405: this.getOptionByScreen(3),
+      600: this.getOptionByScreen(5),
+      795: this.getOptionByScreen(5),
+      990: this.getOptionByScreen(5),
+      992: this.getOptionByScreen(5),
+      1187: this.getOptionByScreen(5),
+      1382: this.getOptionByScreen(5),
+      1577: this.getOptionByScreen(5),
+      1772: this.getOptionByScreen(5),
+      1967: this.getOptionByScreen(5),
+      1846: this.getOptionByScreen(5),
+      2162: this.getOptionByScreen(5),
     },
   };
 
@@ -130,7 +133,11 @@ export class ContentShopComponent implements OnInit{
     return this.remainingTime % 60;
   }
 
+  dataBestSeller:any;
   ngOnInit(): void {
+    this.contentHomePageService.getProductBestSeller().subscribe((data:any)=>{
+      this.dataBestSeller = data.data;
+    })
     this.startCountdown();
   }
 

@@ -18,6 +18,11 @@
   height: 100%;
   overflow-x: hidden;
 }
+::ng-deep{
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 10px !important;
+  }
+}
 //.menu-base-left{
 //  flex: 0 0 auto;
 //  overflow-y: hidden;

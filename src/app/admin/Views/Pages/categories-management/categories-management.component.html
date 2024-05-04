@@ -1,0 +1,86 @@
+<!-- app.component.html -->
+<!--<ag-grid-angular-->
+<!--  #agGrid-->
+<!--  style="width: 100%; height:570px;"-->
+<!--  [suppressScrollOnNewData]="true"-->
+<!--  class="ag-theme-balham"-->
+<!--  [columnDefs]="columnDefs"-->
+<!--  [defaultColDef]="defaultColDef"-->
+<!--  [autoGroupColumnDef]="autoGroupColumnDef"-->
+<!--  [rowModelType]="rowModelType"-->
+<!--  [treeData]="true"-->
+<!--  [headerHeight]="headerHeight"-->
+<!--  [rowHeight]="rowHeight"-->
+<!--  [debounceVerticalScrollbar]="true"-->
+<!--  [suppressRowTransform]="true" [suppressRowClickSelection]="true"-->
+<!--  [isServerSideGroupOpenByDefault]="isServerSideGroupOpenByDefault"-->
+<!--  [isServerSideGroup]="isServerSideGroup"-->
+<!--  [suppressContextMenu]="true"-->
+<!--  [overlayNoRowsTemplate]="noRowsTemplate"-->
+<!--  [getServerSideGroupKey]="getServerSideGroupKey"-->
+<!--  [rowData]="rowData"-->
+<!--  [tooltipShowDelay]="tooltipShowDelay"-->
+<!--  (gridReady)="onGridReady($event)"-->
+<!--  (gridSizeChanged)="gridSizeChanged($event)"-->
+<!--&gt;</ag-grid-angular>-->
+<!--<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">-->
+<!--  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>-->
+<!--    <li class="mat-tree-node">-->
+<!--      <button mat-icon-button disabled></button>-->
+<!--      {{node.name}}-->
+<!--    </li>-->
+<!--  </mat-tree-node>-->
+
+<!--  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">-->
+<!--    <li>-->
+<!--      <div class="mat-tree-node">-->
+<!--        <button mat-icon-button matTreeNodeToggle-->
+<!--                [attr.aria-label]="'Toggle ' + node.name">-->
+<!--          <mat-icon class="mat-icon-rtl-mirror">-->
+<!--            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}-->
+<!--          </mat-icon>-->
+<!--        </button>-->
+<!--        {{node.name}}-->
+<!--      </div>-->
+<!--      <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">-->
+<!--        <ng-container matTreeNodeOutlet></ng-container>-->
+<!--      </ul>-->
+<!--    </li>-->
+<!--  </mat-nested-tree-node>-->
+<!--</mat-tree>-->
+<!--<table>-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th>ID</th>-->
+<!--    <th>Category Name</th>-->
+<!--    <th>Category Code</th>-->
+<!--    <th>Parent ID</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  <ng-container *ngFor="let node of data">-->
+<!--    <tr>-->
+<!--      <td>{{node.id}}</td>-->
+<!--      <td>{{node.categoriName}}</td>-->
+<!--      <td>{{node.categoriCode}}</td>-->
+<!--      <td>{{node.parentId}}</td>-->
+<!--    </tr>-->
+<!--    <ng-container *ngIf="node.children && node.children.length > 0">-->
+<!--      <tr *ngFor="let childNode of node.children">-->
+<!--        <td>{{childNode.id}}</td>-->
+<!--        <td>{{childNode.categoriName}}</td>-->
+<!--        <td>{{childNode.categoriCode}}</td>-->
+<!--        <td>{{childNode.parentId}}</td>-->
+<!--      </tr>-->
+<!--    </ng-container>-->
+<!--  </ng-container>-->
+<!--  </tbody>-->
+<!--</table>-->
+<ag-grid-angular
+  style="width: 100%; height: 550px"
+  class="ag-theme-balham"
+  #grid
+  [gridOptions]="gridOptions"
+  [columnDefs]="columnDefs"
+  [rowData]="rowData"
+></ag-grid-angular>
