@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {FlatTreeControl} from "@angular/cdk/tree";
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {CategoriesService} from "./categories.service";
-import {TranslateService} from "@ngx-translate/core";
-import {ColDef, GridOptions} from "ag-grid-community";
+import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {CreateUpdateRoleComponent} from "../role-management/create-update-role/create-update-role.component";
+import {CreateUpdateCategoriesComponent} from "./create-update-categories/create-update-categories.component";
 
 @Component({
   selector: 'app-categories-management',
@@ -9,261 +13,125 @@ import {ColDef, GridOptions} from "ag-grid-community";
   styleUrls: ['./categories-management.component.scss']
 })
 export class CategoriesManagementComponent implements OnInit{
+  displayedColumns: string[] = ['categoriCode','categoriName', 'createTime','status','description','action'];
 
-  constructor() {}
-  rowData = [
+  private transformer = (node: any, level: number) => {
+    return {
+      id:node.id,
+      categoriName:node.categoriName,
+      categoriCode:node.categoriCode,
+      parentId:node.parentId,
+      createTime:node.createTime,
+      description:node.description,
+      status:node.status,
+      expandable: !!node.children && node.children.length > 0,
+      level: level,
+    };
+  }
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    (node: ExampleFlatNode) => node.level,
+    (node: ExampleFlatNode) => node.expandable
+  );
+
+  treeFlattener = new MatTreeFlattener<any, any>(
+    this.transformer,
+    (node: any) => node.level,
+    (node: any) => node.expandable,
+    (node: any) => node.children
+  );
+
+  dataSource = new MatTreeFlatDataSource<any, any>(
+    this.treeControl,
+    this.treeFlattener
+  );
+
+
+  constructor(private categoriService:CategoriesService,
+              public matdialog:MatDialog) {
+  }
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  itemStatus=[
     {
-      "id": 1,
-      "categoriName": "Bóng đá",
-      "categoriCode": "FBSport",
-      "parentId": null,
-      "createTime": null,
-      "description": null,
-      "status": null,
-      "children": []
+      name: "Hoạt động",
+      code: "1",
+      color: "green"
     },
     {
-      "id": 2,
-      "categoriName": "Bóng đá trong nhà",
-      "categoriCode": "FBSportInHouse",
-      "parentId": null,
-      "createTime": null,
-      "description": null,
-      "status": null,
-      "children": [
-        {
-          "id": 3,
-          "categoriName": "Cầu lông",
-          "categoriCode": "BADMINTON",
-          "parentId": 2,
-          "createTime": null,
-          "description": null,
-          "status": null,
-          "children": [
-            {
-              "id": 4,
-              "categoriName": "Vợt cầu lông",
-              "categoriCode": "BADMINTONPLAY",
-              "parentId": 3,
-              "createTime": null,
-              "description": null,
-              "status": null,
-              "children": []
-            }
-          ]
-        }
-      ]
+      name: "Không hoạt động",
+      code:"0",
+      color: "red",
     }
   ];
-
+  formSearch={
+    status : null,
+    keySearch:""
+  }
+  rowData:any;
   ngOnInit(): void {
+    this.search()
   }
-  public columnDefs:any = [
-    { headerName: "Mã danh mục",
-      field: 'categoriCode',
-      cellRenderer: 'agGroupCellRenderer', },
-    { headerName: "Tên danh mục", field: "categoriName" },
-    { headerName: "Mô tả", field: "description" },
-  ];
-  public gridOptions:any = {
-    rowSelection: 'multiple',
-    groupSelectsChildren: true,
-    groupSelectsFiltered: true,
-    suppressAggFuncInHeader: true,
-    suppressRowClickSelection: true,
-    autoGroupColumnDef: {headerName: "Chủ đề cha", field: "parentId", width: 200,
-      cellRenderer:'agGroupCellRenderer',
-      cellRendererParams: {
-        checkbox: true
-      }
-    },
-    getNodeChildDetails: function getNodeChildDetails(rowItem:any) {
-      console.log(rowItem)
-      if (rowItem.children) {
-        console.log(rowItem.children)
-        return {
-          group: true,
-          // open C be default
-          expanded: true,
-          // provide ag-Grid with the children of this group
-          children: rowItem.children,
-          // the key is used by the default group cellRenderer
-          key: rowItem.categoriCode
-        };
-      } else {
-        return null;
-      }
-    },
 
-  };
-  onGridReady(params:any) {
+  protected readonly NO_ROW_GRID_TEMPLATE = NO_ROW_GRID_TEMPLATE;
+
+  search() {
+    this.categoriService.apiGetDataTree(this.formSearch).subscribe((data:any)=>{
+      this.dataSource.data=data.data;
+    })
+  }
+
+  openCreate() {
+    const dialogConfig: MatDialogConfig<{ isCreate: boolean}> = {
+      height: '60vh',
+      maxHeight: '90vh',
+      minWidth:'30vw',
+      maxWidth: '90vw',
+      data: {
+        isCreate: true
+      }
+    };
+    this.matdialog.open(CreateUpdateCategoriesComponent, dialogConfig).afterClosed().subscribe((data:any)=>
+      {this.search()}
+    )
+  }
+
+  updateCategories(data:any) {
+    const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
+      height: '60vh',
+      maxHeight: '90vh',
+      minWidth:'30vw',
+      maxWidth: '90vw',
+      data: {
+        isCreate: false,
+        itemData: data
+      }
+    };
+    this.matdialog.open(CreateUpdateCategoriesComponent, dialogConfig).afterClosed().subscribe((data:any)=>
+      {this.search()}
+    )
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.matdialog.open(template)
+  }
+
+  deleteCategories() {
 
   }
-  // rowData:any;
-  // constructor(private translateService: TranslateService, private categoriesService: CategoriesService) {}
-  // ngOnInit(): void {
-  //   this.rowData = [];
-  //   this.categoriesService.apiGetDataTree().subscribe((res:any) => {
-  //     this.rowData = res.data;
-  //     console.log(this.rowData)
-  //   });
-  // }
-  // public columnDefs = [
-  //   { headerName: "Mã danh mục", field: 'categoriCode',cellRenderer: 'agGroupCellRenderer', },
-  //   { headerName: "Tên danh mục", field: "categoriName" },
-  //   { headerName: "Mô tả", field: "description" },
-  // ];
-  // public gridOptions:any = {
-  //   rowSelection: 'multiple',
-  //   groupSelectsChildren: true,
-  //   groupSelectsFiltered: true,
-  //   suppressAggFuncInHeader: true,
-  //   suppressRowClickSelection: true,
-  //   autoGroupColumnDef: {headerName: "Chủ đề cha", field: "parentId", width: 200,
-  //     cellRenderer:'agGroupCellRenderer',
-  //     cellRendererParams: {
-  //       checkbox: true
-  //     }
-  //   },
-  //   getNodeChildDetails: function getNodeChildDetails(rowItem:any) {
-  //     console.log(rowItem)
-  //     if (rowItem.children) {
-  //       console.log(rowItem.children)
-  //       return {
-  //         group: true,
-  //         // open C be default
-  //         expanded: true,
-  //         // provide ag-Grid with the children of this group
-  //         children: rowItem.children,
-  //         // the key is used by the default group cellRenderer
-  //         key: rowItem.categoriCode
-  //       };
-  //     } else {
-  //       return null;
-  //     }
-  //   },
-  //
-  // };
-  // onGridReady(params:any) {
-  //
-  // }
-  // getNodeChildDetails(rowItem: any) {
-  //   if (rowItem.children) {
-  //     return {
-  //       group: true,
-  //       expanded: true,
-  //       children: rowItem.children,
-  //       key: rowItem.categoriCode
-  //     };
-  //   } else {
-  //     return null;
-  //   }
-  // }
 }
-interface CategoryNode {
-  id: number;
-  categoriName: string;
-  categoriCode: string;
-  parentId: number | null;
-  children?: CategoryNode[];
-}
-interface CategoryFlatNode {
-  id: number;
-  name: string;
-  code: string;
-  parentId: number | null;
-  level: number;
+
+interface ExampleFlatNode {
+  id:number;
+  categoriName:string;
+  categoriCode:string;
+  parentId?:number;
+  createTime?:any;
+  description?:string;
+  status?:number;
   expandable: boolean;
+  name: string;
+  count?: number;
+  level: number;
 }
-
-
-// rowData:any;
-// ngOnInit(): void {
-//   this.rowData = [
-//     {
-//       "id": 1,
-//       "categoriName": "Bóng đá",
-//       "categoriCode": "FBSport",
-//       "parentId": null,
-//       "createTime": null,
-//       "description": null,
-//       "status": null,
-//       "children": []
-//     },
-//     {
-//       "id": 2,
-//       "categoriName": "Bóng đá trong nhà",
-//       "categoriCode": "FBSportInHouse",
-//       "parentId": null,
-//       "createTime": null,
-//       "description": null,
-//       "status": null,
-//       "children": [
-//         {
-//           "id": 3,
-//           "categoriName": "Cầu lông",
-//           "categoriCode": "BADMINTON",
-//           "parentId": 2,
-//           "createTime": null,
-//           "description": null,
-//           "status": null,
-//           "children": [
-//             {
-//               "id": 4,
-//               "categoriName": "Vợt cầu lông",
-//               "categoriCode": "BADMINTONPLAY",
-//               "parentId": 3,
-//               "createTime": null,
-//               "description": null,
-//               "status": null,
-//               "children": []
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//   ]
-//   // this.categoriesService.apiGetDataTree().subscribe((res:any) => {
-//   //   this.rowData = res.data;
-//   //   console.log(this.rowData)
-//   // });
-// }
-// public columnDefs = [
-//   { headerName: "Mã danh mục", field: 'categoriCode' },
-//   { headerName: "Tên danh mục", field: "categoriName" },
-//   { headerName: "Mô tả", field: "description" },
-// ];
-// public gridOptions:any = {
-//   rowSelection: 'multiple',
-//   groupSelectsChildren: true,
-//   groupSelectsFiltered: true,
-//   suppressAggFuncInHeader: true,
-//   suppressRowClickSelection: true,
-//   autoGroupColumnDef: {headerName: "Chủ đề cha", field: "parentId", width: 200,
-//     cellRenderer:'agGroupCellRenderer',
-//     cellRendererParams: {
-//       checkbox: true
-//     }
-//   },
-//   getNodeChildDetails: function getNodeChildDetails(rowItem:any) {
-//     console.log(rowItem)
-//     if (rowItem.children) {
-//       console.log(rowItem.children)
-//       return {
-//         group: true,
-//         // open C be default
-//         expanded: false,
-//         // provide ag-Grid with the children of this group
-//         children: rowItem.children,
-//         // the key is used by the default group cellRenderer
-//         key: rowItem.categoriCode
-//       };
-//     } else {
-//       return null;
-//     }
-//   },
-//
-// };
-// onGridReady(params:any) {
-//
-// }

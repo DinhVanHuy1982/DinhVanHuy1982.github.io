@@ -1,1 +1,59 @@
-<p>create-update-categories works!</p>
+<div class="create-update-brand">
+  <div class="header">
+    <div *ngIf="data.isCreate">Thêm mới</div>
+    <div *ngIf="!data.isCreate">Cập nhật</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-md-6">
+        <label>Mã danh mục</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.categoriCode" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Tên danh mục</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.categoriName" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Danh mục cha</label>
+        <ng-select
+          [items]="lstParent"
+          bindValue="id"
+          bindLabel="tranform"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.parentId"
+        >
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Trạng thái</label>
+        <ng-select
+          [items]='itemStatus'
+          bindLabel="name"
+          bindValue="code"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.status"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+
+    </div>
+    <div class="col-md-12">
+      <label>Mô tả</label>
+      <textarea  class="form-control" [(ngModel)]="formCreateUpdate.description"></textarea>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
+    <button class="submit" *ngIf="data.isCreate" (click)="create()">
+      <span >Thêm mới</span>
+    </button>
+    <button class="submit" *ngIf="!data.isCreate" (click)="update()">
+      <span >Cập nhật</span>
+    </button>
+  </div>
+</div>

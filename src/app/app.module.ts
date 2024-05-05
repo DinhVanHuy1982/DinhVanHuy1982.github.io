@@ -66,7 +66,11 @@ import { ActionCategoriesComponent } from './admin/Views/Pages/categories-manage
 import { CreateUpdateCategoriesComponent } from './admin/Views/Pages/categories-management/create-update-categories/create-update-categories.component';
 import { BannerManagementComponent } from './admin/Views/Pages/banner-management/banner-management.component';
 import { CreateUpdateBrandComponent } from './admin/Views/Pages/brand-management/create-update-brand/create-update-brand.component';
-
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatTableModule} from "@angular/material/table";
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,6 +107,10 @@ import { CreateUpdateBrandComponent } from './admin/Views/Pages/brand-management
     CreateUpdateBrandComponent
   ],
   imports: [
+    ScrollingModule,
+    DragDropModule,
+    CdkTreeModule,
+    CdkTableModule,
     TreeviewModule,
     BrowserModule,
     AppRoutingModule,
@@ -130,7 +138,8 @@ import { CreateUpdateBrandComponent } from './admin/Views/Pages/brand-management
     MatIconModule,
     MatGridListModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [DatePipe,TreeviewConfig,
     { provide: TreeviewI18n, useClass: DefaultTreeviewI18n },
