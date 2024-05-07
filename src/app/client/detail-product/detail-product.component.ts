@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatDialog} from "@angular/material/dialog";
 import {FileDetailComponent} from "../../core/compontnts/file-detail/file-detail.component";
@@ -6,6 +6,9 @@ import {environment} from "../../../environment/environment";
 import {DetailProductService} from "./detail-product.service";
 import {ToastrService} from "ngx-toastr";
 import {HttpHeaders} from "@angular/common/http";
+import {ProductService} from "../../admin/Views/Pages/product-management/product.service";
+import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../cart/cart.service";
 // import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -13,20 +16,20 @@ import {HttpHeaders} from "@angular/common/http";
   templateUrl: './detail-product.component.html',
   styleUrls: ['./detail-product.component.scss']
 })
-export class DetailProductComponent implements AfterViewInit{
+export class DetailProductComponent implements OnInit, AfterViewInit{
 
   lstReviewsView: any[] = [];
 
   isSafari = false;
-  domainFile = environment.DOMAIN_FILE_LOCAL;
+  domainFile = environment.DOMAIN_FILE_SERVER;
 
   isViewMoreInfoBook=true;
   num=1;
-  toTalRate1 = 1;
-  toTalRate2 = 2;
-  toTalRate3 = 3;
-  toTalRate4 = 3;
-  toTalRate5 = 2;
+  toTalRate1 :any;
+  toTalRate2 :any;
+  toTalRate3 :any;
+  toTalRate4 :any;
+  toTalRate5 :any;
   totalReviewsBook :any;
   avatarBook = 'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/72ce1bb0d1cb8b3c32dc254d35dbca3ca335aa25a39a1060e7dd5ed340d96b83/ming6.jpg';
   listAvatarBook = [
@@ -44,7 +47,7 @@ export class DetailProductComponent implements AfterViewInit{
     "name": "Không Phải Sói Nhưng Cũng Đừng Là Cừu UPDATE",
     "topicBookId": 318,
     "avatar": "/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/2b092b5ea1a2b8521cb146ced15102d06ed51fe6593292d394f2b77540c588ad/_khong-phai-soi-nhung-cung-dung-la-cuu.jpg,/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/de366a9b4644c6c2d968a5ae664e1ad7fae2085f34941811767736c14ed0c479/img3.jpg,/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/72ce1bb0d1cb8b3c32dc254d35dbca3ca335aa25a39a1060e7dd5ed340d96b83/ming6.jpg,/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/725b26fdfc02b1c7174da5d940e2c46d4232e159fbec43a9ff1ee42653cbfde0/img4.jpg,/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/0cb922589e4f88eeb43339c5a18193658c961545fcf813e0924e49b821a22d44/img5.jpg",
-    "avgRate": 3.0,
+    "avgRate": 3.5,
     "totalSold": 2,
     "totalReview": 5,
     "author": "Lê Bảo Ngọc",
@@ -101,6 +104,7 @@ export class DetailProductComponent implements AfterViewInit{
   };
   typeBookChoose = this.bookInfo.hardBook;
   priceOfTypeBook: number | 0 | undefined;
+  commentInfor:any;
   rate1: any;
   rate2: any;
   rate3: any;
@@ -112,7 +116,10 @@ export class DetailProductComponent implements AfterViewInit{
      private elementRef: ElementRef,
      private changeDetectorRef: ChangeDetectorRef,
      private detailProduct: DetailProductService,
-     private toast: ToastrService
+     private toast: ToastrService,
+     private productService:ProductService,
+     private activatedRoute: ActivatedRoute,
+     private cartService: CartService
    ) {
 
      this.lstReviewsView=[{
@@ -156,6 +163,76 @@ export class DetailProductComponent implements AfterViewInit{
      this.rate4 = (this.toTalRate4 * 100 / this.totalReviewsBook).toFixed(5);
      this.rate5 = (this.toTalRate5 * 100 / this.totalReviewsBook).toFixed(5);
    }
+
+  dataProduct:any;
+  queryParam:any;
+  lstType:any;
+  lstSize:any;
+  totalHave:any; //số lượng ứng cới từng loại và size
+  descriptionProduct:any;// mô tả tương ứng với loại và size
+  typeProduct:any;
+  sizeProduct:any;
+  currentUser:any;
+  ngOnInit(): void {
+
+    const user = localStorage.getItem("user")
+    if(user){
+        this.currentUser = JSON.parse(user);
+    }
+
+     this.activatedRoute.queryParams.subscribe((data:any)=>{
+       if(this.queryParam===data){
+         return;
+       }
+       this.queryParam = data;
+       // console.log(this.queryParam)
+       this.productService.getDetailProductForClient(this.queryParam.id).subscribe((res:any)=>{
+         if(res.status=="OK"){
+           this.dataProduct= res.data;
+           this.lstType=res.data.typeProductDTOS
+           this.lstSize=res.data.sizeDTOS
+           this.commentInfor=res.data.commentResponseDTO;
+           this.typeProduct=this.lstType[0].id
+           this.sizeProduct=this.lstSize[0].id
+
+           // nối mô tả nhanh giữa loại và size
+           const descript = [];
+           if(this.lstType[0].description){
+             descript.push(this.lstType[0].description)
+           }
+           if(this.lstSize[0].description){
+             descript.push(this.lstSize[0].description)
+           }
+           this.descriptionProduct = descript.join(", ")
+
+           // lấy ảnh đại diện
+           this.avatarBook = res.data.pathImg.map((item:any) =>{
+             if(item?.avatar){
+               return item?.fileName ;
+             }
+           })
+
+           // lấy thông tin sao đánh giá
+           this.rate1 = (this.commentInfor.rate1 / this.commentInfor.totalRate)*100;
+           this.rate2 = (this.commentInfor.rate2 / this.commentInfor.totalRate) *100;
+           this.rate3 = (this.commentInfor.rate3 / this.commentInfor.totalRate) *100;
+           this.rate4 = (this.commentInfor.rate4 / this.commentInfor.totalRate) *100;
+           this.rate5 = (this.commentInfor.rate5 / this.commentInfor.totalRate) *100;
+           this.setPercentRate()
+           setTimeout((data:any)=>{
+
+           },500)
+         }else{
+           this.toast.error(res.message)
+         }
+         this.changeChooseProduct()
+         console.log(res)
+       }, (error:any) => {
+         this.toast.error("Có lỗi trong quá trính xử lý: ", error.message)
+       })
+     })
+
+  }
   changeShowAvatar(item :any){
     this.avatarBook = item;
   }
@@ -197,7 +274,27 @@ export class DetailProductComponent implements AfterViewInit{
   toggleWishList(){
 
   }
-  addToCart(type: any, num: number){}
+  // addToCart(type: any, num: number){}
+  addToCart(){
+    if(this.currentUser){
+      const productAddCart={
+        userId:this.currentUser?.id,
+        productId:this.queryParam.id,
+        typeProductId:this.typeProduct,
+        sizeProductId:this.sizeProduct,
+        quantity:this.num
+      }
+      this.cartService.createCart(productAddCart).subscribe((res:any)=>{
+        if(res.status==='OK'){
+          this.toast.success("Thêm vào giỏ hàng thành công")
+        }else{
+          this.toast.error(res.messages);
+        }
+      })
+    }else{
+      this.toast.warning("Bạn cần đăng nhập để thực hiện chức năng này");
+    }
+  }
   goToLibrary(){}
   goToCart(){}
   addBuyNow(){}
@@ -265,8 +362,6 @@ export class DetailProductComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.setPercentRate();
-
     // nhận dạng sự kiện thay đổi
     this.changeDetectorRef.detectChanges();
   }
@@ -333,5 +428,37 @@ export class DetailProductComponent implements AfterViewInit{
     // }else{
     //   return ;
     // }
+  }
+
+  changeChooseProduct() {
+    for ( let i =0;i<this.lstSize.length;i++){
+      for(let j=0;j<this.lstType.length;j++){
+        if(this.lstSize[i].id===this.sizeProduct && this.lstType[j].id===this.typeProduct){
+          const descript = [];
+          if(this.lstType[j].description){
+            descript.push(this.lstType[j].description)
+          }
+          if(this.lstSize[i].description){
+            descript.push(this.lstSize[i].description)
+          }
+          this.descriptionProduct = descript.join(", ")
+        }
+      }
+    }
+    this.dataProduct.typeSizeDTOS.forEach((item:any)=>{
+      if(item.typeId=== this.typeProduct && item.sizeId === this.sizeProduct){
+        this.totalHave=item.quantity;
+      }
+    })
+  }
+
+  changeTypeProduct(event:any , itemType: any) {
+    this.typeProduct=itemType.id
+    this.changeChooseProduct()
+  }
+
+  changeSizeProduct(event:any, itemSize: any) {
+    this.sizeProduct=itemSize.id
+    this.changeChooseProduct();
   }
 }

@@ -10,7 +10,7 @@ import {Optional} from "ag-grid-community";
 })
 export class FileDetailComponent {
   itemFile:any;
-  linkFile = environment.DOMAIN_FILE_LOCAL;
+  linkFile = environment.DOMAIN_FILE_SERVER;
   popup = (document.querySelector('.file-position') as HTMLElement)
   checkHeight = false;
   checkWidth = false;

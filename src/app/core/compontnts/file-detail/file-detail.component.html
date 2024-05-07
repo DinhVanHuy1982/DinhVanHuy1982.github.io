@@ -1,15 +1,17 @@
 
 <div class="file-position file-detail-course w-100 h-100">
-  <img [src]="itemFile.path" *ngIf="itemFile.type == 0 && itemFile.fileId === undefined" class="checkImg checkImg2"
+<!--  <img [src]="itemFile.path" *ngIf="itemFile.type == 0 && itemFile.fileId === undefined" class="checkImg checkImg2"-->
+<!--       [ngStyle]="{height: checkHeight ? 'inherit' : 'auto'}" style="width: inherit;">-->
+  <img [src]="linkFile+itemFile" class="checkImg checkImg2"
        [ngStyle]="{height: checkHeight ? 'inherit' : 'auto'}" style="width: inherit;">
-  <img [src]="linkFile + itemFile.path" *ngIf="itemFile.type == 0 && itemFile.fileId !== undefined" class="checkImg2 checkImg"
-       [ngStyle]="{height: checkHeight ? 'inherit' : 'auto'}" style="width: inherit;">
-  <video controls="control" width="140" height="140" style="border-radius: 4px;" *ngIf="itemFile.type == 1 && itemFile.fileId === undefined">
-    <source [src]="itemFile.path" type="video/mp4"/>
-  </video>
-  <video controls="control" width="140" height="140" style="border-radius: 4px;" *ngIf="itemFile.type == 1 && itemFile.fileId !== undefined">
-    <source [src]="linkFile + itemFile.path" type="video/mp4"/>
-  </video>
+<!--  <img [src]="linkFile + itemFile.path" *ngIf="itemFile.type == 0 && itemFile.fileId !== undefined" class="checkImg2 checkImg"-->
+<!--       [ngStyle]="{height: checkHeight ? 'inherit' : 'auto'}" style="width: inherit;">-->
+<!--  <video controls="control" width="140" height="140" style="border-radius: 4px;" *ngIf="itemFile.type == 1 && itemFile.fileId === undefined">-->
+<!--    <source [src]="itemFile.path" type="video/mp4"/>-->
+<!--  </video>-->
+<!--  <video controls="control" width="140" height="140" style="border-radius: 4px;" *ngIf="itemFile.type == 1 && itemFile.fileId !== undefined">-->
+<!--    <source [src]="linkFile + itemFile.path" type="video/mp4"/>-->
+<!--  </video>-->
   <div class="iconDelete" (click)="closePopUp()">
     <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_d_36095_52257)">

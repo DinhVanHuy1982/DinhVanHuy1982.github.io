@@ -29,11 +29,12 @@
   .icon-switch{
     position: absolute;
     top: calc(50% - 52px/2 + 0.5px);
-    left: -100px;
+    //left: -100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: calc(100% + 200px);
+    width: 100%;
+    //width: calc(100% + 200px);
 
     span{
       width: 52px;

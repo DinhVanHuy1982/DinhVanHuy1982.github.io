@@ -25,6 +25,7 @@ const routes: Routes = [
   {path: "home-page",component: HomePageComponent},
   {path: "details", component:DetailProductComponent},
   {path:"h2shop/cart",component:CartComponent},
+  {path: "home-page-content", component: ContentShopComponent},
   {path: "**", component: ContentShopComponent}
 ];
 

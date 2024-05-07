@@ -11,8 +11,9 @@ export class CartService {
   constructor(private http:HttpClient) { }
 
   getAllCart(id:any){
-
       return this.http.get(this.api+"get-cart-by-user/"+id)
   }
-
+  createCart(data: any){
+    return this.http.post(this.api+"create/cart", data)
+  }
 }

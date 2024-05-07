@@ -63,7 +63,7 @@ export class ContentShopComponent implements OnInit{
     `],
     autoplay: false,
     responsiveClass: true,
-    loop: false,
+    loop: true,
     mouseDrag: true,
     responsive: {
       0: this.getOptionByScreen(1),
@@ -141,7 +141,9 @@ export class ContentShopComponent implements OnInit{
     this.startCountdown();
   }
 
-  goToDetailsProduct(){
-    this.router.navigate(["/details"],{})
+  goToDetailsProduct(id:any){
+    this.router.navigate(["/details"],{queryParams: {
+        id: parseInt(id,10),
+      }})
   }
 }

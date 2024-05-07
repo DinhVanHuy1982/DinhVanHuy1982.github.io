@@ -23,4 +23,7 @@ export class ProductService {
   public getDetailProduct(productId:any){
     return this.http.get(this.api+"/get-detail/"+productId);
   }
+  public getDetailProductForClient(productId:any){
+    return this.http.get(this.api+"/get-detail-for-client/"+productId);
+  }
 }
