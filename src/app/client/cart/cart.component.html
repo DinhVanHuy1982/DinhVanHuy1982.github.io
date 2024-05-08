@@ -1,71 +1,67 @@
 <div class="myCart">
   <div class="headerCart">
-    <div class="all-item">
-      <span class="example-list-section">
-        <mat-checkbox class="example-margin"
-                      [checked]="allComplete"
-                      [color]="task.color"
-                      [indeterminate]="someComplete()"
-                      (change)="setAll($event.checked)">
-          Tất cả
-        </mat-checkbox>
-      </span>
+<!--    <div class="all-item">-->
+<!--      <span class="example-list-section">-->
+<!--        -->
+<!--      </span>-->
+<!--    </div>-->
+    <div class="pay-item"  (click)="changeTab(0)" [ngStyle]="{'color':tabSlected===0?'blue':'unset'}">
+      <i class="fa-solid fa-cart-shopping"  style="font-size: 50px;"></i>Trong giỏ
     </div>
-    <div class="pay-item">
-      <i class="fa-brands fa-amazon-pay" style="font-size: 50px;"></i> Thanh toán
+    <div class="pay-item" (click)="changeTab(1)" [ngStyle]="{'color':tabSlected===1?'blue':'unset'}">
+      <i class="fa-brands fa-amazon-pay" style="font-size: 50px;"></i> Đang giao
     </div>
-    <div class="buy-complete">
+    <div class="buy-complete"  (click)="changeTab(2)" [ngStyle]="{'color':tabSlected===2?'blue':'unset'}">
       <i class="fa-regular fa-calendar-check" style="font-size: 50px;"></i> Hoàn thành
     </div>
   </div>
-  <table>
-    <tr>
-      <th>Chọn</th>
-      <th>Ảnh</th>
-      <th>Tên sản phẩm</th>
-      <th>Số lượng đặt</th>
-      <th>Size</th>
-      <th>Type</th>
-      <th>Số lượng còn lại</th>
-    </tr>
-    <tr *ngFor="let cart of rowData; let index = index">
-      <th></th>
-      <th><img [src] ="domainFile+cart.fileName"></th>
-      <th>{{cart.productName}}</th>
-      <th>{{cart.quantity}}</th>
-      <th>{{cart.sizeProductName}}</th>
-      <th>{{cart.typeProductName}}</th>
-      <th>{{cart.residualQuantity}}</th>
-    </tr>
-  </table>
+  <div *ngIf="tabSlected===0">
+    <table class="table-order" >
+      <tr>
+        <th>
+          <mat-checkbox class="example-margin"
+                        [checked]="allComplete"
+                        [color]="task.color"
+                        [indeterminate]="someComplete()"
+                        (change)="setAll($event.checked)">
+            <span class="header"></span>
+          </mat-checkbox>
+        </th>
+        <th>Ảnh</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng đặt</th>
+        <th>Đơn giá</th>
+        <th>Size</th>
+        <th>Type</th>
+        <th>Số lượng còn lại</th>
+      </tr>
+      <tr *ngFor="let cart of rowData; let index = index">
+        <th>
+          <mat-checkbox [(ngModel)]="cart.slected"
+                        (ngModelChange)="updateAllComplete()">
+          </mat-checkbox>
+        </th>
+        <th><img class="productAvatar" [src] ="domainFile+cart.fileName"></th>
+        <th>{{cart.productName}}</th>
+        <th>
+          <div class="numP1"><a (click)="decrease(cart)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 12.75H6C5.59 12.75 5.25 12.41 5.25 12C5.25 11.59 5.59 11.25 6 11.25H18C18.41 11.25 18.75 11.59 18.75 12C18.75 12.41 18.41 12.75 18 12.75Z" fill="#292D32"/>
+          </svg></a> {{cart.quantity}}
+            <a (click)="increase(cart)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 12.75H6C5.59 12.75 5.25 12.41 5.25 12C5.25 11.59 5.59 11.25 6 11.25H18C18.41 11.25 18.75 11.59 18.75 12C18.75 12.41 18.41 12.75 18 12.75Z" fill="#292D32"/>
+              <path d="M12 18.75C11.59 18.75 11.25 18.41 11.25 18V6C11.25 5.59 11.59 5.25 12 5.25C12.41 5.25 12.75 5.59 12.75 6V18C12.75 18.41 12.41 18.75 12 18.75Z" fill="#292D32"/>
+            </svg></a>
+          </div>
+        </th>
+        <th>{{cart.price}}</th>
+        <th>{{cart.sizeProductName}}</th>
+        <th>{{cart.typeProductName}}</th>
+        <th>{{cart.residualQuantity}}</th>
+      </tr>
+    </table>
+    <div class="footer-in-cart">
+
+    </div>
+  </div>
 
 </div>
-<section class="example-section">
-  <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-  <mat-checkbox class="example-margin" [disabled]="true">Disabled</mat-checkbox>
-</section>
-
-<section class="example-section">
-  <span class="example-list-section">
-    <mat-checkbox class="example-margin"
-                  [checked]="allComplete"
-                  [color]="task.color"
-                  [indeterminate]="someComplete()"
-                  (change)="setAll($event.checked)">
-      {{task.name}}
-    </mat-checkbox>
-  </span>
-  <span class="example-list-section">
-    <ul>
-<!--      @for (subtask of task.subtasks; track subtask) {-->
-      <li *ngFor="let subtask of task.subtasks;">
-        <mat-checkbox [(ngModel)]="subtask.completed"
-                      [color]="subtask.color"
-                      (ngModelChange)="updateAllComplete()">
-            {{subtask.name}}
-          </mat-checkbox>
-        </li>
-<!--      }-->
-    </ul>
-  </span>
-</section>

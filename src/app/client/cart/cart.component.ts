@@ -12,6 +12,7 @@ import {environment} from "../../../environment/environment";
 export class CartComponent implements OnInit{
   allComplete: boolean = false;
   domainFile = environment.DOMAIN_FILE_SERVER
+  tabSlected=0;// tab chọn hiển thị 0 trong giỏ, 1 đang giao hàng, 2 đã hoàn thành
 
   constructor(private cartService:CartService) {
   }
@@ -26,20 +27,20 @@ export class CartComponent implements OnInit{
     ],
   };
   someComplete(): boolean {
-    if (this.task.subtasks == null) {
+    if (this.rowData == null) {
       return false;
     }
-    return this.task.subtasks.filter((t:any) => t.completed).length > 0 && !this.allComplete;
+    return this.rowData.filter((t:any) => t.slected).length > 0 && !this.allComplete;
   }
   setAll(completed: boolean) {
     this.allComplete = completed;
-    if (this.task.subtasks == null) {
+    if (this.rowData == null) {
       return;
     }
-    this.task.subtasks.forEach((t:any) => (t.completed = completed));
+    this.rowData.forEach((t:any) => (t.slected = completed));
   }
   updateAllComplete() {
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every((t:any) => t.completed);
+    this.allComplete = this.rowData.every((t:any) => t.slected);
   }
 
   ngOnInit(): void {
@@ -52,6 +53,18 @@ export class CartComponent implements OnInit{
     }
   }
   rowData:any;
+  decrease(item:any) {
+    if (item.quantity > 0) {
+      item.quantity--
+    }
+  }
+  increase(item:any) {
+    item.quantity++
+  }
+
+  changeTab(number: number) {
+    this.tabSlected=number;
+  }
 }
 export interface Task {
   name: string;

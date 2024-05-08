@@ -1,0 +1,152 @@
+<div class="modal-content modal-dialog-custom">
+  <div class="modal-header">
+    <h4 >Tạo mới mã giảm giá</h4>
+    <!--        <h4 *ngIf="isUpdate">{{'ROLES_MANAGER.ADD.TITLE_UPDATE' | translate}}</h4>-->
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label  class="input-label" >Mã giảm giá <span>*</span></label>
+        <input type="text" class="input-typing overflow-dot form-control" [(ngModel)]="body.code"
+               placeholder="{{'ROLES_MANAGER.ADD.CODE_PLACHOLDER' | translate}}"
+               [matTooltip]="body.code" matTooltipClass="material-tooltip"
+        >
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errCode">
+          {{errCode}}
+        </small>
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Tiêu đề<span>*</span></label>
+        <input type="text" class="input-typing overflow-dot form-control" [(ngModel)]="body.name"
+               placeholder="Tiêu đề giảm giá"
+               [matTooltip]="body.name" matTooltipClass="material-tooltip"
+        >
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errName">
+          {{errName}}
+        </small>
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Giảm giá cho<span>*</span></label>
+        <ng-select
+          [items]="saleFor"
+          style="height: 40px"
+          placeholder="{{'REPORT_TEMPLATE.STATUS_PLACHOLDER' | translate}}"
+          class="report-template-body-search-item-select"
+          bindLabel="name"
+          bindValue="id"
+          [(ngModel)]="body.type"
+          [clearable]="false"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            <div [matTooltip]="item.name" >{{item.name}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Khuyến mãi (%)<span>*</span></label>
+        <input type="text" class="input-typing overflow-dot form-control" (blur)="changePriceDiscount()" [(ngModel)]="body.maxPurchase"
+               placeholder="Phần trăm khuyến mãi"
+               matTooltipClass="material-tooltip"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        >
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errMaxPurchase">
+          {{errMaxPurchase}}
+        </small>
+      </div>
+<!--      <div class="col-md-6" style="padding-right: 6px;">-->
+<!--        <label class="input-label">Khuyến mãi không quá</label>-->
+<!--        <input type="text" class="input-typing overflow-dot form-control" [(ngModel)]="body.maxDiscount"-->
+<!--               placeholder="Khuyến mãi không quá"-->
+<!--               matTooltipClass="material-tooltip"-->
+<!--        >-->
+<!--        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errCode">-->
+<!--          {{errCode}}-->
+<!--        </small>-->
+<!--      </div>-->
+<!--      <div class="col-md-6" style="padding-right: 6px;">-->
+<!--        <label class="input-label">Áp dụng cho giá thấp nhất</label>-->
+<!--        <input type="text" class="input-typing overflow-dot form-control" [(ngModel)]="body.minPrice"-->
+<!--               placeholder="Áp dụng cho giá thấp nhất"-->
+<!--               matTooltipClass="material-tooltip"-->
+<!--        >-->
+<!--      </div>-->
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Số lượng phát hành</label>
+        <input type="text" [disabled]="body.type==0" class="input-typing overflow-dot form-control" [(ngModel)]="body.quantity"
+               placeholder="Số lượng"
+               matTooltipClass="material-tooltip"
+        >
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Mô tả</label>
+        <input type="text" class="input-typing overflow-dot form-control" [(ngModel)]="body.description"
+               placeholder="Mô tả"
+               matTooltipClass="material-tooltip"
+        >
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Ngày bắt đầu<span>*</span></label>
+        <input [(ngModel)]="startDateStr" (change)="changeStartTime($event)" type="date" class="form-control datepicker" placeholder="Chọn ngày bắt đầu">
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errStartTime">
+          {{errStartTime}}
+        </small>
+      </div>
+      <div class="col-md-6" style="padding-right: 6px;">
+        <label class="input-label">Ngày kết thúc<span>*</span></label>
+        <input  [(ngModel)]="endDateStr"  (change)="changeEndTime($event)"  type="date" class="form-control datepicker" placeholder="Chọn ngày kết thúc">
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errEndTime">
+          {{errEndTime}}
+        </small>
+      </div>
+    </div>
+    <div *ngIf="body.type===0">
+      <table style="width: 100%">
+        <tr>
+          <th><mat-checkbox class="example-margin"
+                            [checked]="allComplete"
+                            [indeterminate]="someComplete()"
+                            (change)="setAll($event.checked)">
+            <span class="header"></span>
+          </mat-checkbox></th>
+          <th>Mã sản phẩm</th>
+          <th>Tên sản phẩm</th>
+          <th>Số lượng hiện có</th>
+          <th>Giá hiện tại</th>
+          <th>Giá sau khi giảm</th>
+        </tr>
+        <tr *ngFor="let item of rowDataDisPlay">
+          <td>
+            <mat-checkbox [(ngModel)]="item.selected"
+                          (ngModelChange)="updateAllComplete()">
+            </mat-checkbox>
+          </td>
+          <td>{{item.productCode}}</td>
+          <td>{{item.productName}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.priceSale}}</td>
+          <td></td>
+        </tr>
+      </table>
+      <app-panigation [total]="totalElement" [totalPage]="this.totalPage" [dataLength]="rowDataDisPlay?.length"
+                      [currentPage]="1" [collapse]="false" [pageSize]="10"
+                      (paginate)="callInforReview(null, $event)">
+      </app-panigation>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="btn-action">
+      <div class="btn-action-dv gray" style="margin-right: 12px;" (click)="closeModal()">
+        {{'COMMON.CANCEL' | translate}}
+      </div>
+      <div class="btn-action-dv gray" style="margin-right: 12px;" *ngIf="data.isCreate" (click)="createSale()">
+        Tạo mới
+      </div>
+      <div class="btn-action-dv gray" style="margin-right: 12px;" (click)="updateSale()" *ngIf="!data.isCreate">
+        Cập nhật
+      </div>
+    </div>
+  </div>
+</div>

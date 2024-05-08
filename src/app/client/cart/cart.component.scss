@@ -1,5 +1,11 @@
 ::ng-deep{
-
+  .mdc-checkbox__background{
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    top: 5px;
+    left: 4px;
+  }
 }
 .headerCart{
   display: flex;
@@ -20,10 +26,35 @@
 }
 
 .example-margin {
-  margin: 0 12px;
+  //margin: 0 12px;
 }
 
 ul {
   list-style-type: none;
   margin-top: 4px;
+}
+.table-order{
+  width: 100%;
+}
+.numP1{
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--neutral-border-muted-separators-n-300, #E6E8F0);
+  height: 40px;
+  color: var(--neutral-headlines-n-900, #101840);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  width: max-content;
+  svg{
+    cursor: pointer;
+  }
+}
+.productAvatar{
+  width: 100px;
 }

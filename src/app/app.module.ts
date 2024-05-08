@@ -71,6 +71,12 @@ import {CdkTreeModule} from '@angular/cdk/tree';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTableModule} from "@angular/material/table";
+import { SaleManagementComponent } from './admin/Views/Pages/sale-management/sale-management.component';
+import { ActionSaleComponent } from './admin/Views/Pages/sale-management/action-sale/action-sale.component';
+import { CreateUpdateSaleComponent } from './admin/Views/Pages/sale-management/create-update-sale/create-update-sale.component';
+import { DateComponent } from './viewsShare/Views/date/date.component';
+import {NgbDatepicker, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,9 +110,14 @@ import {MatTableModule} from "@angular/material/table";
     ActionCategoriesComponent,
     CreateUpdateCategoriesComponent,
     BannerManagementComponent,
-    CreateUpdateBrandComponent
+    CreateUpdateBrandComponent,
+    SaleManagementComponent,
+    ActionSaleComponent,
+    CreateUpdateSaleComponent,
+    DateComponent
   ],
   imports: [
+    MatDatepickerModule,
     ScrollingModule,
     DragDropModule,
     CdkTreeModule,
@@ -139,7 +150,9 @@ import {MatTableModule} from "@angular/material/table";
     MatGridListModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    NgbDatepicker,
+    NgbInputDatepicker
   ],
   providers: [DatePipe,TreeviewConfig,
     { provide: TreeviewI18n, useClass: DefaultTreeviewI18n },

@@ -85,6 +85,10 @@ export const menuleft : MenuNode[]=[
         name: "Quản lý đặt hàng",
         hasChild: false,
         router: "/order-management"
+      },{
+        name: "Quản lý giảm giá",
+        hasChild: false,
+        router: "/sale-management"
       }
     ]
   },
@@ -127,3 +131,19 @@ export const menuleft : MenuNode[]=[
 
 
 export const PAGE_SIZE = 20;
+
+export const COMPARE = {
+  LESS_THAN: '<',
+  LESS_EQUAL: '<=',
+  GREATER_THAN: '>',
+  GREATER_EQUAL: '>=',
+  EQUAL: '=',
+};
+export const INVALID = [null, undefined, '', 'null'];
+export const KEYCODE_0 = 48;
+export const KEYCODE_9 = 57;
+export const KEYCODE_RIGHT_0 = 96;
+export const KEYCODE_RIGHT_9 = 105;
+export const KEYCODE_BACKSPACE = 8;
+export const KEYCODE_UP = 38;
+export const KEYCODE_DOWN = 40;

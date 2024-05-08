@@ -26,4 +26,7 @@ export class ProductService {
   public getDetailProductForClient(productId:any){
     return this.http.get(this.api+"/get-detail-for-client/"+productId);
   }
+  public getAllProductForCreateSale(){
+    return this.http.get(this.api+'/getAll');
+  }
 }

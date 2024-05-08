@@ -288,7 +288,7 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
         if(res.status==='OK'){
           this.toast.success("Thêm vào giỏ hàng thành công")
         }else{
-          this.toast.error(res.messages);
+          this.toast.error(res.message);
         }
       })
     }else{

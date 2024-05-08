@@ -1,0 +1,9 @@
+::ng-deep{
+  .cell-action{
+    z-index: 99999;
+    position: relative !important;
+  }
+  .ag-row-hover:hover{
+    z-index: 5 !important;
+  }
+}
