@@ -1,1 +1,126 @@
-<p>create-order works!</p>
+<div class="create-update-brand">
+  <div class="header">
+    <div *ngIf="data.isCreate">Thêm mới</div>
+    <div *ngIf="!data.isCreate">Cập nhật</div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-md-6">
+        <label>Họ tên người nhận <span>*</span></label>
+        <input type="text" [(ngModel)]="formCreateUpdate.fullName" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Số điện thoại người nhận <span>*</span></label>
+        <input type="text" [(ngModel)]="formCreateUpdate.fullName" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Phương thức thanh toán <span>*</span></label>
+        <input type="text" [(ngModel)]="formCreateUpdate.paymentMethod" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Tỉnh <span>*</span></label>
+        <ng-select
+          [items]='lstProvince'
+          bindLabel="ProvinceName"
+          bindValue="ProvinceID"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.province_id"
+          (ngModelChange)="changeProvince()"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.ProvinceName" >{{item.ProvinceName}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Quận huyện <span>*</span></label>
+        <ng-select
+          [items]='lstDistict'
+          bindLabel="DistrictName"
+          bindValue="DistrictID"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.district_id"
+          (ngModelChange)="changeDistict()"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.DistrictName" >{{item.DistrictName}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Xã, phường <span>*</span></label>
+        <ng-select
+          [items]='lstWard'
+          bindLabel="WardName"
+          bindValue="WardCode"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.ward"
+          (ngModelChange)="changeWard()"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.WardName" >{{item.WardName}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Đơn vị vận chuyển <span>*</span></label>
+        <ng-select
+          [items]='lstShip'
+          bindLabel="short_name"
+          bindValue="service_id"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.shippingUnit"
+          (ngModelChange)="changeWard()"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.short_name" >{{item.short_name}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Phương thức thanh toán</label>
+        <ng-select
+          [items]='lstPayMent'
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Lựa chọn..."
+          [clearable]="true"
+          [(ngModel)]="formCreateUpdate.paymentMethod"
+          (ngModelChange)="changeWard()"
+        >
+          <ng-template let-item="item" ng-option-tmp>
+            <div [matTooltip]="item.name" >{{item.name}}</div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="col-md-6">
+        <label>Ghi chú (VND)</label>
+        <input type="text" [(ngModel)]="formCreateUpdate.note" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Phí vận chuyển (VND)</label>
+        <input type="text" [(ngModel)]="this.fee" readonly class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Giá trị đơn hàng (VND)</label>
+        <input type="text" [(ngModel)]="this.priceOfOrder" readonly class="form-control">
+      </div>
+      <div class="col-md-12">
+        <label>Tổng giá trị đơn hàng (VND)</label>
+        <input type="text" [(ngModel)]="this.totalPay" readonly class="form-control">
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
+    <button class="submit" (click)="create()">
+      <span *ngIf="data.isCreate">Thêm mới</span>
+      <span *ngIf="!data.isCreate">Cập nhật</span>
+    </button>
+  </div>
+</div>

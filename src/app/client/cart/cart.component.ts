@@ -2,6 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 import {CartService} from "./cart.service";
 import {environment} from "../../../environment/environment";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {
+  CreateUpdateBrandComponent
+} from "../../admin/Views/Pages/brand-management/create-update-brand/create-update-brand.component";
+import {CreateOrderComponent} from "./create-order/create-order.component";
+import {Toast, ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +20,9 @@ export class CartComponent implements OnInit{
   domainFile = environment.DOMAIN_FILE_SERVER
   tabSlected=0;// tab chọn hiển thị 0 trong giỏ, 1 đang giao hàng, 2 đã hoàn thành
 
-  constructor(private cartService:CartService) {
+  constructor(private cartService:CartService,
+              private dialog: MatDialog,
+              private toast:ToastrService) {
   }
   task:Task  = {
     name: 'Indeterminate',
@@ -90,6 +98,28 @@ export class CartComponent implements OnInit{
 
   changeTab(number: number) {
     this.tabSlected=number;
+  }
+
+  createOrder() {
+    let productOrder=this.rowData.filter((item:any)=>item.slected)
+    if(productOrder.length==0){
+      this.toast.warning("Bạn cần chọn sản phẩm trước khi thực hiện đặt hàng")
+    }else{
+      const dialogConfig={
+        height: '80vh',
+        width:'700px',
+        maxHeight: '90vh',
+        maxWidth: '90vw',
+        disableClose: false,
+        hasBackdrop: true,
+        data: productOrder
+      };
+      this.dialog.open(CreateOrderComponent, dialogConfig).afterClosed().subscribe((data:any)=>
+        {
+          // this.search()
+        }
+      )
+    }
   }
 }
 export interface Task {
