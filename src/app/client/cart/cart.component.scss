@@ -58,3 +58,22 @@ ul {
 .productAvatar{
   width: 100px;
 }
+.footer-in-cart{
+  bottom: 0px;
+  position: sticky;
+  height: 40px;
+}
+.line-through{
+  text-decoration-line:line-through ;
+}
+.col-price{
+  justify-content: center;
+  display: flex;
+  align-content: space-around;
+  flex-wrap: wrap;
+}
+.center-align{
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}

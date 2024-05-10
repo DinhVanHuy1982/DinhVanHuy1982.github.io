@@ -29,4 +29,7 @@ export class ProductService {
   public getAllProductForCreateSale(){
     return this.http.get(this.api+'/getAll');
   }
+  public searchProduct(dataSearch:any){// api phục vụ lấy dữ liệu hiển thị cho việc tìm kiếm sản phẩm cho người dùng
+    return this.http.post(this.api+'/search-by-client', dataSearch)
+  }
 }

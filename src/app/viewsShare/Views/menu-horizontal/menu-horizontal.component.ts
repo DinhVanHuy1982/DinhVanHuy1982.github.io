@@ -6,6 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {HomePageComponent} from "../home-page/home-page.component";
 import {RegisterAccountComponent} from "../register-account/register-account.component";
 import {LoginComponent} from "../login/login.component";
+import {Router} from "@angular/router";
+import {SearchPageComponent} from "../search-page/search-page.component";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -29,7 +31,9 @@ export class MenuHorizontalComponent {
 
   constructor(private cdr : ChangeDetectorRef,
               private translationService: TranslationService,
-              private matdialog: MatDialog
+              private matdialog: MatDialog,
+              private router: Router,
+              private sagePage:SearchPageComponent,
               ) {
     this.listHistory=[];
     this.listHistoryFilter = [];
@@ -80,10 +84,11 @@ export class MenuHorizontalComponent {
         if(this.keyword.trim().length > 0){
             this.setHistory();
             this.getHistory();
-            // let keyword = this.keyword.trim();
-            // this.router.navigateByUrl(`/system/home/search?keyword=${encodeURIComponent(keyword)}`)
+            let keyword = this.keyword.trim();
+            this.sagePage.searchProduct.nameSearch=keyword;
+            this.router.navigateByUrl(`/search-page-product?keyword=${encodeURIComponent(keyword)}`)
         }else{
-            // this.router.navigateByUrl(`/system/home/search`);
+            this.router.navigateByUrl(`/search-page-product`);
         }
         this.showHistory = false;
         this.inputSearch.nativeElement.blur();

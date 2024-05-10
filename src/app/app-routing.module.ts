@@ -13,6 +13,7 @@ import {BrandManagementComponent} from "./admin/Views/Pages/brand-management/bra
 import {CategoriesManagementComponent} from "./admin/Views/Pages/categories-management/categories-management.component";
 import {OrderManagementComponent} from "./admin/Views/Pages/order-management/order-management.component";
 import {SaleManagementComponent} from "./admin/Views/Pages/sale-management/sale-management.component";
+import {SearchPageComponent} from "./viewsShare/Views/search-page/search-page.component";
 
 // const userLogin =
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:"h2shop/cart",component:CartComponent},
   {path:"sale-management",component:SaleManagementComponent},
   {path: "home-page-content", component: ContentShopComponent},
+  {path: "search-page-product", component: SearchPageComponent},
   {path: "**", component: ContentShopComponent}
 ];
 

@@ -127,6 +127,7 @@
   }
 }
 .infor-user{
+  z-index: 10;
   display: flex;
   align-items: center;
   .cart, .notifi{
@@ -327,6 +328,7 @@
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+  z-index: 10;
 }
 .language:hover .language-selector{
   display: block !important;
@@ -337,6 +339,7 @@
 
 
 .categories{
+  z-index: 1;
   .categories-parent > .categories-child{
     //display: none;
     opacity: 0;

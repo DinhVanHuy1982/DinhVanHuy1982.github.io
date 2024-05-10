@@ -77,6 +77,8 @@ import { CreateUpdateSaleComponent } from './admin/Views/Pages/sale-management/c
 import { DateComponent } from './viewsShare/Views/date/date.component';
 import {NgbDatepicker, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SearchPageComponent } from './viewsShare/Views/search-page/search-page.component';
+import { CreateOrderComponent } from './client/cart/create-order/create-order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,7 +116,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     SaleManagementComponent,
     ActionSaleComponent,
     CreateUpdateSaleComponent,
-    DateComponent
+    DateComponent,
+    SearchPageComponent,
+    CreateOrderComponent
   ],
   imports: [
     MatDatepickerModule,
@@ -156,7 +160,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   ],
   providers: [DatePipe,TreeviewConfig,
     { provide: TreeviewI18n, useClass: DefaultTreeviewI18n },
-    { provide: TreeviewEventParser, useClass: DefaultTreeviewEventParser }],
+    { provide: TreeviewEventParser, useClass: DefaultTreeviewEventParser },SearchPageComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

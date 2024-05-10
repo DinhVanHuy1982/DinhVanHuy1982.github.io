@@ -23,4 +23,8 @@ export class CommonFunction {
     static deleteCookie(cname:any){
         document.cookie = `${cname}=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
     }
+
+  static replaceAll(str:string, find:string, replace:string) {
+    return str?.replace(new RegExp(find, 'g'), replace) ?? str;
+  }
 }

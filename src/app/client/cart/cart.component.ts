@@ -61,6 +61,32 @@ export class CartComponent implements OnInit{
   increase(item:any) {
     item.quantity++
   }
+  sumProduct(type:number){
+    if(type===1){
+      let sumProduct=0;
+      this.rowData.forEach((item:any)=>{
+        if(item.slected){
+          sumProduct+=item.quantity;
+        }
+      })
+      return sumProduct;
+    }else if(type===2){
+      let sumPriceProduct=0;
+      this.rowData.forEach((item:any)=>{
+        if(item.slected){
+          if(item.maxPurchase){
+            sumPriceProduct+=(item.quantity*(item.price*((100-item.maxPurchase)/100)));
+          }else{
+            sumPriceProduct+=(item.quantity*item.price);
+          }
+        }
+      })
+      return sumPriceProduct;
+    }else{
+      return 0
+    }
+
+  }
 
   changeTab(number: number) {
     this.tabSlected=number;
