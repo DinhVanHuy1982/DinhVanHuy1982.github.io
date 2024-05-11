@@ -1,1 +1,119 @@
-<p>order-detail works!</p>
+<div class="create-update-brand">
+  <div class="header">
+    <div *ngIf="!data?.isCreate">Cập nhật đơn hàng</div>
+  </div>
+  <div class="body">
+    <mat-tab-group class="tab-group" (selectedTabChange)="changeTab($event)" >
+      <mat-tab label="Thông tin đơn hàng">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="input-label">Mã đơn hàng <span>*</span></label>
+            <input type="text" [(ngModel)]="inforOrder.code" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Trạng thái</label>
+            <ng-select
+              [items]='itemStatus'
+              bindLabel="name"
+              bindValue="code"
+              placeholder="Lựa chọn..."
+              [clearable]="true"
+              [(ngModel)]="inforOrder.status"
+              (ngModelChange)="changeStatus()"
+            >
+              <ng-template ng-option-tmp let-item="item">
+                <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                <b [style.color] = "item.color" >{{item.name}}</b>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Họ tên người nhận <span>*</span></label>
+            <input type="text" [(ngModel)]="inforOrder.fullName" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Số điện thoại người nhận <span>*</span></label>
+            <input type="text" [(ngModel)]="inforOrder.phoneNumber" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Tỉnh <span>*</span></label>
+            <input type="text" [(ngModel)]="nameProvince" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Quận huyện <span>*</span></label>
+            <input type="text" [(ngModel)]="nameDistict"  disabled readonly class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Xã, phường <span>*</span></label>
+            <input type="text" [(ngModel)]="nameWard"  disabled readonly class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Đơn vị vận chuyển <span>*</span></label>
+            <input type="text" [(ngModel)]="nameShippingUnit"  disabled readonly class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Phương thức thanh toán</label>
+            <input type="text" [(ngModel)]="namePayMent" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Trạng thái thanh toán</label>
+            <input type="text" [(ngModel)]="payStatus" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Giảm giá</label>
+            <input type="text" [ngModel]="inforOrder.saleName" disabled readonly  class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Ghi chú</label>
+            <input type="text" [(ngModel)]="inforOrder.note"  disabled readonly class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Phí vận chuyển (VND)</label>
+            <input type="text" [ngModel]="inforOrder.shipPrice" disabled readonly class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="input-label">Tổng giá trị đơn hàng (VND)</label>
+            <input type="text" [ngModel]="inforOrder.price" disabled readonly class="form-control">
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab  label="Danh sách sản phẩm">
+        <table class="table-order" >
+          <tr class="row">
+            <th  class="col-md-3 center-align">Tên sản phẩm</th>
+            <th class="col-md-2 col-price">Số lượng</th>
+            <th class="col-md-1 col-price">Đơn giá</th>
+            <th class="col-md-3 center-align">Size</th>
+            <th class="col-md-3 center-align">Type</th>
+          </tr>
+          <tr  class="row" *ngFor="let product of orderDetail; let index = index">
+            <td class="col-md-3 center-align">{{product.productName}}</td>
+            <td class="col-md-2 col-price">
+              {{product.quantity}}
+            </td>
+            <td class="col-md-1 col-price">
+              <div class="price" [ngClass]="product.priceSale?'line-through':''">
+                {{product.price}}
+              </div>
+              <div class="price-discount" *ngIf="product.priceSale">
+                {{product.priceSale}}
+              </div>
+            </td>
+            <td class="col-md-3 center-align">{{product.sizeName}}</td>
+            <td class="col-md-3 center-align">{{product.typeName}}</td>
+          </tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+
+
+  </div>
+  <div class="footer">
+    <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
+    <button class="submit" (click)="update()">
+      <span>Cập nhật</span>
+    </button>
+  </div>
+</div>

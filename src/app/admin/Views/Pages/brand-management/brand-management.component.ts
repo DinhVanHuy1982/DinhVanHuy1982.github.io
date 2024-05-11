@@ -127,7 +127,7 @@ export class BrandManagementComponent implements OnInit{
      )
    }
   callInforReview(empty:any,event:any){
-
+    // this.dataSearch.
   }
   openCreate(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {

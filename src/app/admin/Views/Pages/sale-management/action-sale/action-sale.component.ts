@@ -8,6 +8,7 @@ import {
 import {ITooltipParams} from "ag-grid-community";
 import {ITooltipAngularComp} from "ag-grid-angular";
 import {CreateUpdateSaleComponent} from "../create-update-sale/create-update-sale.component";
+import {SaleManagementComponent} from "../sale-management.component";
 
 @Component({
   selector: 'app-action-sale',
@@ -19,7 +20,8 @@ export class ActionSaleComponent implements ITooltipAngularComp{
   constructor(
     private toast:ToastrService,
     public matdialog: MatDialog,
-    private productService: ProductService
+    private productService: ProductService,
+    private saleComponent:SaleManagementComponent
   ) {
   }
   data: any;
@@ -38,7 +40,7 @@ export class ActionSaleComponent implements ITooltipAngularComp{
       }
     };
     this.matdialog.open(CreateUpdateSaleComponent, dialogConfig).afterClosed().subscribe((data:any)=>
-      {}
+      {this.saleComponent.search()}
     )
   }
   deleteProduct(){

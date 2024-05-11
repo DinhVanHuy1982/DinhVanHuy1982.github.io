@@ -169,14 +169,19 @@ export class CreateUpdateRoleComponent implements OnInit{
     //     listRolesDetailsDTO.push(functionCreate)
     //   }
     // }
-
+    const roleFilter: any[] = [];
+    listRolesDetailsDTO.forEach((item:any)=>{
+      if(item.action !==""){
+        roleFilter.push(item)
+      }
+    })
     this.formCreateUpdate ={
       id: this.roleUpdate.id,
       roleName: this.roleUpdate.roleName,
       roleCode : this.roleCode,
       status: this.roleStatus,
       description: this.roleDescription,
-      listRolesDetailsDTO: listRolesDetailsDTO
+      listRolesDetailsDTO: roleFilter
     }
     this.roleService.updateRole(this.formCreateUpdate).subscribe((data:any)=>{
       if(data.status="OK"){

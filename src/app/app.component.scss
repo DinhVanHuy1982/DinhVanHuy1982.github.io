@@ -19,7 +19,7 @@
       transform: translateX(-50%);
       border-radius: 16px;
       z-index: 999999;
-      background-image: url(src/assets/media/img/loadingg.gif);
+      //background-image: url(src/assets/media/img/loadingg.gif);
       background-repeat: no-repeat;
       background-size: 100%;
     }
@@ -131,5 +131,33 @@
         border: 2px solid gray !important;
       }
     }
+  }
+}
+::ng-deep{
+  .active-status {
+    color: green !important;
+    font-weight: 600;
+  }
+
+  .inactive-status {
+    color: red !important;
+    font-weight: 600;
+  }
+
+  .warning-status{
+    color:yellow !important;
+    font-weight: 600;
+  }
+
+  .waiting-status{
+    color:blue !important;
+    font-weight: 600;
+  }
+  .orangre-status{
+    color: orange !important;
+    font-weight: 600;
+  }
+  .ng-select-container.ng-has-value .ng-value-container .ng-value b{
+    font-weight: unset !important;
   }
 }

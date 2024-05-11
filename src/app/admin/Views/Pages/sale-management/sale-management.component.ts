@@ -31,6 +31,7 @@ export class SaleManagementComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.search()
   }
   openCreate(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
@@ -50,7 +51,13 @@ export class SaleManagementComponent implements OnInit{
   }
   search(){
     this.saleService.searchSale(this.formSearch).subscribe((res:any)=>{
-      this.rowData=res.data.content
+      this.rowData=res.data.content.map((item:any)=>{
+        item.startTime= new Date(item.startTime*1000)
+        item.endTime= new Date(item.endTime*1000)
+        return item
+      })
+      this.totalElement = res.data.totalElements
+      this.totalPage=res.data.totalPages
     })
   }
   columdef:any = [

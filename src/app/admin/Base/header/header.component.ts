@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../viewsShare/Views/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,12 @@ export class HeaderComponent implements OnInit{
 
 
 
-  constructor(private userService:UserService) {
+  constructor(private userService:UserService,private router:Router) {
   }
   logout() {
     this.userService.setUserCurrent(null);
+    localStorage.removeItem('sessionExpiration');
+    this.router.navigateByUrl('home-page-content')
   }
   shouldShowGoToAccount: any;
   goToAccount() {
@@ -37,6 +40,8 @@ export class HeaderComponent implements OnInit{
     const expiration = localStorage.getItem('sessionExpiration');
     if (expiration && Date.now() > parseInt(expiration, 10)) {
       this.userService.setUserCurrent(null)
+      localStorage.removeItem('sessionExpiration');
+      this.router.navigateByUrl('home-page-content')
     }
   }
 

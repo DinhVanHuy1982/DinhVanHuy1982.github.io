@@ -129,6 +129,7 @@ export class AppComponent implements OnInit{
           console.log("userLogin",userLogin)
           if(userLogin?.roles){
             this.roleManager=true;
+            this.router.navigateByUrl('/dashboard')
             // this.router.resetConfig(this.routesManager);
           }else{
             this.roleManager=false;
@@ -142,6 +143,7 @@ export class AppComponent implements OnInit{
           localStorage.setItem('user',JSON.stringify(user))
           if(user?.roles){
             this.roleManager=true;
+            this.router.navigateByUrl('/dashboard')
             // this.router.resetConfig(this.routesManager);
           }else{
             this.roleManager=false;
