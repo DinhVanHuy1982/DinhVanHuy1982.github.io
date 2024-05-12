@@ -15,7 +15,7 @@
 }
 .router-outlet{
   overflow: auto;
-  height: 100%;
+  height: calc(100% - 100px);
   overflow-x: hidden;
 }
 :host::ng-deep{
@@ -24,6 +24,42 @@
   }
   body{
     overflow: hidden !important;
+  }
+}
+
+::ng-deep{
+
+  .modal-content {
+    border-radius: 16px;
+    .modal-header {
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-title {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 30px;
+      color: #242f57;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .des {
+      font-size: 14px;
+      line-height: 20px;
+      color: #8f95b2;
+      margin: 0;
+    }
+    .modal-footer {
+      padding: 24px 0;
+      justify-content: center;
+      .modal-actions {
+        display: flex;
+        .sy-btn-action {
+          min-width: 106px;
+          margin: 0 6px;
+        }
+      }
+    }
   }
 }
 //.menu-base-left{

@@ -1,0 +1,162 @@
+<div class="create-update-brand">
+    <div class="header">
+        <div *ngIf="data.isCreate">Thêm mới</div>
+        <div *ngIf="!data.isCreate">Cập nhật</div>
+    </div>
+    <div class="body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-avatar">
+                    <div class="title-avatar">Ảnh đại diện</div>
+                    <div class="img" (click)="fileInput.click()">
+                        <img src="./assets/media/img/image_photo.png" class="img-avatar" *ngIf="!avatar">
+                        <img  src="{{avatar}}" *ngIf="avatar" class="img-avatar">
+                    </div>
+                    <div class="avatar-choice">
+                        <input type="file" #fileInput id="upload-img-product" style="display: none" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 col-right">
+                        <label>Tên đăng nhập <span>*</span></label>
+                        <input type="text" [(ngModel)]="formCreateUpdate.username" class="form-control">
+                        <small class="error-validate" *ngIf="errUserName">
+                            {{errUserName}}
+                        </small>
+                    </div>
+                    <div class="col-md-12 col-right" *ngIf="data.isCreate">
+                        <label>Mật khẩu <span>*</span></label>
+                        <input type="text" [(ngModel)]="formCreateUpdate.password" class="form-control">
+                        <small class="error-validate" *ngIf="errPassword">
+                            {{errPassword}}
+                        </small>
+                    </div>
+                    <div class="col-md-12  col-right">
+                        <label>Họ và tên <span>*</span></label>
+                        <input type="text"  [(ngModel)]="formCreateUpdate.fullName"  class="form-control">
+                        <small class="error-validate" *ngIf="errFullName">
+                            {{errFullName}}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Số điện thoại <span>*</span></label>
+                <input type="text"  [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+                <small class="error-validate" *ngIf="errSDT">
+                    {{errSDT}}
+                </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Trạng thái tài khoản</label>
+                <ng-select
+                        [items]='itemStatus'
+                        bindLabel="name"
+                        bindValue="code"
+                        placeholder="Lựa chọn..."
+                        [clearable]="true"
+                        [(ngModel)]="formCreateUpdate.status"
+                >
+                    <ng-template let-item="item" ng-option-tmp>
+                        <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+                    </ng-template>
+                </ng-select>
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Role</label>
+                <ng-select
+                        [items]='lstRoles'
+                        bindLabel="roleName"
+                        bindValue="id"
+                        placeholder="Lựa chọn..."
+                        [clearable]="true"
+                        [(ngModel)]="formCreateUpdate.roleId"
+                >
+                    <ng-template let-item="item" ng-option-tmp>
+                        <div [matTooltip]="item.roleName" >{{item.roleName}}</div>
+                    </ng-template>
+                </ng-select>
+                <small class="error-validate" *ngIf="errRole">
+                    {{errRole}}
+                </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label class="input-label">Tỉnh <span>*</span></label>
+                <ng-select
+                        [items]='lstProvince'
+                        bindLabel="ProvinceName"
+                        bindValue="ProvinceID"
+                        placeholder="Lựa chọn..."
+                        [clearable]="true"
+                        [(ngModel)]="formCreateUpdate.provinceId"
+                        (ngModelChange)="changeProvince()"
+                >
+                    <ng-template let-item="item" ng-option-tmp>
+                        <div [matTooltip]="item.ProvinceName" >{{item.ProvinceName}}</div>
+                    </ng-template>
+                </ng-select>
+                <small class="error-validate" *ngIf="errProvince">
+                    {{errProvince}}
+                </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label class="input-label">Quận huyện <span>*</span></label>
+                <ng-select
+                        [items]='lstDistict'
+                        bindLabel="DistrictName"
+                        bindValue="DistrictID"
+                        placeholder="Lựa chọn..."
+                        [clearable]="true"
+                        [(ngModel)]="formCreateUpdate.districtId"
+                        (ngModelChange)="changeDistict()"
+                >
+                    <ng-template let-item="item" ng-option-tmp>
+                        <div [matTooltip]="item.DistrictName" >{{item.DistrictName}}</div>
+                    </ng-template>
+                </ng-select>
+                <small class="error-validate" *ngIf="errDistict">
+                    {{errDistict}}
+                </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label class="input-label">Xã, phường <span>*</span></label>
+                <ng-select
+                        [items]='lstWard'
+                        bindLabel="WardName"
+                        bindValue="WardCode"
+                        placeholder="Lựa chọn..."
+                        [clearable]="true"
+                        [(ngModel)]="formCreateUpdate.ward"
+                >
+                    <ng-template let-item="item" ng-option-tmp>
+                        <div [matTooltip]="item.WardName" >{{item.WardName}}</div>
+                    </ng-template>
+                </ng-select>
+                <small class="error-validate" *ngIf="errWard">
+                    {{errWard}}
+                </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Email</label>
+                <input type="text" [(ngModel)]="formCreateUpdate.email" class="form-control">
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Mô tả</label>
+                <input type="text"  [(ngModel)]="formCreateUpdate.description"  class="form-control">
+                <small class="error-validate" *ngIf="errDescription">
+                    {{errDescription}}
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
+        <button class="submit" (click)="create()">
+            <span *ngIf="data.isCreate">Thêm mới</span>
+            <span *ngIf="!data.isCreate">Cập nhật</span>
+        </button>
+    </div>
+</div>

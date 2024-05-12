@@ -14,6 +14,7 @@ import {CategoriesManagementComponent} from "./admin/Views/Pages/categories-mana
 import {OrderManagementComponent} from "./admin/Views/Pages/order-management/order-management.component";
 import {SaleManagementComponent} from "./admin/Views/Pages/sale-management/sale-management.component";
 import {SearchPageComponent} from "./viewsShare/Views/search-page/search-page.component";
+import {UserManagementComponent} from "./admin/Views/Pages/user-management/user-management.component";
 
 // const userLogin =
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path:"sale-management",component:SaleManagementComponent},
   {path: "home-page-content", component: ContentShopComponent},
   {path: "search-page-product", component: SearchPageComponent},
+  {path: "user-management", component: UserManagementComponent},
   {path: "**", component: ContentShopComponent}
 ];
 

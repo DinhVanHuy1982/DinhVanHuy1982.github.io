@@ -60,6 +60,10 @@ export const menuleft : MenuNode[]=[
         name: "Quản lý role",
         hasChild: false,
         router: "/role-management"
+      },{
+        name: "Quản lý người dùng",
+        hasChild: false,
+        router: "/user-management"
       }
     ]
   },{

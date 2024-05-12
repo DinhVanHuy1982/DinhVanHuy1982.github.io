@@ -67,7 +67,7 @@ export class AsideLeftComponent {
     this.isExpand=!this.isExpand;
     if(!this.isExpand){
       // this.menuItem = this.menuItem.forEach(item =>  item.targetitem.target=null)
-        this.menuItem = menuleft.map(item => ({ ...item }));
+        this.menuItem = menuleft.map((item:any) => ({ ...item }));
       for(let item of this.menuItem){
         if(item.target){
           item.target=undefined;
@@ -76,7 +76,7 @@ export class AsideLeftComponent {
 
         console.log("Close menu :", this.menuItem);
     }else{
-        this.menuItem = menuleft.map(item => ({ ...item }));
+        this.menuItem = menuleft.map((item:any) => ({ ...item }));
         console.log("Open menu : ", this.menuItem);
     }
     // this.treeControl.collapseAll();

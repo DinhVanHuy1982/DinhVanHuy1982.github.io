@@ -28,8 +28,8 @@ export class ActionBrandManagementComponent implements ITooltipAngularComp{
   }
   updateBrand() {
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; itemData:any}> = {
-      height: '60vh',
-      width: '600px',
+      height: '80vh',
+      width: '50vw',
       maxHeight: '90vh',
       maxWidth: '90vw',
       disableClose: false,

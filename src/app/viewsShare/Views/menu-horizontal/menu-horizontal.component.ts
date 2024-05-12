@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {CommonFunction} from "../../../../core/service/utils/common-function";
 import {TranslationService} from "../../../../core/_base/layout/service/translation.service";
 import {environment} from "../../../../environment/environment";
@@ -8,13 +8,14 @@ import {RegisterAccountComponent} from "../register-account/register-account.com
 import {LoginComponent} from "../login/login.component";
 import {Router} from "@angular/router";
 import {SearchPageComponent} from "../search-page/search-page.component";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-menu-horizontal',
   templateUrl: './menu-horizontal.component.html',
   styleUrls: ['./menu-horizontal.component.scss']
 })
-export class MenuHorizontalComponent {
+export class MenuHorizontalComponent implements OnInit{
   @ViewChild('inputSearch') inputSearch!: ElementRef;
   domainFileLocal = environment.DOMAIN_FILE_LOCAL;
   listHistory: string[];
@@ -34,10 +35,29 @@ export class MenuHorizontalComponent {
               private matdialog: MatDialog,
               private router: Router,
               private sagePage:SearchPageComponent,
+              private userService:UserService
               ) {
     this.listHistory=[];
     this.listHistoryFilter = [];
     this.srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
+  }
+
+  currrentUser:any;
+  ngOnInit(): void {
+
+    const user = localStorage.getItem("user")
+    // this.currrentUser = this.userService.getUserCurrent().subscribe((res:any)=>{
+    //   this.currrentUser = JSON.parse(res)
+    //
+    // });
+    if(user){
+      this.currrentUser = JSON.parse(user);
+      this.checkLogin=true
+    }else{
+      this.currrentUser=null;
+      this.checkLogin=false;
+    }
+
   }
 
   getHistory(){
@@ -239,5 +259,25 @@ export class MenuHorizontalComponent {
       minHeight:'30vh',
       maxWidth:'30vw'
     })
+  }
+
+  goToAccount() {
+
+  }
+
+  goToChangePass() {
+
+  }
+
+  logout() {
+    this.userService.setUserCurrent(null);
+    localStorage.removeItem('sessionExpiration');
+    localStorage.removeItem('user');
+    this.checkLogin=false
+    this.router.navigateByUrl('home-page-content')
+  }
+
+  gotoCart() {
+
   }
 }

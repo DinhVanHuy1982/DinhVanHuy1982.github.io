@@ -79,6 +79,9 @@ import {NgbDatepicker, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SearchPageComponent } from './viewsShare/Views/search-page/search-page.component';
 import { CreateOrderComponent } from './client/cart/create-order/create-order.component';
+import { UserManagementComponent } from './admin/Views/Pages/user-management/user-management.component';
+import { ActionUserManagementComponent } from './admin/Views/Pages/user-management/action-user-management/action-user-management.component';
+import { CreateUpdateUserComponent } from './admin/Views/Pages/user-management/create-update-user/create-update-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +121,10 @@ import { CreateOrderComponent } from './client/cart/create-order/create-order.co
     CreateUpdateSaleComponent,
     DateComponent,
     SearchPageComponent,
-    CreateOrderComponent
+    CreateOrderComponent,
+    UserManagementComponent,
+    ActionUserManagementComponent,
+    CreateUpdateUserComponent
   ],
   imports: [
     MatDatepickerModule,

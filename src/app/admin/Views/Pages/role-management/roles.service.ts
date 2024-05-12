@@ -14,6 +14,10 @@ export class RolesService {
     return this.http.post(this.api+'roles/getAllRoleWithPage',search);
   }
 
+  public getAllRole(){
+    return this.http.get(this.api+"roles/get-all")
+  }
+
   public getListFunctionCreate(){
     return this.http.get(this.api+"function/get-function-detail");
   }

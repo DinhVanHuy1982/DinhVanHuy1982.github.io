@@ -27,4 +27,19 @@ export class UserService {
   getUserCurrent() {
     return this.userCurrent.asObservable();
   }
+
+  createUser(data:any){
+    return this.http.post(this.api+'/createUser',data);
+  }
+
+  searchUser(formSearch:any){
+    return this.http.post(this.api+'/search',formSearch)
+  }
+  detailUser(id:any){
+    return this.http.get(this.api+'/detail-user/'+id)
+  }
+
+  deleteUser(id:any){
+    return this.http.get(this.api+'/delete/'+id)
+  }
 }
