@@ -16,6 +16,7 @@ import {UserService} from "../user.service";
   styleUrls: ['./menu-horizontal.component.scss']
 })
 export class MenuHorizontalComponent implements OnInit{
+  domainFile = environment.DOMAIN_FILE_SERVER
   @ViewChild('inputSearch') inputSearch!: ElementRef;
   domainFileLocal = environment.DOMAIN_FILE_LOCAL;
   listHistory: string[];
@@ -41,6 +42,7 @@ export class MenuHorizontalComponent implements OnInit{
     this.listHistoryFilter = [];
     this.srcFlag = "/assets/media/img/h2Shop/flag_vn.png";
   }
+  avatarUser:any;
 
   currrentUser:any;
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class MenuHorizontalComponent implements OnInit{
     // });
     if(user){
       this.currrentUser = JSON.parse(user);
+      this.avatarUser = this.currrentUser.avatar;
       this.checkLogin=true
     }else{
       this.currrentUser=null;

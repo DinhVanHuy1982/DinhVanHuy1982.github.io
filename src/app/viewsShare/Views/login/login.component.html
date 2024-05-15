@@ -2,17 +2,35 @@
   <div class="login-header">Đăng nhập</div>
   <div class="login-body">
 
-    <div class="user-name row">
+    <div class="user-name">
       <label for="userName">Tên đăng nhập<small>*</small></label>
       <input id="userName" type="text" class="form-control" [(ngModel)]="userName">
     </div>
     <div class="password row">
       <label for="password">Mật khẩu<small>*</small></label>
-      <input type="text" class="form-control" [(ngModel)]="password" id="password">
+      <div id="password" class="input-group-append">
+        <input type="password" class="form-control w-100 input-sm custom-input-error"
+               id="currentPassword" ng aria-describedby="currentPassword" #password1
+               #focusInput
+               [(ngModel)]="password"
+               (keydown.space)="$event.preventDefault();"
+               autocomplete="off">
+        <span class="input-group-text cursor-pointer  navi-hover text-hover-red custom-span-error"
+              (click)="changeType(password1, 1)">
+              <i *ngIf="!toggle1" [ngClass]="{'fas fa-eye-slash': !toggle1}"></i>
+              <i *ngIf="toggle1" [ngClass]="{'fas fa-eye':toggle1}"></i>
+        </span>
+      </div>
     </div>
+    <p style="margin-top: 10px;">
+      <a class="float-right forgort-password"
+         (click)="openModal(templateForget)">{{'AUTH.LOGIN.FORGOT_PASSWORD' | translate}}
+      </a>
+    </p>
   </div>
   <div class="login-footer">
-    <button class="btn-cancel btn btn-gray" (click)="close()">Hủy đăng ký</button>
+    <button class="btn-cancel btn btn-gray" (click)="close()">Hủy đăng nhập</button>
     <button class="btn-submit btn" (click)="login()" >Đăng nhập</button>
   </div>
 </div>
+<ng-template #templateForget ></ng-template>

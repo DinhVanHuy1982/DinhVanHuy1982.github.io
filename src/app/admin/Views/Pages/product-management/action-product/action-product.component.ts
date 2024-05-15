@@ -28,7 +28,8 @@ export class ActionProductComponent implements ITooltipAngularComp{
   }
   updateProduct(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
-      height: '60vh',
+      height: '80vh',
+      width: '60vw',
       maxHeight: '90vh',
       maxWidth: '90vw',
       data: {

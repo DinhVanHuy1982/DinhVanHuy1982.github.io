@@ -28,6 +28,13 @@
 }
 
 ::ng-deep{
+  .mat-mdc-tab-body-content{
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+  .form-control:focus{
+    box-shadow: none!important;
+  }
 
   .modal-content {
     border-radius: 16px;
@@ -62,6 +69,7 @@
     }
   }
 }
+
 //.menu-base-left{
 //  flex: 0 0 auto;
 //  overflow-y: hidden;

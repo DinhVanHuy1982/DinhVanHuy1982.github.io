@@ -6,6 +6,14 @@
   .ag-row-hover:hover{
     z-index: 5 !important;
   }
+  .mat-mdc-tab-list{
+    border-bottom: 1px solid #f26522;
+  }
+  .tab-group{
+    border: 1px solid #f26522;
+    border-radius: 6px;
+    padding: 10px
+  }
 }
 .title-manangement{
   display: flex;
@@ -36,3 +44,4 @@
     display: flex;
   }
 }
+

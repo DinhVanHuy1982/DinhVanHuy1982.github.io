@@ -29,3 +29,75 @@
   height:100px;
   border-radius: 6px;
 }
+.footer{
+  position: absolute;
+  height: 50px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  bottom: 0px;
+  background: white;
+  button{
+    height: 35px;
+  }
+}
+.btn-submit{
+  height: 35px;
+  background: blue;
+  color: white;
+  font-weight: 500;
+}
+.header{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 24px;
+}
+.infor-product{
+  margin-bottom: 10px;
+}
+.create-update-body{
+  padding: 0 15px;
+}
+.btn-action-sc {
+  width: 95px;
+  height: 25px;
+  cursor: pointer;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  color: #D14343;
+  border: none;
+  background: none;
+  svg {
+    margin-right: 5px;
+  }
+
+  border-radius: 2px;
+}
+.delete {
+  background: #fdf4f4;
+}
+::ng-deep{
+  .mat-mdc-tab-body-wrapper{
+    margin-top: 15px;
+  }
+}
+.title-infor{
+  display: flex;
+  height: 30px;
+  align-items: center;
+  background: white;
+  justify-content: space-between;
+}
+.type-product{
+  .col-md-6{
+    margin-bottom: 10px;
+  }
+}
+.addType, .addSize{
+  margin-top: 10px;
+}

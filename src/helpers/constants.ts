@@ -46,7 +46,7 @@ export const menuleft : MenuNode[]=[
   {
     router: "/dashboard",
     hasChild: false,
-    name: "DASBOARD",
+    name: "Thống kê chi tiết",
     class: "fa-solid fa-table-columns",
   },
   {
