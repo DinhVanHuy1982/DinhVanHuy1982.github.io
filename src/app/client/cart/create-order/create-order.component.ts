@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {OrderService} from "../../../admin/Views/Pages/order-management/order.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-order',
@@ -46,7 +47,8 @@ export class CreateOrderComponent implements OnInit{
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
               public dialog:MatDialog,
               private orderService:OrderService,
-              private toast:ToastrService) {
+              private toast:ToastrService,
+              private router:Router) {
 
     const user= localStorage.getItem('user')
     if(user){
@@ -99,6 +101,16 @@ export class CreateOrderComponent implements OnInit{
             this.toast.error(res.message)
           }
         },(err:any)=>{this.toast.error(err.message)})
+      }else{
+        this.orderService.getLinkPayMent(this.totalPay*100).subscribe((res:any)=>{
+          if(res.status =='Ok'){
+            const anchor = document.createElement('a');
+            anchor.href = res.url;
+            anchor.target='_blank'
+            anchor.click()
+            // this.router.navigateByUrl(res.url);
+          }
+        })
       }
     }else{
 

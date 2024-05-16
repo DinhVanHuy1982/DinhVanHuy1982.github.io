@@ -11,17 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 import {locale as vnLang} from '../core/_config/i18n/vn';
 import {locale as enLang} from '../core/_config/i18n/en';
 import { TranslationService } from 'src/core/_base/layout/service/translation.service';
-import {OwlCarousel} from 'ngx-owl-carousel';
 
-import { CAROUSEL_OPTION, NO_ROW_GRID_TEMPLATE } from 'src/helpers/constants';
+import { CAROUSEL_OPTION } from 'src/helpers/constants';
 import {UserService} from "./viewsShare/Views/user.service";
-import {Router, Routes} from "@angular/router";
-import {DashboardComponent} from "./admin/Views/Pages/dashboard/dashboard.component";
-import {RoleManagementComponent} from "./admin/Views/Pages/role-management/role-management.component";
-import {HomePageComponent} from "./viewsShare/Views/home-page/home-page.component";
-import {DetailProductComponent} from "./client/detail-product/detail-product.component";
-import {CartComponent} from "./client/cart/cart.component";
-import {ContentShopComponent} from "./viewsShare/Views/content-shop/content-shop.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',

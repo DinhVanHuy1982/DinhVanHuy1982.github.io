@@ -10,6 +10,7 @@ export class OrderService {
 
   private apiprovince="https://online-gateway.ghn.vn/shiip/public-api"
   private token="faa08a2d-075e-11ef-99f3-d6c2df26db63"
+  private apiGetPayMentOnline = environment.API_GATEWAY_PAYMENT_ONLINE;
 
   constructor(private http:HttpClient) { }
 
@@ -54,5 +55,9 @@ export class OrderService {
   }
   detailOrder(orderId:number){
     return this.http.get(this.api+'order/detail/'+orderId)
+  }
+
+  getLinkPayMent(amount:number){
+    return this.http.get(this.apiGetPayMentOnline+amount)
   }
 }

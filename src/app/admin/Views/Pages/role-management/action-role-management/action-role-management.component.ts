@@ -7,6 +7,7 @@ import {ITooltipParams} from "ag-grid-community";
 import {CreateUpdateRoleComponent} from "../create-update-role/create-update-role.component";
 import {RolesService} from "../roles.service";
 import {RoleManagementComponent} from "../role-management.component";
+import {UserService} from "../../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-action-role-management',
@@ -31,6 +32,7 @@ export class ActionRoleManagementComponent implements ITooltipAngularComp {
     this.params = params;
     this.data = params.data;
   }
+  action:any;
 
   constructor(
               private toast: ToastrService,
@@ -38,8 +40,12 @@ export class ActionRoleManagementComponent implements ITooltipAngularComp {
               private translate: TranslateService,
               private cd: ChangeDetectorRef,
               private roleService: RolesService,
-              private roleManagement: RoleManagementComponent
+              private roleManagement: RoleManagementComponent,
+              private userService:UserService
   ) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
 
   }
 

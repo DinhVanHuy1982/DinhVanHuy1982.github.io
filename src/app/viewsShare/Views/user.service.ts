@@ -9,6 +9,7 @@ import {BehaviorSubject} from "rxjs";
 export class UserService {
 
   private userCurrent = new BehaviorSubject<any>([]);
+  private actionByScreen = new BehaviorSubject<any>([]);
   private api = environment.API_GATEWAY_ENDPOINT+'user';
   constructor(private http: HttpClient) { }
 
@@ -27,6 +28,14 @@ export class UserService {
   getUserCurrent() {
     return this.userCurrent.asObservable();
   }
+
+  getAction(){
+    return this.actionByScreen.asObservable();
+  }
+  setAction(data:any){
+    this.actionByScreen.next(data);
+  }
+
 
   createUser(data:any){
     return this.http.post(this.api+'/createUser',data);

@@ -2,7 +2,7 @@
   <div class="role-action">
     <div class="title-screen">QUẢN LÝ ROLE NGƯỜI DÙNG</div>
     <div class="action">
-      <div class="action-create">
+      <div *ngIf="action?.create" class="action-create">
         <button (click)="openCreate()">Tạo mới</button>
       </div>
     </div>

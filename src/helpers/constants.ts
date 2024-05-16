@@ -35,6 +35,7 @@ export let NO_ROW_GRID_TEMPLATE = `
 interface MenuNode{
   name: string;// tên nhánh trên breadcrum
   child?: MenuNode[];
+  code?:string,
   class?: string;
   router?:string;
   hasChild: boolean;
@@ -45,6 +46,7 @@ interface MenuNode{
 export const menuleft : MenuNode[]=[
   {
     router: "/dashboard",
+    code:"dashboard",
     hasChild: false,
     name: "Thống kê chi tiết",
     class: "fa-solid fa-table-columns",
@@ -59,11 +61,13 @@ export const menuleft : MenuNode[]=[
       {
         name: "Quản lý role",
         hasChild: false,
-        router: "/role-management"
+        router: "/role-management",
+        code:"QLR"
       },{
         name: "Quản lý người dùng",
         hasChild: false,
-        router: "/user-management"
+        router: "/user-management",
+        code:"QLTK"
       }
     ]
   },{
@@ -76,23 +80,28 @@ export const menuleft : MenuNode[]=[
       {
         name: "Quản lý sản phẩm",
         hasChild: false,
-        router: "/product-management"
+        router: "/product-management",
+        code:"QLSP"
       },{
         name: "Quản lý nhãn hàng",
         hasChild: false,
-        router: "/brand-management"
+        router: "/brand-management",
+        code:"QLNCC"
       },{
         name: "Quản lý danh mục",
         hasChild: false,
-        router: "/categories-management"
+        router: "/categories-management",
+        code:"QLDM"
       },{
         name: "Quản lý đặt hàng",
         hasChild: false,
-        router: "/order-management"
+        router: "/order-management",
+        code:"QLDH"
       },{
         name: "Quản lý giảm giá",
         hasChild: false,
-        router: "/sale-management"
+        router: "/sale-management",
+        code:"QLGG"
       }
     ]
   },

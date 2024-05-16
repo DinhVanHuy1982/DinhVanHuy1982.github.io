@@ -1,6 +1,7 @@
 <div class="create-update-product">
   <div class="header">
-    Tạo mới sản phẩm
+    <span *ngIf="this.data?.isCreate">Tạo mới sản phẩm</span>
+    <span *ngIf="!this.data?.isCreate">Cập nhật sản phẩm</span>
   </div>
   <div class="create-update-body">
     <mat-tab-group (selectedTabChange)="changeTab($event)" >
@@ -20,7 +21,15 @@
           </div>
           <div class="col-md-6">
             <label>Danh mục: </label>
-            <input type="text" [(ngModel)]="productInfor.categoriesID"  class="form-control">
+            <ng-select
+              [items]="listCategories"
+              bindLabel="categoriName"
+              bindValue="id"
+              placeholder="Danh mục"
+              [clearable]="true"
+              [(ngModel)]="productInfor.categoriesID"
+            >
+            </ng-select>
           </div>
           <div class="col-md-6">
             <label>Nhãn hiệu: </label>
@@ -140,6 +149,7 @@
     </mat-tab-group>
   </div>
   <div class="footer">
-    <button class="btn-submit btn" (click)="submit()">Thêm mới</button>
+    <button class="btn-submit btn" *ngIf="this.data?.isCreate" (click)="submit()">Thêm mới</button>
+    <button class="btn-submit btn"  *ngIf="!this.data?.isCreate" (click)="updateProduct()">Cập nhật</button>
   </div>
 </div>

@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {DatePipe} from "@angular/common";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CreateUpdateRoleComponent} from "./create-update-role/create-update-role.component";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-role-management',
@@ -23,11 +24,16 @@ export class RoleManagementComponent implements OnInit{
   totalRecord =0;
   totalPage =0;
   rowData = [];
-
+  action:any;
   constructor(private roleService:RolesService,
               private toast:ToastrService,
               private datePipe: DatePipe,
-              private matdialog:MatDialog) {
+              private matdialog:MatDialog,
+              private userService:UserService) {
+
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
   noRowsTemplate = NO_ROW_GRID_TEMPLATE
 
@@ -116,7 +122,6 @@ export class RoleManagementComponent implements OnInit{
       if(data.status=='OK'){
         const roleData = data.data.content;
         this.rowData = roleData.map((item:any) => {
-          console.log(item)
           item.createTime = this.datePipe.transform(new Date(item.createTime * 1000), 'dd/MM/yyyy');
           if(item.status==null){
             item.status=0;

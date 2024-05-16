@@ -1,18 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {menuleft} from "../../../../helpers/constants";
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material/tree";
 import {BreadcrumbService} from "../../../../core/_base/layout/service/breadcrumb.service";
 import {Router} from "@angular/router";
-
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-// interface FoodNode {
-//   name: string;
-//   children?: FoodNode[];
-// }
+import {ToastrService} from "ngx-toastr";
+import {UserService} from "../../../viewsShare/Views/user.service";
 
 interface MenuNode{
   name: string;
@@ -22,26 +15,6 @@ interface MenuNode{
   hasChild: boolean;
   isExpand?: boolean;
 }
-
-// const TREE_DATA: FoodNode[] = [
-//   {
-//     name: 'Fruit',
-//     children: [{name: 'Apple'}, {name: 'Banana'}, {name: 'Fruit loops'}],
-//   },
-//   {
-//     name: 'Vegetables',
-//     children: [
-//       {
-//         name: 'Green',
-//         children: [{name: 'Broccoli'}, {name: 'Brussels sprouts'}],
-//       },
-//       {
-//         name: 'Orange',
-//         children: [{name: 'Pumpkins'}, {name: 'Carrots'}],
-//       },
-//     ],
-//   },
-// ];
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -58,11 +31,11 @@ interface ExampleFlatNode {
   templateUrl: './aside-left.component.html',
   styleUrls: ['./aside-left.component.scss']
 })
-export class AsideLeftComponent {
+export class AsideLeftComponent implements OnInit{
   isExpand = true;
 
   // menuItem = menuleft
-    menuItem = menuleft.map(item => ({ ...item }));
+  allMenu = menuleft.map(item => ({ ...item }));
   closeOpenMenu(){
     this.isExpand=!this.isExpand;
     if(!this.isExpand){
@@ -107,22 +80,19 @@ export class AsideLeftComponent {
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  currentUser:any;
+  menuItem:any;
   // dataSource:any;
-  constructor(private breadCrumService: BreadcrumbService, private router: Router) {
-    this.dataSource.data = this.menuItem;
-    console.log("Data source: ",this.dataSource)
-    console.log("Menu Item: ",this.menuItem)
+  constructor(private breadCrumService: BreadcrumbService,
+              private router: Router,
+              private toast:ToastrService,
+              private userService:UserService) {
+    this.menuItem = [...this.allMenu];
+   this.userService.getUserCurrent().subscribe((user:any)=>{
+     this.currentUser = user;
+     this.menuItem = this.filterMenuItems(this.menuItem,this.currentUser.lstFunctionCode)
+   })
   }
-
-  // hasChild = (_: number, node: ExampleFlatNode) => node.hasChild;
-  //
-  // navLinkComponent(router : any){
-  //   console.log("Navigate to: ", router);
-  //
-  //   this.getLocationMenu(this.menuItem, router.name);
-  //
-  //   this.router.navigate([router.router], {})
-  // }
 
   getLocationMenu(node: any, nameNode: string):string[]{
     const arrNode : string[] = [];
@@ -164,9 +134,50 @@ export class AsideLeftComponent {
 
     return [];
   }
-    navigateMenu(router:any, name: string){
-        console.log("Navigate to : ", router)
-        this.getLocationMenu(this.menuItem, name);
-        this.router.navigate([router],{})
-    }
+  navigateMenu(item:any){
+      const  userStr = localStorage.getItem("user");
+      if(userStr){
+        const user = JSON.parse(userStr);
+        let checkAccessScreen=false;
+        user.rolesDTO.listFunction.forEach((itemRole:any)=>{
+          if(item.code===itemRole.functionCode){
+            checkAccessScreen=true;
+            this.userService.setAction(itemRole)
+          }
+        })
+        if(checkAccessScreen){
+          console.log("Item screen: ", item)
+          console.log("Navigate to : ", item.router)
+          this.getLocationMenu(this.menuItem, item.name);
+          this.router.navigate([item.router],{})
+        }else {
+          this.toast.warning("Bạn không có quyền truy cập chức năng này")
+        }
+      }
+      const menuAllow  = this.filterMenuItems(menuleft,this.allowedCodes)
+    console.log("MenuAllow: ", menuAllow)
+
+  }
+  allowedCodes :any[]=[];
+  filterMenuItems(items: any[], allowedCodes: string[]): any[] {
+    return items
+      .map((item:any) => {
+        if (item.hasChild && item.child) {
+          // Lọc các phần tử con
+          item.child = this.filterMenuItems(item.child, allowedCodes);
+          // Giữ lại phần tử cha nếu có bất kỳ phần tử con nào hợp lệ
+          return item.child.length > 0 ? item : null;
+        } else {
+          // Kiểm tra phần tử chính
+          return allowedCodes.includes(item.code) ? item : null;
+        }
+      })
+      .filter((item:any) => item !== null);
+  }
+
+  ngOnInit(): void {
+    this.dataSource.data = this.menuItem;
+    console.log("Data source: ",this.dataSource)
+    console.log("Menu Item: ",this.menuItem)
+  }
 }

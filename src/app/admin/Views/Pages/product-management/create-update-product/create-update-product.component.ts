@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ProductService} from "../product.service";
 import {BrandService} from "../../brand-management/brand.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {CategoriesService} from "../../categories-management/categories.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-create-update-product',
@@ -12,6 +14,8 @@ export class CreateUpdateProductComponent implements OnInit{
 
   constructor(private productService: ProductService,
               private brandService:BrandService,
+              private categoriesService:CategoriesService,
+              private toast:ToastrService,
               @Inject(MAT_DIALOG_DATA) public data:any
   ) {
   }
@@ -25,6 +29,7 @@ export class CreateUpdateProductComponent implements OnInit{
   }
 
   listBrand:any;
+  listCategories:any[]=[];
   formDataSend = new FormData();
   listProductDetail:any[]=[];
   listSize:sizeProduct[]=[
@@ -55,8 +60,8 @@ export class CreateUpdateProductComponent implements OnInit{
         quantity: 0,
         positionSize: this.listSize[indexSize-1].position,
         sizeName: this.listSize[indexSize-1].sizeName,
-        positionType: item.typeName,
-        typeName: item.position,
+        positionType: item.position,
+        typeName:item.typeName ,
       }
       this.listProductDetail.push(productDetail);
     })
@@ -164,10 +169,14 @@ export class CreateUpdateProductComponent implements OnInit{
     console.log("Type: ", this.listType)
     this.productService.saveProduct(this.formDataSend).subscribe((data:any)=>{
       if(data.status==='OK'){
-
+        this.toast.success("Thêm mới sản phẩm thành công")
+      }else{
+        this.toast.error(data.message);
       }
     })
-
+    this.formDataSend.delete("productDTO");
+    this.formDataSend.delete("sizeList");
+    this.formDataSend.delete("typeProductList");
   }
 
   ngOnInit(): void {
@@ -194,6 +203,7 @@ export class CreateUpdateProductComponent implements OnInit{
         this.listSize = res.data.sizeDTOS;
         this.listType = res.data.typeProductDTOS;
         this.listProductDetail = res.data.typeSizeDTOS
+        this.imageUrls=res.data.pathImg;
       })
     }
     this.brandService.getListBrand().subscribe((data:any)=>{
@@ -204,6 +214,18 @@ export class CreateUpdateProductComponent implements OnInit{
         }
       });
     })
+    this.categoriesService.getNoTree().subscribe((res:any)=>{
+      if(res.status==='OK'){
+        this.listCategories=res.data;
+      }else{
+        this.toast.error(res.message);
+      }
+    })
+
+
+  }
+
+  updateProduct() {
 
   }
 }
