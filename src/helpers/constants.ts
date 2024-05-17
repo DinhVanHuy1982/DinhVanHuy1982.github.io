@@ -68,6 +68,11 @@ export const menuleft : MenuNode[]=[
         hasChild: false,
         router: "/user-management",
         code:"QLTK"
+      },{
+        name: "Quản lý banner",
+        hasChild: false,
+        router: "/banner-management",
+        code:"QLBN"
       }
     ]
   },{
