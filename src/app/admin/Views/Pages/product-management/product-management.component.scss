@@ -44,4 +44,10 @@
     display: flex;
   }
 }
-
+.btn-search, .btn-search:hover{
+  background-color: #f26522;
+  align-content: flex-end;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}

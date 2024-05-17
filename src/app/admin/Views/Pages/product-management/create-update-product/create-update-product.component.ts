@@ -4,6 +4,7 @@ import {BrandService} from "../../brand-management/brand.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {CategoriesService} from "../../categories-management/categories.service";
 import {ToastrService} from "ngx-toastr";
+import {environment} from "../../../../../../environment/environment";
 
 @Component({
   selector: 'app-create-update-product',
@@ -11,6 +12,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./create-update-product.component.scss']
 })
 export class CreateUpdateProductComponent implements OnInit{
+  domainFile = environment.DOMAIN_FILE_SERVER;
 
   constructor(private productService: ProductService,
               private brandService:BrandService,
@@ -19,6 +21,8 @@ export class CreateUpdateProductComponent implements OnInit{
               @Inject(MAT_DIALOG_DATA) public data:any
   ) {
   }
+  listPathImg:any // chứa danh sách các product_img
+  lstUrlImgUpdate:any;
   productInfor:any={
     description:"",
     price:null,
@@ -62,19 +66,38 @@ export class CreateUpdateProductComponent implements OnInit{
         sizeName: this.listSize[indexSize-1].sizeName,
         positionType: item.position,
         typeName:item.typeName ,
+        typeId:item.id
       }
       this.listProductDetail.push(productDetail);
     })
   }
   removeSize(size:any){
-    this.listSize = this.listSize.filter((item:any)=>
-      item.position != size.position
-    )
-    this.listProductDetail.filter((item:any)=>{
-      item.positionSize != size.position
-    })
-    this.listSize.forEach((item: any,index :number)=> item.position=index+1)
 
+    if(size.id){
+      for(let item of this.listProductDetail){
+        if(item.quantity>0 && size.id == item.sizeId){
+          this.toast.warning("Kích cỡ này trong kho đang còn só lượng, không được xóa");
+          return;
+        }
+      }
+      this.listSize = this.listSize.filter((item:any)=> {
+          return item.position != size.position
+        }
+      )
+      this.listProductDetail=this.listProductDetail.filter((item:any)=>{
+        return item.positionSize != size.position
+      })
+      this.listSize.forEach((item: any,index :number)=> item.position=index+1)
+    }else{
+      this.listSize = this.listSize.filter((item:any)=> {
+          return item.position != size.position
+        }
+      )
+      this.listProductDetail=this.listProductDetail.filter((item:any)=>{
+        return item.positionSize != size.position
+      })
+      this.listSize.forEach((item: any,index :number)=> item.position=index+1)
+    }
   }
 
   addType(){
@@ -91,19 +114,45 @@ export class CreateUpdateProductComponent implements OnInit{
         positionSize: item.position,
         sizeName: item.sizeName,
         positionType: this.listType[indexType-1].position,
-        typeName: this.listType[indexType-1].typeName
+        typeName: this.listType[indexType-1].typeName,
+        sizeId:item.id
       }
       this.listProductDetail.push(productDetail);
     })
   }
   removeType(type: any){
-    this.listType = this.listType.filter((item:any)=>
-      item.position != type.position
-    )
-    this.listProductDetail.filter((item:any)=>{
-      item.positionType != type.position
-    })
-    this.listType.forEach((item: any,index :number)=> item.position=index+1)
+
+    if(type.id){
+      for(let item of this.listProductDetail){
+        if(item.quantity>0 && type.id == item.typeId){
+          this.toast.warning("Loại này trong kho đang còn só lượng, không được xóa");
+          return;
+        }
+      }
+      this.listType = this.listType.filter((item:any)=>
+        {
+          return item.position != type.position
+        }
+      )
+      this.listProductDetail = this.listProductDetail.filter((item:any)=>{
+        {
+          return item.positionType != type.position;
+        }
+      })
+      this.listType.forEach((item: any,index :number)=> item.position=index+1)
+    }else{
+      this.listType = this.listType.filter((item:any)=>
+        {
+          return item.position != type.position
+        }
+      )
+      this.listProductDetail = this.listProductDetail.filter((item:any)=>{
+        {
+          return item.positionType != type.position;
+        }
+      })
+      this.listType.forEach((item: any,index :number)=> item.position=index+1)
+    }
   }
 
   imageUrls: string[] = [];
@@ -122,13 +171,27 @@ export class CreateUpdateProductComponent implements OnInit{
       }
     }
   }
-  removeImgProduct(urlImg: any, index:any){
-    this.imageUrls = this.imageUrls.filter((item:any)=> item!=urlImg);
-    if(index>=0 && index < this.lstFileProduct.length){
-      const filesArray: File[] = Array.from(this.lstFileProduct);
-      filesArray.splice(index, 1);
-      this.lstFileProduct=filesArray;
-      console.log(this.lstFileProduct)
+  productImgDelete:any[]=[]
+  removeImgProduct(urlImg: any, index:any, isUpdate:boolean){
+    if(isUpdate){
+
+
+      if(this.listPathImg){
+        this.lstUrlImgUpdate = this.lstUrlImgUpdate.filter((item:any)=> item!=urlImg);
+        for(let item of this.listPathImg){
+          if(item.fileName === urlImg){
+            this.productImgDelete.push(item.id);
+          }
+        }
+      }
+    }else{
+      this.imageUrls = this.imageUrls.filter((item:any)=> item!=urlImg);
+      if(index>=0 && index < this.lstFileProduct.length){
+        const filesArray: File[] = Array.from(this.lstFileProduct);
+        filesArray.splice(index, 1);
+        this.lstFileProduct=filesArray;
+        console.log(this.lstFileProduct)
+      }
     }
   }
   changeTab(event:any){
@@ -203,7 +266,8 @@ export class CreateUpdateProductComponent implements OnInit{
         this.listSize = res.data.sizeDTOS;
         this.listType = res.data.typeProductDTOS;
         this.listProductDetail = res.data.typeSizeDTOS
-        this.imageUrls=res.data.pathImg;
+        this.listPathImg = res.data.lstProductIMG
+        this.lstUrlImgUpdate = res.data.pathImg
       })
     }
     this.brandService.getListBrand().subscribe((data:any)=>{
@@ -226,6 +290,37 @@ export class CreateUpdateProductComponent implements OnInit{
   }
 
   updateProduct() {
+    this.productInfor.listProductDetail = this.listProductDetail;
+    this.productInfor.imgDelete = this.productImgDelete
+    if(this.lstFileProduct){
+      this.lstFileProduct=Array.from(this.lstFileProduct);
+      this.lstFileProduct.forEach((item:any)=>{
+        this.formDataSend.append('file',  item);
+      })
+    }
+    this.formDataSend.append('productDTO',new Blob([ JSON.stringify(this.productInfor)],{type: 'application/json'}));
+    this.formDataSend.append('sizeList', new Blob([JSON.stringify(this.listSize)] ,{type: 'application/json'}) );
+    this.formDataSend.append('typeProductList', new Blob([JSON.stringify(this.listType)] ,{type: 'application/json'}) );
+    this.productService.updateProduct(this.formDataSend).subscribe((res:any)=>{
+      if(res.status==="OK"){
+        this.toast.success(res.message)
+      }else{
+        this.toast.error(res.message)
+      }
+    })
+    this.formDataSend.delete("productDTO");
+    this.formDataSend.delete("sizeList");
+    this.formDataSend.delete("typeProductList");
+    this.formDataSend.delete("file");
+    this.formDataSend.delete("file");
+
+    // this.formDataSend.append('productDTO',new Blob([ JSON.stringify(this.productInfor)],{type: 'application/json'}));
+    // this.formDataSend.append('sizeList', new Blob([JSON.stringify(this.listSize)] ,{type: 'application/json'}) );
+    // this.formDataSend.append('typeProductList', new Blob([JSON.stringify(this.listType)] ,{type: 'application/json'}) );
+    console.log("Form data send: ", this.formDataSend)
+    console.log("ProductInfor: ", this.productInfor)
+    console.log("Size: ", this.listSize)
+    console.log("Type: ", this.listType)
 
   }
 }

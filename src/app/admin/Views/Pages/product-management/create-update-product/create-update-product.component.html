@@ -69,9 +69,15 @@
             </label>
             <input type="file" id="upload-img-product" style="display: none" (change)="onFileSelected($event)" multiple accept=".png, .jpg, .jpeg">
             <div class="list-image-selected">
+              <div class="img-item" *ngFor="let imageUrl of lstUrlImgUpdate;let index=index">
+                <img *ngIf="lstUrlImgUpdate" [src]="domainFile + imageUrl" class="img-selected" alt="Selected Image">
+                <div class="icon" (click)="removeImgProduct(imageUrl,index, true)">
+                  <i class="fa-regular fa-trash-can" style="color: red; width: 10px;left: -1.5px;position: relative;"></i>
+                </div>
+              </div>
               <div class="img-item" *ngFor="let imageUrl of imageUrls;let index=index">
                 <img [src]="imageUrl" class="img-selected" alt="Selected Image">
-                <div class="icon" (click)="removeImgProduct(imageUrl,index)">
+                <div class="icon" (click)="removeImgProduct(imageUrl,index,false)">
                   <i class="fa-regular fa-trash-can" style="color: red; width: 10px;left: -1.5px;position: relative;"></i>
                 </div>
               </div>

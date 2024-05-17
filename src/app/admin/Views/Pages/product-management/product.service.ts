@@ -20,6 +20,13 @@ export class ProductService {
     return  this.http.post(this.api+"/createProduct", data, {headers})
   }
 
+  public updateProduct(data:any){
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'multipart/form-data');{headers}
+    return  this.http.post(this.api+"/updateProduct", data, )
+  }
+
+
   public getDetailProduct(productId:any){
     return this.http.get(this.api+"/get-detail/"+productId);
   }
