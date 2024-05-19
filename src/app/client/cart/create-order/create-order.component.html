@@ -1,7 +1,7 @@
 <div class="create-update-brand">
   <div class="header">
     <div *ngIf="data.isCreate">Thêm mới</div>
-    <div *ngIf="!data.isCreate">Cập nhật</div>
+    <div *ngIf="!data.isCreate">Đặt hàng</div>
   </div>
   <div class="body">
     <div class="row">
@@ -103,6 +103,7 @@
           bindLabel="name"
           bindValue="id"
           placeholder="Lựa chọn..."
+          [clearable]="false"
           [(ngModel)]="formCreateUpdate.paymentMethod"
         >
           <ng-template let-item="item" ng-option-tmp>

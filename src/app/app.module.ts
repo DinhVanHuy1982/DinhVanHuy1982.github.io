@@ -82,6 +82,11 @@ import { CreateOrderComponent } from './client/cart/create-order/create-order.co
 import { UserManagementComponent } from './admin/Views/Pages/user-management/user-management.component';
 import { ActionUserManagementComponent } from './admin/Views/Pages/user-management/action-user-management/action-user-management.component';
 import { CreateUpdateUserComponent } from './admin/Views/Pages/user-management/create-update-user/create-update-user.component';
+import { ImportProductManagementComponent } from './admin/Views/Pages/import-product-management/import-product-management.component';
+import { CreateImportProductComponent } from './admin/Views/Pages/import-product-management/create-import-product/create-import-product.component';
+import { ActionImportProductComponent } from './admin/Views/Pages/import-product-management/action-import-product/action-import-product.component';
+import { ViewOrderComponent } from './client/cart/view-order/view-order.component';
+import { ActionViewOrderComponent } from './client/cart/action-view-order/action-view-order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,7 +129,12 @@ import { CreateUpdateUserComponent } from './admin/Views/Pages/user-management/c
     CreateOrderComponent,
     UserManagementComponent,
     ActionUserManagementComponent,
-    CreateUpdateUserComponent
+    CreateUpdateUserComponent,
+    ImportProductManagementComponent,
+    CreateImportProductComponent,
+    ActionImportProductComponent,
+    ViewOrderComponent,
+    ActionViewOrderComponent
   ],
   imports: [
     MatDatepickerModule,

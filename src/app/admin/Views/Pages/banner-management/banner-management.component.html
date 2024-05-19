@@ -1,43 +1,20 @@
 
 <div class="banner">
-<!--  <owl-carousel-->
-<!--    class="slide-banner"-->
-<!--    [options]="myCarouselOptions"-->
-<!--    [carouselClasses]="['owl-theme', 'row', 'sliding']"-->
-<!--    #owlcarosel-->
-<!--  >-->
-<!--    <div class="item" *ngFor="let item of lstImg">-->
-<!--      <div class="thumbnail-image">-->
-<!--        <img-->
-<!--          src="{{item}}" />-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </owl-carousel>-->
   <owl-carousel
+    *ngIf="checkDisplayBanner"
     class="slide-banner"
     [options]="myCarouselOptions"
-    #owlcarosel2
     [carouselClasses]="['owl-theme', 'row', 'sliding']"
+    #owlcarosel
   >
-    <div class="item" *ngFor="let i of lstImgAlt">
+    <div class="item" *ngFor="let item of lstImg">
       <div class="thumbnail-image">
         <img
-          src="{{i}}"/>
+          src="{{item}}" />
       </div>
     </div>
-<!--    <div class="item">-->
-<!--      <div class="thumbnail-image">-->
-<!--        <img-->
-<!--          src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"/>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="item">-->
-<!--      <div class="thumbnail-image">-->
-<!--        <img-->
-<!--          src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"/>-->
-<!--      </div>-->
-<!--    </div>-->
   </owl-carousel>
+
 
   <div class="infor-img">
     <div class="img-item" >

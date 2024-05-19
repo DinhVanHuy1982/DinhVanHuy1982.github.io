@@ -27,7 +27,7 @@ export const environment = {
   URL_IMAGE_LOADING: DOMAIN + '/upload',
   URL_LOGOUT:'logout-mobile.com',
   API_GATEWAY_ENDPOINT: 'http://localhost:8085'+'/api/',
-  API_GATEWAY_PAYMENT_ONLINE: 'http://localhost:8087/api/create_payment?amount=',
+  API_GATEWAY_PAYMENT_ONLINE: 'http://localhost:8087/api/create_payment',
   // SCHOOL_NAME: 'Trường THPT Chuyên Nguyễn Huệ',
   SCHOOL_NAME: 'ໂຮງຮຽນມິດຕະພາບລາວ-ຫວຽດນາມ',
   SCHOOL_CODE: `${SCHOOL_CODE}`,

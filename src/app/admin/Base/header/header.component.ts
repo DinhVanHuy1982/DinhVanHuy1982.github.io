@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit{
   logout() {
     this.userService.setUserCurrent(null);
     localStorage.removeItem('sessionExpiration');
+    localStorage.removeItem('user');
     this.router.navigateByUrl('home-page-content')
   }
   shouldShowGoToAccount: any;

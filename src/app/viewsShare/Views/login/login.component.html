@@ -33,4 +33,36 @@
     <button class="btn-submit btn" (click)="login()" >Đăng nhập</button>
   </div>
 </div>
-<ng-template #templateForget ></ng-template>
+<ng-template #templateForget >
+
+
+<div class="forgot-pass">
+  <div class="for-got-header">
+    <div class="title-header">Quên mật khẩu</div>
+  </div>
+  <div class="for-got-body">
+    <div class="form-forgot">
+      <label>Nhập tên đăng nhập</label>
+      <input [(ngModel)]="userNameForgot" type="text" class="form-control">
+      <small class="error-validate" *ngIf="errUserNameForgot">
+        {{errUserNameForgot}}
+      </small>
+    </div>
+    <div class="form-forgot">
+      <label>Nhập mã xác nhận <p *ngIf="timeLeft>0">{{ formatTime(timeLeft) }}</p></label>
+      <input [(ngModel)]="codeVerify" type="text" class="form-control">
+      <small class="error-validate" *ngIf="errValidateCode">
+        {{errValidateCode}}
+      </small>
+    </div>
+  </div>
+  <div class="for-got-footer">
+    <div class="action-for-got">
+      <button class="btn btn-cancel" (click)="dialog.closeAll()">Hủy</button>
+      <button *ngIf="codeVerify==''" [disabled]="timeLeft>10" (click)="sendCode()"  class="btn-submit btn">Lấy mã</button>
+      <button *ngIf="codeVerify!==''" (click)="verify()" class="btn btn-submit">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+</ng-template>

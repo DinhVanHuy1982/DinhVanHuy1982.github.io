@@ -47,6 +47,16 @@ export class OrderDetailComponent implements OnInit{
   namePayMent=""
   payStatus=""
 
+  lstPayMent=[
+    {
+      id:1,
+      name:'Đã thanh toán'
+    },{
+      id:0,
+      name:'Chưa thanh toán'
+    }
+  ]
+
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
               public dialog:MatDialog,
               public orderService:OrderService,
@@ -69,11 +79,11 @@ export class OrderDetailComponent implements OnInit{
           this.namePayMent="Thanh toán khi nhận hàng"
         }
 
-        if(this.inforOrder.payStatus==1){
-          this.payStatus="Đã thanh toán"
-        }else{
-          this.payStatus="Chưa thanh toán"
-        }
+        // if(this.inforOrder.payStatus==1){
+        //   this.payStatus="Đã thanh toán"
+        // }else{
+        //   this.payStatus="Chưa thanh toán"
+        // }
 
         this.searchAddress()
       }

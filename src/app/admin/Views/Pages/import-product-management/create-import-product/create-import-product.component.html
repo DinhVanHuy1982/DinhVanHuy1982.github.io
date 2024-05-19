@@ -1,0 +1,165 @@
+<div class="create-update-product">
+  <div class="header">
+    <span *ngIf="this.data?.isCreate">Nhập hàng</span>
+    <span *ngIf="!this.data?.isCreate">Xem chi tiết</span>
+  </div>
+  <div class="create-update-body">
+    <mat-tab-group (selectedTabChange)="changeTab($event)" >
+      <mat-tab label="Thông tin sản phẩm">
+        <div class="row infor-product">
+          <div class="col-md-6" *ngIf="data.isCreate">
+            <label>Chọn sản phẩm nhập</label>
+            <ng-select
+              [items]="lstProduct"
+              bindValue="id"
+              bindLabel="productName"
+              placeholder="Sản phẩm"
+              [clearable]="true"
+              [(ngModel)]="productId"
+              (ngModelChange)="changeProduct()"
+            >
+<!--              <ng-template let-item="item" ng-option-tmp>-->
+<!--                <div [matTooltip]="item.productCode +' - '+ item.productName">{{item.id +' - '+item.productCode +' - '+ item.productName}}</div>-->
+<!--              </ng-template>-->
+            </ng-select>
+            <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errProduct">
+              {{errProduct}}
+            </small>
+          </div>
+          <div class="col-md-6" *ngIf="data.isCreate">
+            <label>Giá mua: </label>
+            <input type="text" [(ngModel)]="priceBuy"  class="form-control">
+            <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errPriceImport">
+              {{errPriceImport}}
+            </small>
+          </div>
+          <div class="col-md-6" *ngIf="!data.isCreate">
+            <label>Mã sản phẩm: </label>
+            <input type="text" disabled [ngModel]="productInfor.productCode" class="form-control">
+          </div>
+
+          <div class="col-md-6" *ngIf="!data.isCreate">
+            <label>Tên sản phẩm: </label>
+            <input type="text" disabled [ngModel]="productInfor.productName"  class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label>Giá bán: </label>
+            <input type="text" disabled [ngModel]="productInfor.price" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>Danh mục: </label>
+            <ng-select
+              [items]="listCategories"
+              bindLabel="categoriName"
+              bindValue="id"
+              placeholder="Danh mục"
+              [clearable]="true"
+              [ngModel]="productInfor.categoriesID"
+              disabled
+            >
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <label>Nhãn hiệu: </label>
+            <ng-select
+              [items]="listBrand"
+              bindLabel="nameTranform"
+              bindValue="id"
+              placeholder="Nhãn hiệu"
+              [clearable]="true"
+              [ngModel]="productInfor.brandId"
+              disabled
+            >
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <label>Mô tả: </label>
+            <input type="text" disabled [ngModel]="productInfor.description"  class="form-control">
+          </div>
+          <div>
+            <label>Ảnh sản phẩm: </label>
+            <div class="list-image-selected">
+              <div class="img-item" *ngFor="let imageUrl of lstUrlImgUpdate;let index=index">
+                <img [src]="domainFile+imageUrl" class="img-selected" alt="Selected Image" (click)="viewFile(index)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Lịch sử nhập hàng">
+        <table style="width: 100%">
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Tên nhà cung cấp</th>
+            <th>Ngày nhập</th>
+            <th>Giá nhập</th>
+            <th>Tổng số lượng nhập</th>
+          </tr>
+          <tr style="line-height: 40px;" *ngFor="let historyImport of lstHistoryImport;let index=index;">
+            <td>{{historyImport.productName}}</td>
+            <td>{{historyImport.brandName}}</td>
+            <td>{{historyImport.importDate}}</td>
+            <td>{{historyImport.importPrice +' VND'}}</td>
+            <td>{{historyImport.totalImport}}</td>
+          </tr>
+        </table>
+      </mat-tab>
+      <mat-tab label="Kích cỡ">
+        <div class="row" *ngFor="let size of listSize; let index = index">
+          <div class="col-md-6">
+            <div class="title-infor">
+              <label>Tên size: </label>
+            </div>
+            <input type="text" disabled [ngModel]="size.sizeName" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <div class="title-infor">
+              <label>Mô tả: </label>
+            </div>
+            <input type="text" disabled [ngModel]="size.description" class="form-control">
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Loại sản phẩm">
+        <div class="row type-product" *ngFor="let type of listType; let index = index">
+          <div class="col-md-6">
+            <div class="title-infor">
+              <label>Tên type: </label>
+            </div>
+            <input type="text" disabled [ngModel]="type.typeName" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <div class="title-infor">
+              <label>Mô tả: </label>
+            </div>
+            <input type="text" disabled [ngModel]="type.description" class="form-control">
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab  label="Số lượng">
+        <table style="width: 100%">
+          <tr>
+            <th>Tên size</th>
+            <th>Tên loại</th>
+            <th>Số lượng</th>
+          </tr>
+          <tr *ngFor="let productDetail of listProductDetail;let index=index;">
+            <td>{{productDetail.sizeName}}</td>
+            <td>{{productDetail.typeName}}</td>
+            <td>
+              <input type="number" [disabled]="!this.data.isCreate" class="form-control" [(ngModel)]="productDetail.quantity">
+            </td>
+          </tr>
+        </table>
+        <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errQuantityImport">
+          {{errQuantityImport}}
+        </small>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="footer">
+    <button class="btn-submit btn" *ngIf="this.data?.isCreate" (click)="submit()">Thêm mới</button>
+<!--    <button class="btn-submit btn"  *ngIf="!this.data?.isCreate" (click)="updateProduct()">Cập nhật</button>-->
+  </div>
+</div>

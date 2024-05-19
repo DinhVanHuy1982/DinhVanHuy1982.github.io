@@ -18,9 +18,21 @@ export class SaleManagementComponent implements OnInit{
     pageSize: 10,
     page:1,
     keySearch:"",
-    type:"",
+    type:null,
     applySearch:null
   }
+  item=[
+      {
+          name: "Sản phẩm",
+          code: 0,
+          color: "green"
+      },
+      {
+          name: "Hóa đơn",
+          code:1,
+          color: "red",
+      }
+  ];
   rowData:any;
   totalPage=0;
   totalElement=0;

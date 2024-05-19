@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BannerService} from "./banner.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
@@ -11,10 +11,10 @@ import {OwlCarousel} from "ngx-owl-carousel";
   templateUrl: './banner-management.component.html',
   styleUrls: ['./banner-management.component.scss']
 })
-export class BannerManagementComponent implements OnInit ,AfterViewInit{
+export class BannerManagementComponent implements OnInit{
   domaiFile = environment.DOMAIN_FILE_SERVER
   formData=new FormData();
-  lstImg:any[]=[]
+  lstImg:any[]=["https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186"]
   lstImgAlt:any[]=[
     "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186",
     "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1kwU0X.img?w=730&h=468&m=6&x=377&y=77&s=76&d=186",
@@ -23,6 +23,7 @@ export class BannerManagementComponent implements OnInit ,AfterViewInit{
   lstUrlsUpload:any[]=[]
   lstFileDto :any;
   lstIdDelete:any[]=[]
+  checkDisplayBanner=false;
 
   constructor(private bannerService:BannerService,
               private toast:ToastrService,
@@ -38,6 +39,7 @@ export class BannerManagementComponent implements OnInit ,AfterViewInit{
           return this.domaiFile + item.fileName
         })
         this.owlElement?.refresh()
+        this.checkDisplayBanner=true;
       }
       this.change.detectChanges()
     },(err:any)=>{
@@ -72,21 +74,6 @@ export class BannerManagementComponent implements OnInit ,AfterViewInit{
       slideBy: numberOfItems,
       items: numberOfItems,
     };
-  }
-  ngAfterViewInit(): void {
-    // Ensure that the carousel is initialized
-    this.refreshCarousel();
-    setTimeout(() => {
-      if (this.owlElement) {
-        this.owlElement.refresh();
-      }
-    }, 0);
-  }
-
-  refreshCarousel(): void {
-    if (this.owlElement) {
-      this.owlElement.refresh();
-    }
   }
 
   deleteFile(imgItem: any) {

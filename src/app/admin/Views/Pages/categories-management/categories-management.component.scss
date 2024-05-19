@@ -22,7 +22,7 @@ th {
       background-color: unset !important;
       border: unset !important;
       .mat-icon{
-        color: white !important;
+        color: black !important;
       }
     }
   }
@@ -45,6 +45,15 @@ th {
   .inactive-status {
     color: red !important;
     font-weight: 600;
+  }
+  .mat-mdc-table .mdc-data-table__row{
+    background: #fcfcfc !important;
+  }
+  .mat-mdc-cell.mdc-data-table__cell.cdk-cell.cdk-column-categoriCode.mat-column-categoriCode{
+    color:black;
+  }
+  .mat-mdc-cell.mdc-data-table__cell.cdk-cell{
+    color: black  !important;
   }
 }
 .role-action{

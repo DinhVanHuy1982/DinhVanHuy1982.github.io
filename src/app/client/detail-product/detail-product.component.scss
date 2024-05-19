@@ -33,7 +33,7 @@
   width: 413px;
 }
 .focus-avatar-choose{
-  border: 2px solid #F26522;
+  border: 2px solid #3643BA;
 }
 .withFitContent{
   width: fit-content;
@@ -131,7 +131,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
-    background: #F26522;
+    background: #3643BA;
 
     min-width: 195px;
     margin-right: 16px;
@@ -140,7 +140,7 @@
 
   .butBuy:hover,.butAddCart:focus {
     color: #FDF7F4;
-    background: #F26522;
+    background: #3643BA;
   }
 
   .butAddCart:hover svg path, .butAddCart:focus svg path {
@@ -152,11 +152,11 @@
     align-items: center;
     height: 48px;
     border-radius: 4px;
-    border: 2px solid var(--orange-o-400, #F26522);
+    border: 2px solid var(--orange-o-400, #3643BA);
     background: var(--neutral-background-white-n-0, #FFF);
     width: 208px;
 
-    color: var(--orange-o-400, #F26522);
+    color: var(--orange-o-400, #3643BA);
     text-align: center;
     font-family: Inter;
     font-size: 16px;
@@ -170,7 +170,7 @@
 
   .butChoose:hover,.butAddCart:focus {
     color: #FDF7F4;
-    background: #F26522;
+    background: #3643BA;
   }
 
   .butChoose{
@@ -178,11 +178,11 @@
     align-items: center;
     height: 48px;
     border-radius: 4px;
-    border: 2px solid var(--orange-o-400, #F26522);
+    border: 2px solid var(--orange-o-400, #3643BA);
     background: var(--neutral-background-white-n-0, #FFF);
     width: 208px;
 
-    color: var(--orange-o-400, #F26522);
+    color: var(--orange-o-400, #3643BA);
     text-align: center;
     font-family: Inter;
     font-size: 16px;
@@ -261,17 +261,21 @@
 }
 
 button.type-book-choose{
-  border-color: #F26522 !important;
+  border-color: #3643BA !important;
 
   .content-button{
-    color: #F26522;
+    color: #3643BA;
   }
 
   &:focus {
-    border-color: #F26522 !important;
+    border-color: #3643BA !important;
   }
 }
-
+.content-button{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .hide-focus-btn:focus {
   border: 1px solid #E6E8F0 !important;
   outline: none !important;
@@ -321,9 +325,7 @@ button.type-book-choose{
   box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.1);
   outline: 0;
   .cu-header{
-    padding: 24px 8px;
-    line-height: 78px;
-    height: 78px;
+    padding: 10px 8px;
     border-bottom: 1px solid #E6E8F0;
     color: #101840;
     text-align: center;
@@ -373,7 +375,7 @@ button.type-book-choose{
         min-width: 110px;
       }
       &.btn-save{
-        background: #F26522;
+        background: #3643BA;
         color: #FFF;
       }
       &.btn-save:disabled{
@@ -446,7 +448,7 @@ button.type-book-choose{
   line-height: 20px;
   letter-spacing: 0em;
   text-align: left;
-  color: #F26522;
+  color: #3643BA;
   margin-right: 5px;
 }
 
@@ -483,7 +485,7 @@ button.type-book-choose{
 .styleColRate{
   width: 124px;
   height: 8px;
-  background: #FCE9E2;
+  background: #DDE3FF;
   border-radius: 4px;
 
   margin-left: 14px;
@@ -491,7 +493,7 @@ button.type-book-choose{
 .styleValueColRate{
   width: 0px;
   height: 8px;
-  background: #F26522;
+  background: #3643BA;
   border-radius: 4px;
 }
 .numColRate{
@@ -522,16 +524,16 @@ button.type-book-choose{
   align-content: center;
   flex-wrap: wrap;
 }
-.input-comment {
-  margin-left: 20px;
-  width: 500px;
-}
+//.input-comment {
+//  margin-left: 20px;
+//  width: 500px;
+//}
 .sent-comment{
   display: flex;
   align-content: center;
   flex-wrap: wrap;
   margin-left: 20px;
-  background-color: #F26522;
+  background-color: #3643BA;
   padding: 0 5px;
   border-radius: 6px;
   color: white;
@@ -649,3 +651,136 @@ button.type-book-choose{
   padding: 15px;
 }
 
+.upload-file {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.upload-file label{
+  width: 90px;
+  height: 36px;
+  background: #3366FF;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg{
+    margin-right: 6px;
+  }
+}
+.product-rate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  span {
+    color: #101840;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 21px */
+  }
+  .detail-rate {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+    svg {
+      cursor: pointer;
+    }
+  }
+}
+.product-comment {
+  position: relative;
+  height: auto;
+  .input-review-btn{
+    width: auto;
+    position: absolute;
+    top: 21px;
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+  }
+  .emoji{
+    left: 12px;
+  }
+  .choose-file {
+    right: 12px;
+  }
+  textarea {
+    min-height: 40px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #D8DAE5;
+    width: 100%;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 12px 70px 12px 10px;
+    margin-top: 10px;
+    resize: none;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &:focus {
+      border: 1px solid #D8DAE5 !important;
+      box-shadow: none;
+    }
+  }
+  .input-review-btn {
+    width: auto;
+    position: absolute;
+    top: 20px;
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+  }
+  .mg-bt{
+    border-bottom: 1px solid #D8DAE5 !important;
+    border-radius: 6px !important;
+  }
+}
+.review-img-upload{
+  display: flex;
+  flex-wrap: wrap;
+  .review-img-item{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin-right: 19px;
+    margin-top: 20px;
+    img, video{
+      width: inherit;
+      height: inherit;
+      border-radius: 8px;
+    }
+    .video-overlay{
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      width: inherit;
+      height: inherit;
+      position: absolute;
+      top: 0;
+      left: 0;
+      svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+    svg{
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      cursor: pointer;
+    }
+  }
+}

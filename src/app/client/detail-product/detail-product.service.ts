@@ -8,15 +8,11 @@ import {ProductService} from "../../admin/Views/Pages/product-management/product
 })
 export class DetailProductService {
 
-  API = environment.API_GATEWAY_ENDPOINT+"product/comment";
+  API = environment.API_GATEWAY_ENDPOINT+"create/comment";
   constructor(private httpClient: HttpClient) { }
 
-  public uploadComment(files:FileList){
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append('file', files[i]);
-    }
-    return this.httpClient.post(this.API,formData);
+  public uploadComment(comment:any){
+    return this.httpClient.post(this.API,comment);
   }
 
   public testAPI(){

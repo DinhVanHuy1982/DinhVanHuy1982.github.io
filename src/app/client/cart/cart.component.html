@@ -5,14 +5,24 @@
 <!--        -->
 <!--      </span>-->
 <!--    </div>-->
-    <div class="pay-item"  (click)="changeTab(0)" [ngStyle]="{'color':tabSlected===0?'blue':'unset'}">
-      <i class="fa-solid fa-cart-shopping"  style="font-size: 50px;"></i>Trong giỏ
+    <div class="pay-item"  (click)="changeTab(0)" [ngStyle]="{'color':tabSlected===0?'#3643BA':'#e6e8f0'}">
+      <i class="fa-solid fa-cart-shopping"  style="font-size: 50px;"></i>
     </div>
-    <div class="pay-item" (click)="changeTab(1)" [ngStyle]="{'color':tabSlected===1?'blue':'unset'}">
-      <i class="fa-brands fa-amazon-pay" style="font-size: 50px;"></i> Đang giao
+    <svg  class="cart-header-item-line" fill="none" height="2" viewBox="0 0 169 2" width="169" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.25 1L167.25 1.00001" [ngStyle]="{'stroke':tabSlected===0||tabSlected===1?'#3643BA':'#e6e8f0'}"  stroke-linecap="round" stroke-width="2" class="ng-star-inserted"></path>
+    </svg>
+    <div class="pay-item" (click)="changeTab(1)" [ngStyle]="{'color':tabSlected===1?'#3643BA':'#e6e8f0'}">
+      <i class="fa-brands fa-amazon-pay" style="font-size: 50px;"></i>
     </div>
-    <div class="buy-complete"  (click)="changeTab(2)" [ngStyle]="{'color':tabSlected===2?'blue':'unset'}">
-      <i class="fa-regular fa-calendar-check" style="font-size: 50px;"></i> Hoàn thành
+    <svg _ngcontent-hpd-c20="" class="cart-header-item-line" fill="none" height="2" viewBox="0 0 169 2" width="169" xmlns="http://www.w3.org/2000/svg"><!---->
+      <path _ngcontent-hpd-c20="" d="M1.25 1L167.25 1.00001" [ngStyle]="{'stroke':tabSlected===2||tabSlected===1?'#3643BA':'#e6e8f0'}"  stroke-linecap="round" stroke-width="2" class="ng-star-inserted"></path><!----></svg>
+    <div class="pay-item" (click)="changeTab(2)" [ngStyle]="{'color':tabSlected===2?'#3643BA':'#e6e8f0'}">
+      <i class="fa-brands fa-amazon-pay" style="font-size: 50px;"></i>
+    </div>
+    <svg _ngcontent-hpd-c20="" class="cart-header-item-line" fill="none" height="2" viewBox="0 0 169 2" width="169" xmlns="http://www.w3.org/2000/svg"><!---->
+      <path _ngcontent-hpd-c20="" d="M1.25 1L167.25 1.00001" [ngStyle]="{'stroke':tabSlected===2||tabSlected===3?'#3643BA':'#e6e8f0'}"  stroke-linecap="round" stroke-width="2" class="ng-star-inserted"></path><!----></svg>
+    <div class="buy-complete"  (click)="changeTab(3)" [ngStyle]="{'color':tabSlected===3?'#3643BA':'#e6e8f0'}">
+      <i class="fa-regular fa-calendar-check" style="font-size: 50px;"></i>
     </div>
   </div>
   <div *ngIf="tabSlected===0">
@@ -74,5 +84,44 @@
 <!--      <div class="col-md-6">100000</div>-->
     </div>
   </div>
+<!--  <div *ngIf="tabSlected==2">-->
+<!--    <ag-grid-angular-->
+<!--      [columnDefs]="coloumDef"-->
+<!--      [rowData]="rowDataShipingComplete"-->
+<!--      style="width: 100%; height: 500px !important;"-->
+<!--      class="ag-theme-alpine"-->
+<!--      [tooltipShowDelay]="0"-->
+<!--      (gridSizeChanged)="gridSizeChanged($event)"-->
+<!--      [overlayNoRowsTemplate]="noRowsTemplate"-->
+<!--    >-->
+
+<!--    </ag-grid-angular>-->
+<!--  </div>-->
+  <div *ngIf="tabSlected===2 ||tabSlected===1|| tabSlected==3">
+    <ag-grid-angular
+      [columnDefs]="coloumDef"
+      [rowData]="rowDataShipingComplete"
+      style="width: 100%; height: 500px !important;"
+      class="ag-theme-alpine"
+      [tooltipShowDelay]="0"
+      (gridSizeChanged)="gridSizeChanged($event)"
+      [overlayNoRowsTemplate]="noRowsTemplate"
+    >
+
+    </ag-grid-angular>
+  </div>
+<!--  <div *ngIf="tabSlected===1">-->
+<!--    <ag-grid-angular-->
+<!--      [columnDefs]="coloumDef"-->
+<!--      [rowData]="rowDataShipingComplete"-->
+<!--      style="width: 100%; height: 500px !important;"-->
+<!--      class="ag-theme-alpine"-->
+<!--      [tooltipShowDelay]="0"-->
+<!--      (gridSizeChanged)="gridSizeChanged($event)"-->
+<!--      [overlayNoRowsTemplate]="noRowsTemplate"-->
+<!--    >-->
+
+<!--    </ag-grid-angular>-->
+<!--  </div>-->
 
 </div>

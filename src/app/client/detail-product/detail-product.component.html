@@ -33,12 +33,12 @@
         </div>
       </div>
       <div class="d-flex paddingTop16">
-        <button class="btn-pbook hide-focus-btn" *ngFor="let itemType of lstType" [ngClass]="{'type-book-choose': typeProduct == itemType.id}" (click)="changeTypeProduct($event,itemType)" >
+        <button class="btn-pbook hide-focus-btn" [matTooltip]="itemType.typeName" *ngFor="let itemType of lstType" [ngClass]="{'type-book-choose': typeProduct == itemType.id}" (click)="changeTypeProduct($event,itemType)" >
           <div class="content-button">{{itemType.typeName}}</div>
         </button>
       </div>
       <div class="d-flex paddingTop16">
-        <button class="btn-pbook hide-focus-btn" *ngFor="let itemSize of lstSize" [ngClass]="{'type-book-choose': sizeProduct == itemSize.id}" (click)="changeSizeProduct($event,itemSize)">
+        <button class="btn-pbook hide-focus-btn"  [matTooltip]="itemSize.sizeName"  *ngFor="let itemSize of lstSize" [ngClass]="{'type-book-choose': sizeProduct == itemSize.id}" (click)="changeSizeProduct($event,itemSize)">
           <div class="content-button">{{itemSize.sizeName}}</div>
         </button>
       </div>
@@ -211,10 +211,8 @@
           <!-- <div class="d-flex justify-content-around">
           </div> -->
         </div>
-        <div class="comment">
+        <div class="comment" *ngIf="this.allowComment">
           <div class="enter-content">Binh luận: </div>
-          <div class="input-comment"><textarea [(ngModel)]="commentValue" type="text" placeholder="Nhập bình luận...." class="form-control" cols="10" rows="1"></textarea> </div>
-          <div class="choose-file-comment"><input #file  multiple  type="file"  id="upload-file" (change)="uploadComment($event)" accept=" .png, .jpg, .jpeg"> </div>
           <div class="sent-comment" (click)="comment(confirmComment)">Gửi bình luận</div>
         </div>
 
@@ -286,27 +284,6 @@
                                  (click)="showMore(item?.imgComment, i)"
                                  alt="image-review">
                           </div>
-
-                          <!--                        show video when has video review -->
-<!--                          <div *ngIf="a.type == 1" >-->
-<!--                            <div class="video-block">-->
-<!--                              <video width="140" class="no-controls"-->
-<!--                                     height="140" style="border-radius: 16px;"-->
-<!--                                     *ngIf="a.type == 1" (click)="showMore(item?.listFileBuyer, i)"-->
-<!--                                     [src]="domainFile + a.path "-->
-<!--                              >-->
-<!--                              </video>-->
-
-<!--                              &lt;!&ndash;                            make a layer cover video &ndash;&gt;-->
-<!--                              <div class="overlay-video"-->
-<!--                                   [style.opacity]="isSafari ? '0':'1'"-->
-<!--                                   (click)="showMore(item?.listFileBuyer, i)">-->
-<!--                                <svg class="overlay-video-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                  <path d="M34.1057 12.8546L18.939 1.72623C17.6185 0.757036 16.0552 0.17281 14.4227 0.038423C12.7902 -0.0959637 11.1524 0.224748 9.69119 0.964945C8.22996 1.70514 7.00248 2.83586 6.14506 4.23153C5.28763 5.6272 4.83381 7.23321 4.834 8.87123V31.1279C4.83083 32.7666 5.28261 34.374 6.13902 35.7711C6.99543 37.1681 8.22284 38.3001 9.68456 39.0408C11.1463 39.7815 12.7849 40.1019 14.418 39.9663C16.0511 39.8307 17.6144 39.2445 18.934 38.2729L34.109 27.1446C35.2316 26.3219 36.1445 25.2462 36.7738 24.0049C37.4031 22.7635 37.731 21.3913 37.731 19.9996C37.731 18.6078 37.4031 17.2356 36.7738 15.9942C36.1445 14.7529 35.2316 13.6773 34.109 12.8546H34.1057ZM31.149 23.1129L15.9823 34.2412C15.4069 34.6641 14.7255 34.9191 14.0139 34.9779C13.3022 35.0367 12.5882 34.8971 11.9511 34.5745C11.3141 34.2519 10.7789 33.759 10.4052 33.1506C10.0315 32.5421 9.83373 31.842 9.834 31.1279V8.87123C9.82635 8.15612 10.021 7.45341 10.3955 6.84416C10.77 6.23492 11.3091 5.74395 11.9507 5.42789C12.4938 5.14902 13.0951 5.00226 13.7057 4.99956C14.5239 5.0036 15.3193 5.26933 15.9757 5.75789L31.1423 16.8862C31.6315 17.2447 32.0292 17.7134 32.3034 18.2543C32.5776 18.7952 32.7205 19.3931 32.7205 19.9996C32.7205 20.606 32.5776 21.2039 32.3034 21.7448C32.0292 22.2857 31.6315 22.7544 31.1423 23.1129H31.149Z" fill="white"/>-->
-<!--                                </svg>-->
-<!--                              </div>-->
-<!--                            </div>-->
-<!--                          </div>-->
                           <div *ngIf="i === 3 && !(item?.imgComment.length === 4)" class="show-more">
                           </div>
                           <span *ngIf="i === 3 && !(item?.imgComment.length === 4)" class="show-more-span" (click)="showMore(item?.imgComment, 3)">+ {{item.imgComment.length - 4}}</span>
@@ -352,24 +329,6 @@
                                        (click)="showMore(item?.imgCommentRepply, i)"
                                        alt="image-response">
                                 </div>
-                                <!--                              show video if has video review -->
-<!--                                <div *ngIf="file?.type == 1" >-->
-<!--                                  <div class="video-block">-->
-<!--                                    <video width="140" class="no-controls"-->
-<!--                                           height="140" style="border-radius: 16px;"-->
-<!--                                           *ngIf="file?.type == 1"-->
-<!--                                           (click)="showMore(item?.listFileSeller, i)"-->
-<!--                                           [src]="domainFile + file?.path "-->
-<!--                                    >-->
-<!--                                    </video>-->
-<!--                                    &lt;!&ndash;                                  make a layer cover video &ndash;&gt;-->
-<!--                                    <div class="overlay-video" [style.opacity]="isSafari ? '0':'1'" (click)="showMore(item?.listFileSeller, i)">-->
-<!--                                      <svg class="overlay-video-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--                                        <path d="M34.1057 12.8546L18.939 1.72623C17.6185 0.757036 16.0552 0.17281 14.4227 0.038423C12.7902 -0.0959637 11.1524 0.224748 9.69119 0.964945C8.22996 1.70514 7.00248 2.83586 6.14506 4.23153C5.28763 5.6272 4.83381 7.23321 4.834 8.87123V31.1279C4.83083 32.7666 5.28261 34.374 6.13902 35.7711C6.99543 37.1681 8.22284 38.3001 9.68456 39.0408C11.1463 39.7815 12.7849 40.1019 14.418 39.9663C16.0511 39.8307 17.6144 39.2445 18.934 38.2729L34.109 27.1446C35.2316 26.3219 36.1445 25.2462 36.7738 24.0049C37.4031 22.7635 37.731 21.3913 37.731 19.9996C37.731 18.6078 37.4031 17.2356 36.7738 15.9942C36.1445 14.7529 35.2316 13.6773 34.109 12.8546H34.1057ZM31.149 23.1129L15.9823 34.2412C15.4069 34.6641 14.7255 34.9191 14.0139 34.9779C13.3022 35.0367 12.5882 34.8971 11.9511 34.5745C11.3141 34.2519 10.7789 33.759 10.4052 33.1506C10.0315 32.5421 9.83373 31.842 9.834 31.1279V8.87123C9.82635 8.15612 10.021 7.45341 10.3955 6.84416C10.77 6.23492 11.3091 5.74395 11.9507 5.42789C12.4938 5.14902 13.0951 5.00226 13.7057 4.99956C14.5239 5.0036 15.3193 5.26933 15.9757 5.75789L31.1423 16.8862C31.6315 17.2447 32.0292 17.7134 32.3034 18.2543C32.5776 18.7952 32.7205 19.3931 32.7205 19.9996C32.7205 20.606 32.5776 21.2039 32.3034 21.7448C32.0292 22.2857 31.6315 22.7544 31.1423 23.1129H31.149Z" fill="white"/>-->
-<!--                                      </svg>-->
-<!--                                    </div>-->
-<!--                                  </div>-->
-<!--                                </div>-->
                                 <div *ngIf="i == 3 && !(item?.imgCommentRepply.length == 4)" class="show-more">
                                 </div>
                                 <span *ngIf="i == 3 && !(item?.imgCommentRepply.length == 4)" class="show-more-span" (click)="showMore(item?.imgCommentRepply, 3)">+ {{item?.imgCommentRepply.length - 4}}</span>
@@ -465,14 +424,84 @@
 <ng-template #confirmComment>
   <div class="cu-container">
     <div class="cu-header">
-      {{'COMMON.CONFIRM' | translate}}
+      Bình luận
     </div>
     <div class="cu-body">
-      <p>Bạn muốn gửi bình luận này chứ</p>
+      <div class="product-rate">
+        <div class="detail-rate">
+          <svg [style.fill]="star1 ? '#F3A412' : '#E9EBED'" (click)="clickStar(1)" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19.0653 4.78109L21.412 9.47443C21.732 10.1278 22.5853 10.7544 23.3053 10.8744L27.5587 11.5811C30.2787 12.0344 30.9187 14.0078 28.9587 15.9544L25.652 19.2611C25.092 19.8211 24.7853 20.9011 24.9587 21.6744L25.9053 25.7678C26.652 29.0078 24.932 30.2611 22.0653 28.5678L18.0787 26.2078C17.3587 25.7811 16.172 25.7811 15.4387 26.2078L11.452 28.5678C8.59867 30.2611 6.86533 28.9944 7.612 25.7678L8.55867 21.6744C8.732 20.9011 8.42533 19.8211 7.86533 19.2611L4.55867 15.9544C2.612 14.0078 3.23867 12.0344 5.95867 11.5811L10.212 10.8744C10.9187 10.7544 11.772 10.1278 12.092 9.47443L14.4387 4.78109C15.7187 2.23443 17.7987 2.23443 19.0653 4.78109Z"
+            />
+          </svg>
+          <svg [style.fill]="star2 ? '#F3A412' : '#E9EBED'" (click)="clickStar(2)" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19.0653 4.78109L21.412 9.47443C21.732 10.1278 22.5853 10.7544 23.3053 10.8744L27.5587 11.5811C30.2787 12.0344 30.9187 14.0078 28.9587 15.9544L25.652 19.2611C25.092 19.8211 24.7853 20.9011 24.9587 21.6744L25.9053 25.7678C26.652 29.0078 24.932 30.2611 22.0653 28.5678L18.0787 26.2078C17.3587 25.7811 16.172 25.7811 15.4387 26.2078L11.452 28.5678C8.59867 30.2611 6.86533 28.9944 7.612 25.7678L8.55867 21.6744C8.732 20.9011 8.42533 19.8211 7.86533 19.2611L4.55867 15.9544C2.612 14.0078 3.23867 12.0344 5.95867 11.5811L10.212 10.8744C10.9187 10.7544 11.772 10.1278 12.092 9.47443L14.4387 4.78109C15.7187 2.23443 17.7987 2.23443 19.0653 4.78109Z"
+            />
+          </svg>
+          <svg [style.fill]="star3 ? '#F3A412' : '#E9EBED'" (click)="clickStar(3)" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19.0653 4.78109L21.412 9.47443C21.732 10.1278 22.5853 10.7544 23.3053 10.8744L27.5587 11.5811C30.2787 12.0344 30.9187 14.0078 28.9587 15.9544L25.652 19.2611C25.092 19.8211 24.7853 20.9011 24.9587 21.6744L25.9053 25.7678C26.652 29.0078 24.932 30.2611 22.0653 28.5678L18.0787 26.2078C17.3587 25.7811 16.172 25.7811 15.4387 26.2078L11.452 28.5678C8.59867 30.2611 6.86533 28.9944 7.612 25.7678L8.55867 21.6744C8.732 20.9011 8.42533 19.8211 7.86533 19.2611L4.55867 15.9544C2.612 14.0078 3.23867 12.0344 5.95867 11.5811L10.212 10.8744C10.9187 10.7544 11.772 10.1278 12.092 9.47443L14.4387 4.78109C15.7187 2.23443 17.7987 2.23443 19.0653 4.78109Z"
+            />
+          </svg>
+          <svg [style.fill]="star4 ? '#F3A412' : '#E9EBED'" (click)="clickStar(4)" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19.0653 4.78109L21.412 9.47443C21.732 10.1278 22.5853 10.7544 23.3053 10.8744L27.5587 11.5811C30.2787 12.0344 30.9187 14.0078 28.9587 15.9544L25.652 19.2611C25.092 19.8211 24.7853 20.9011 24.9587 21.6744L25.9053 25.7678C26.652 29.0078 24.932 30.2611 22.0653 28.5678L18.0787 26.2078C17.3587 25.7811 16.172 25.7811 15.4387 26.2078L11.452 28.5678C8.59867 30.2611 6.86533 28.9944 7.612 25.7678L8.55867 21.6744C8.732 20.9011 8.42533 19.8211 7.86533 19.2611L4.55867 15.9544C2.612 14.0078 3.23867 12.0344 5.95867 11.5811L10.212 10.8744C10.9187 10.7544 11.772 10.1278 12.092 9.47443L14.4387 4.78109C15.7187 2.23443 17.7987 2.23443 19.0653 4.78109Z"
+            />
+          </svg>
+          <svg [style.fill]="star5 ? '#F3A412' : '#E9EBED'" (click)="clickStar(5)" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19.0653 4.78109L21.412 9.47443C21.732 10.1278 22.5853 10.7544 23.3053 10.8744L27.5587 11.5811C30.2787 12.0344 30.9187 14.0078 28.9587 15.9544L25.652 19.2611C25.092 19.8211 24.7853 20.9011 24.9587 21.6744L25.9053 25.7678C26.652 29.0078 24.932 30.2611 22.0653 28.5678L18.0787 26.2078C17.3587 25.7811 16.172 25.7811 15.4387 26.2078L11.452 28.5678C8.59867 30.2611 6.86533 28.9944 7.612 25.7678L8.55867 21.6744C8.732 20.9011 8.42533 19.8211 7.86533 19.2611L4.55867 15.9544C2.612 14.0078 3.23867 12.0344 5.95867 11.5811L10.212 10.8744C10.9187 10.7544 11.772 10.1278 12.092 9.47443L14.4387 4.78109C15.7187 2.23443 17.7987 2.23443 19.0653 4.78109Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="product-comment">
+                <textarea id="text-content" placeholder="Nhập nội dung bình luận"
+                          [ngClass]="false ? 'input-review' : 'mg-bt input-review'" [(ngModel)]="reviewDto.content">
+                            </textarea>
+        <!-- upload ảnh -->
+        <input type="file" multiple hidden id="imageInput" #imageInput (change)="uploadComment($event)"
+               accept="image/*">
+        <div class="input-review-btn choose-file">
+          <label id="uploadImage" for="imageInput" style="cursor: pointer;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.5013 18.9596H7.5013C2.9763 18.9596 1.04297 17.0263 1.04297 12.5013V7.5013C1.04297 2.9763 2.9763 1.04297 7.5013 1.04297H12.5013C17.0263 1.04297 18.9596 2.9763 18.9596 7.5013V12.5013C18.9596 17.0263 17.0263 18.9596 12.5013 18.9596ZM7.5013 2.29297C3.65964 2.29297 2.29297 3.65964 2.29297 7.5013V12.5013C2.29297 16.343 3.65964 17.7096 7.5013 17.7096H12.5013C16.343 17.7096 17.7096 16.343 17.7096 12.5013V7.5013C17.7096 3.65964 16.343 2.29297 12.5013 2.29297H7.5013Z"
+                fill="#696F8C" />
+              <path
+                d="M7.4987 8.95833C6.23203 8.95833 5.20703 7.93333 5.20703 6.66667C5.20703 5.4 6.23203 4.375 7.4987 4.375C8.76536 4.375 9.79036 5.4 9.79036 6.66667C9.79036 7.93333 8.76536 8.95833 7.4987 8.95833ZM7.4987 5.625C6.9237 5.625 6.45703 6.09167 6.45703 6.66667C6.45703 7.24167 6.9237 7.70833 7.4987 7.70833C8.0737 7.70833 8.54036 7.24167 8.54036 6.66667C8.54036 6.09167 8.0737 5.625 7.4987 5.625Z"
+                fill="#696F8C" />
+              <path
+                d="M2.224 16.4148C2.024 16.4148 1.824 16.3148 1.70733 16.1398C1.51566 15.8565 1.59066 15.4648 1.88233 15.2732L5.99066 12.5148C6.89066 11.9065 8.13233 11.9815 8.949 12.6732L9.224 12.9148C9.64066 13.2732 10.349 13.2732 10.7573 12.9148L14.224 9.93984C15.1073 9.18151 16.499 9.18151 17.3907 9.93984L18.749 11.1065C19.0073 11.3315 19.0407 11.7232 18.8157 11.9898C18.5907 12.2482 18.199 12.2815 17.9323 12.0565L16.574 10.8898C16.1573 10.5315 15.449 10.5315 15.0323 10.8898L11.5657 13.8648C10.6823 14.6232 9.29066 14.6232 8.399 13.8648L8.124 13.6232C7.74066 13.2982 7.10733 13.2648 6.68233 13.5565L2.574 16.3148C2.46566 16.3815 2.34066 16.4148 2.224 16.4148Z"
+                fill="#696F8C" />
+            </svg>
+          </label>
+        </div>
+      </div>
+      <div class="review-img-upload">
+        <div class="review-img-item" *ngFor="let file of fileUploadUrl; let index = index">
+          <img  [src]="file" alt="">
+          <svg (click)="deleteFileUpload(index)" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_b_40942_48971)">
+              <rect y="0.600586" width="24" height="24" rx="12" fill="black" fill-opacity="0.35"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.41 12.6006L16.7 9.31059C16.89 9.13059 17 8.88059 17 8.60059C17 8.05059 16.55 7.60059 16 7.60059C15.72 7.60059 15.47 7.71059 15.29 7.89059L12 11.1906L8.71 7.89059C8.53 7.71059 8.28 7.60059 8 7.60059C7.45 7.60059 7 8.05059 7 8.60059C7 8.88059 7.11 9.13059 7.29 9.31059L10.59 12.6006L7.3 15.8906C7.11 16.0706 7 16.3206 7 16.6006C7 17.1506 7.45 17.6006 8 17.6006C8.28 17.6006 8.53 17.4906 8.71 17.3106L12 14.0106L15.29 17.3006C15.47 17.4906 15.72 17.6006 16 17.6006C16.55 17.6006 17 17.1506 17 16.6006C17 16.3206 16.89 16.0706 16.71 15.8906L13.41 12.6006Z" fill="white"/>
+            </g>
+            <defs>
+              <filter id="filter0_b_40942_48971" x="-2" y="-1.39941" width="28" height="28" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feGaussianBlur in="BackgroundImageFix" stdDeviation="1"/>
+                <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_40942_48971"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_40942_48971" result="shape"/>
+              </filter>
+            </defs>
+          </svg>
+        </div>
+      </div>
     </div>
     <div class="cu-footer">
       <button class="btn-cancel" (click)="matdialogPopup.close()" >{{'COMMON.CANCEL'|translate}}</button>
-      <button class="btn-save" (click)="sentComment()">
+      <button class="btn-save" [disabled]="this.reviewDto.rate == null || this.reviewDto.rate === 0" (click)="sentComment()">
         <span>{{'COMMON.CONFIRM' | translate}}</span>
         <i class="position-absolute spinner spinner-right spinner-sm spinner-light" style="margin-left: 12px;margin-top: 9px;"></i>
       </button>
@@ -480,21 +509,3 @@
   </div>
 </ng-template>
 
-
-<ng-template #popupWishlist>
-  <div class="cu-container">
-    <div class="cu-header">
-      {{'COMMON.CONFIRM' | translate}}
-    </div>
-    <div class="cu-body">
-      <p>Thông báo</p>
-    </div>
-    <div class="cu-footer">
-      <button class="btn-cancel" (click)="matdialogPopup.close()" >{{'COMMON.CANCEL'|translate}}</button>
-      <button class="btn-save" [disabled]="disableWishList" (click)="toggleWishList()">
-        <span>{{'COMMON.CONFIRM' | translate}}</span>
-        <i class="position-absolute spinner spinner-right spinner-sm spinner-light" style="margin-left: 12px;margin-top: 9px;" *ngIf="disableWishList"></i>
-      </button>
-    </div>
-  </div>
-</ng-template>

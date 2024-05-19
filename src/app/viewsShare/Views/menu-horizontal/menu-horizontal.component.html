@@ -1,3 +1,10 @@
+<!--<marquee-->
+<!--  class="title-shop"-->
+<!--  [height]="50"-->
+<!--  direction="left"-->
+<!--&gt;-->
+<!--  <span>B_Sport xin kính chào quý khách hàng, chúng tôi xin cam kết mang đến cho quý khách những trải nghiệm thú vị và những mặt hàng có chất lượng cao nhất</span>-->
+<!--</marquee>-->
 <div class="header">
     <div class="row container">
       <div class="col-3 logo-icon">
@@ -52,7 +59,7 @@
         </div>
       </div>
       <div class="col-3 infor-user">
-        <div class = "cart" routerLink="/h2shop/cart">
+        <div class = "cart" (click)="routerTo('/h2shop/cart')">
           <div class="number-cart">10</div>
           <i class="fa-solid fa-cart-shopping fa-xl" style="color: white;"></i>
         </div>
@@ -145,7 +152,7 @@
       </div>
       <div class="col-12 categories">
         <div class="row" style="line-height: 50px;position: relative;top: 7px;">
-          <div class="col-2">
+          <div class="col-2 title-categories">
             Danh mục
           </div>
           <div class="categories col-10">

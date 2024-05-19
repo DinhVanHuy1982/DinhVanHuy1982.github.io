@@ -102,7 +102,8 @@ export class SearchPageComponent implements OnInit{
       }else{
         this.searchProduct.nameSearch = '';
       }
-      this.onClearSearch()
+      this.search();
+      // this.onClearSearch()
     })
   }
 

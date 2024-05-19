@@ -21,7 +21,7 @@ export class UserService {
   }
 
   setUserCurrent(data: any) {
-    localStorage.removeItem('user')
+    // localStorage.removeItem('user')
     this.userCurrent.next(data);
   }
 
@@ -50,5 +50,12 @@ export class UserService {
 
   deleteUser(id:any){
     return this.http.get(this.api+'/delete/'+id)
+  }
+
+  forgotPassWord(userName:any){
+    return this.http.post(this.api+"/forgotPassword",{username:userName})
+  }
+  confirmCodeVerify(data:any){
+    return this.http.post(this.api+"/confirmResetPass",data);
   }
 }

@@ -164,7 +164,7 @@
             // }
           }
           .btn-apply {
-            background: #F26522;
+            background: #3643BA;
             color: #FFFFFF;
           }
           .btn-clear {
@@ -237,7 +237,7 @@
               background: #FFFFFF;
               &:focus {
                 background: #FCE9E2;
-                color: #F26522;
+                color: #3643BA;
                 border: 1px solid #FCE9E2 !important;
               }
             }
@@ -407,11 +407,11 @@
               line-height: 18px;
               text-align: center;
               text-transform: capitalize;
-              color: #F26522;
+              color: #3643BA;
               box-shadow: unset !important;
               &:hover{
                 color: #FDF7F4;
-                background: #F26522;
+                background: #3643BA;
                 svg path{
                   fill: #FDF7F4;
                 }
@@ -500,7 +500,7 @@
   }
 }
 .styleChoose{
-  background-color: #FCE9E2 !important;
-  color: #F26522 !important;
-  border: 1px solid #FCE9E2 !important;
+  background-color: #DDE3FF !important;
+  color: #3643BA !important;
+  border: 1px solid #3643BA !important;
 }

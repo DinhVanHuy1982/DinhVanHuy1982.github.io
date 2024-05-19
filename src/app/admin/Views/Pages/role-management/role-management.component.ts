@@ -145,8 +145,9 @@ export class RoleManagementComponent implements OnInit{
   }
   openCreate(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
-      height: '60vh',
+      height: '800px',
       maxHeight: '90vh',
+      width: '800px',
       maxWidth: '90vw',
       disableClose: false,
       hasBackdrop: true,

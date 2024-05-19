@@ -8,6 +8,7 @@ import {environment} from "../../../../../environment/environment";
 export class ProductService {
 
   private api = environment.API_GATEWAY_ENDPOINT+"product";
+  private api2 = environment.API_GATEWAY_ENDPOINT;
   constructor(private http:HttpClient) { }
 
   public getProduct(dataSearch: any){
@@ -30,6 +31,11 @@ export class ProductService {
   public getDetailProduct(productId:any){
     return this.http.get(this.api+"/get-detail/"+productId);
   }
+
+  public getHistoryImportProduct(productId:any){
+    return this.http.get("http://localhost:8085/api"+"/import/get-history/"+productId);
+  }
+
   public getDetailProductForClient(productId:any){
     return this.http.get(this.api+"/get-detail-for-client/"+productId);
   }
@@ -38,5 +44,12 @@ export class ProductService {
   }
   public searchProduct(dataSearch:any){// api phục vụ lấy dữ liệu hiển thị cho việc tìm kiếm sản phẩm cho người dùng
     return this.http.post(this.api+'/search-by-client', dataSearch)
+  }
+
+  public checkAllowComment(userId:number, productId:number){
+    return this.http.get(this.api2+"order/check-comment-allow/"+userId+"/"+productId)
+  }
+  public updatePayMentStatusOfOrder(orderCode:any){
+    return this.http.get(this.api+"/update/pay-status/"+orderCode)
   }
 }

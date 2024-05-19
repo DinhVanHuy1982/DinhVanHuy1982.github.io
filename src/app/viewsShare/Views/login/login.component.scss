@@ -72,3 +72,42 @@
   background: #E6E8F0;
   color: #696F8C !important;
 }
+.forgot-pass{
+  .for-got-header{
+    min-height: 5vh;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .title-header{
+      font-size: 24px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+  }
+  .for-got-body{
+    padding: 15px 0;
+    min-height:20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top:1px solid gray ;
+    border-bottom:1px solid gray ;
+    align-content: space-around;
+    flex-wrap: wrap;
+    .form-forgot{
+      margin: 0 15px;
+      width: 100%;
+    }
+  }
+  .for-got-footer{
+    min-height: 5vh;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .action-for-got{
+      justify-content:space-around;
+    }
+  }
+}

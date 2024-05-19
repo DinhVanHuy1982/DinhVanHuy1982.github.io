@@ -37,7 +37,7 @@ export class RegisterAccountComponent implements OnInit{
       fullName:new FormControl(null,[Validators.required, Validators.maxLength(30)]),
       password: new FormControl(null, [Validators.required, Validators.maxLength(16), Validators.minLength(6)]),
       rePassword: new FormControl(),
-      email: new FormControl(null , [Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
+      email: new FormControl(null , [Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/)]),
     })
   }
   uploadFile(event:any){

@@ -16,6 +16,9 @@ import {SaleManagementComponent} from "./admin/Views/Pages/sale-management/sale-
 import {SearchPageComponent} from "./viewsShare/Views/search-page/search-page.component";
 import {UserManagementComponent} from "./admin/Views/Pages/user-management/user-management.component";
 import {BannerManagementComponent} from "./admin/Views/Pages/banner-management/banner-management.component";
+import {
+  ImportProductManagementComponent
+} from "./admin/Views/Pages/import-product-management/import-product-management.component";
 
 // const userLogin =
 
@@ -34,6 +37,7 @@ const routes: Routes = [
   {path: "search-page-product", component: SearchPageComponent},
   {path: "user-management", component: UserManagementComponent},
   {path: "banner-management", component: BannerManagementComponent},
+  {path: "import-product-management", component: ImportProductManagementComponent},
   {path: "**", component: ContentShopComponent}
 ];
 

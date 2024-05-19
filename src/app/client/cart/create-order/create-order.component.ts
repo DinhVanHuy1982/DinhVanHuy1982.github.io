@@ -89,29 +89,55 @@ export class CreateOrderComponent implements OnInit{
         }
         return inforProduct
       })
-      if(this.formCreateUpdate.paymentMethod==2){
-        this.formCreateUpdate.userId = this.currentUser.id;
-        this.formCreateUpdate.orderDetailDTOList=listProduct;
-        this.formCreateUpdate.shipPrice=this.fee
-        console.log(this.formCreateUpdate)
-        this.orderService.createOrder(this.formCreateUpdate).subscribe((res:any)=>{
-          if(res.status=='OK'){
-            this.toast.success("Đặt hàng thành công")
+
+      this.formCreateUpdate.userId = this.currentUser.id;
+      this.formCreateUpdate.orderDetailDTOList=listProduct;
+      this.formCreateUpdate.shipPrice=this.fee
+      console.log(this.formCreateUpdate)
+      this.orderService.createOrder(this.formCreateUpdate).subscribe((res:any)=>{
+        if(res.status=='OK'){
+          if(this.formCreateUpdate.paymentMethod==1){
+            const orderCode = res.data.orderCode;
+            this.orderService.getLinkPayMent(this.totalPay*100, orderCode).subscribe((res:any)=>{
+              if(res.status =='Ok'){
+                const anchor = document.createElement('a');
+                anchor.href = res.url;
+                anchor.target='_blank'
+                anchor.click()
+              }
+            })
           }else{
-            this.toast.error(res.message)
+            this.toast.success("Đặt hàng thành công")
           }
-        },(err:any)=>{this.toast.error(err.message)})
-      }else{
-        this.orderService.getLinkPayMent(this.totalPay*100).subscribe((res:any)=>{
-          if(res.status =='Ok'){
-            const anchor = document.createElement('a');
-            anchor.href = res.url;
-            anchor.target='_blank'
-            anchor.click()
-            // this.router.navigateByUrl(res.url);
-          }
-        })
-      }
+
+        }else{
+          this.toast.error(res.message)
+        }
+      },(err:any)=>{this.toast.error(err.message)})
+
+
+      // if(this.formCreateUpdate.paymentMethod==2){
+      //   this.formCreateUpdate.userId = this.currentUser.id;
+      //   this.formCreateUpdate.orderDetailDTOList=listProduct;
+      //   this.formCreateUpdate.shipPrice=this.fee
+      //   console.log(this.formCreateUpdate)
+      //   this.orderService.createOrder(this.formCreateUpdate).subscribe((res:any)=>{
+      //     if(res.status=='OK'){
+      //       this.toast.success("Đặt hàng thành công")
+      //     }else{
+      //       this.toast.error(res.message)
+      //     }
+      //   },(err:any)=>{this.toast.error(err.message)})
+      // }else{
+      //   this.orderService.getLinkPayMent(this.totalPay*100).subscribe((res:any)=>{
+      //     if(res.status =='Ok'){
+      //       const anchor = document.createElement('a');
+      //       anchor.href = res.url;
+      //       anchor.target='_blank'
+      //       anchor.click()
+      //     }
+      //   })
+      // }
     }else{
 
     }
@@ -151,9 +177,7 @@ export class CreateOrderComponent implements OnInit{
       this.errWard=""
     }
     if(this.formCreateUpdate.shippingUnit==null){
-      this.errShipping="Vui lòng chọn phương thức thanh toán";
-    }else{
-      this.errShipping=""
+      this.errShipping="Vui lòng chọn phương thức vận chuyển";
     }
 
     return this.errShipping=="" && this.errWard=="" && this.errProvince=="" && this.errSDT=="" && this.errFullName=="" && this.errDistict==""
@@ -192,7 +216,9 @@ export class CreateOrderComponent implements OnInit{
       this.formCreateUpdate.ward=null;
       this.fee=0;
       this.formCreateUpdate.shippingUnit=null;
+      this.errDistict="Vui lòng chọn quận, huyện giao hàng"
     }else{
+      this.errDistict=""
       this.lstShip=[]
       this.lstWard=[]
       this.formCreateUpdate.ward=null;
@@ -240,7 +266,7 @@ export class CreateOrderComponent implements OnInit{
         }else{
           this.totalPay = this.priceOfOrder+res.data.total;
         }
-
+        this.errShipping="";
       }else{
         this.fee=0;
         this.totalPay=this.priceOfOrder
@@ -250,6 +276,7 @@ export class CreateOrderComponent implements OnInit{
       this.fee=0;
       this.totalPay=this.priceOfOrder
       this.toast.warning(error?.error?.code_message_value)
+      this.errShipping="Đơn vị vận chuyển không hợp lệ"
     } )
   }
 

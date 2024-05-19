@@ -13,7 +13,7 @@ export class CartService {
   getAllCart(id:any){
       return this.http.get(this.api+"get-cart-by-user/"+id)
   }
-  createCart(data: any){
-    return this.http.post(this.api+"create/cart", data)
+  createCart(data: any) {
+    return this.http.post(this.api + "create/cart", data)
   }
 }

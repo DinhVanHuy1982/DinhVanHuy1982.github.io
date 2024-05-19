@@ -137,7 +137,7 @@
         </div>
       </mat-tab>
       <mat-tab *ngIf="!data.isCreate" label="Số lượng">
-        <table>
+        <table class="table-detail-product" style="width: 100%">
           <tr>
             <th>Tên size</th>
             <th>Tên loại</th>
@@ -147,7 +147,7 @@
             <td>{{productDetail.sizeName}}</td>
             <td>{{productDetail.typeName}}</td>
             <td>
-              <input type="number" class="form-control" [(ngModel)]="productDetail.quantity">
+              {{productDetail.quantity}}
             </td>
           </tr>
         </table>

@@ -1,5 +1,5 @@
 .header{
-  background-color: #c2185b;
+  background-color: #3643BA;
   height: 119px;
   display: flex;
   justify-content: center;
@@ -293,7 +293,7 @@
       background-color: white;
       padding: 10px 0;
       border-radius: 6px;
-      top:65px;
+      top:80px;
       width: 190px;
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
       .choose{
@@ -348,13 +348,27 @@
     top:unset !important;
     transition: all ease-in-out .3s;
   }
+  .title-categories{
+    color: white;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 17px;
+  }
   .categori-item{
     width: 200px;
     position: relative;
     transition: all ease-in-out .3s;
-    background-color: white;
+    background-color: #3643BA;
     padding: unset;
     text-align: center;
+    color: white;
+    .nameCategories{
+      justify-content: space-around;
+      display: flex;
+      align-items: center;
+    }
+
     .categories-child{
       //display: none;
       display: block;
@@ -365,6 +379,11 @@
       top:0px;
       transition: .3s ease-in-out all;
     }
+
+  }
+  .categori-item:hover > .nameCategories i {
+    rotate: 90deg;
+    transition: all ease-in-out .3s;
   }
   .categori-item:hover > .categories-child{
     //display: block !important;
@@ -373,8 +392,9 @@
     left: 200px;
   }
   .categori-item:hover{
-    background-color: yellow;
+    background-color: #27358E;
   }
+
 }
 
 .action-user {
@@ -445,4 +465,12 @@
   font-weight: 600;
   font-size: 14px;
   color: #101840;
+}
+.title-shop{
+  background-color: #3643BA;
+  span{
+    color:white;
+    font-size: 14px;
+    font-weight: 400;
+  }
 }

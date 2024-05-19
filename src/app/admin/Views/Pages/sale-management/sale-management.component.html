@@ -11,27 +11,27 @@
   </div>
   <hr>
   <div class="row form-search">
-<!--    <div class="col-md-6">-->
-<!--      <div class="row">-->
-<!--        <div class="col-md-5">-->
-<!--          <ng-select-->
-<!--            [items]='item'-->
-<!--            bindLabel="name"-->
-<!--            bindValue="code"-->
-<!--            placeholder="Lựa chọn..."-->
-<!--            [clearable]="true"-->
-<!--            [(ngModel)]="dataSearch.status"-->
-<!--          >-->
-<!--            <ng-template let-item="item" ng-option-tmp>-->
-<!--              <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>-->
-<!--            </ng-template>-->
-<!--          </ng-select>-->
-<!--        </div>-->
-<!--        <div class="col-md-5">-->
-<!--          <input type="text" placeholder="Nhập mã hoặc tên role" class="w-100 form-control" [(ngModel)]="dataSearch.roleSearchName">-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          <ng-select
+            [items]='item'
+            bindLabel="name"
+            bindValue="code"
+            placeholder="Lựa chọn..."
+            [clearable]="true"
+            [(ngModel)]="formSearch.type"
+          >
+            <ng-template let-item="item" ng-option-tmp>
+              <div [matTooltip]="item.name" [style.color]="item.color">{{item.name}}</div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="col-md-5">
+          <input type="text" placeholder="Nhập mã hoặc tên giảm giá" class="w-100 form-control" [(ngModel)]="formSearch.keySearch">
+        </div>
+      </div>
+    </div>
     <div class="col-md-6  text-end">
       <button class="btn-search btn btn-hover" (click)="search()">Tìm kiếm</button>
     </div>

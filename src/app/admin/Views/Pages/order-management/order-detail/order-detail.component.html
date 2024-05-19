@@ -59,7 +59,17 @@
           </div>
           <div class="col-md-6">
             <label class="input-label">Trạng thái thanh toán</label>
-            <input type="text" [(ngModel)]="payStatus" disabled readonly  class="form-control">
+            <ng-select
+              [items]='lstPayMent'
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Lựa chọn..."
+              [(ngModel)]="inforOrder.payStatus"
+            >
+              <ng-template let-item="item" ng-option-tmp>
+                <div [matTooltip]="item.name" >{{item.name}}</div>
+              </ng-template>
+            </ng-select>
           </div>
           <div class="col-md-6">
             <label class="input-label">Giảm giá</label>

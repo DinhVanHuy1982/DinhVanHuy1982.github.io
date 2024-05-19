@@ -9,6 +9,7 @@ import {LoginComponent} from "../login/login.component";
 import {Router} from "@angular/router";
 import {SearchPageComponent} from "../search-page/search-page.component";
 import {UserService} from "../user.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -36,7 +37,8 @@ export class MenuHorizontalComponent implements OnInit{
               private matdialog: MatDialog,
               private router: Router,
               private sagePage:SearchPageComponent,
-              private userService:UserService
+              private userService:UserService,
+              private toast:ToastrService
               ) {
     this.listHistory=[];
     this.listHistoryFilter = [];
@@ -48,18 +50,25 @@ export class MenuHorizontalComponent implements OnInit{
   ngOnInit(): void {
 
     const user = localStorage.getItem("user")
-    // this.currrentUser = this.userService.getUserCurrent().subscribe((res:any)=>{
-    //   this.currrentUser = JSON.parse(res)
-    //
-    // });
-    if(user){
-      this.currrentUser = JSON.parse(user);
-      this.avatarUser = this.currrentUser.avatar;
-      this.checkLogin=true
-    }else{
-      this.currrentUser=null;
-      this.checkLogin=false;
-    }
+    this.currrentUser = this.userService.getUserCurrent().subscribe((res:any)=>{
+      if(res){
+        this.currrentUser = res
+        this.avatarUser = this.currrentUser.avatar;
+        this.checkLogin=true
+      }else{
+        this.currrentUser=null;
+        this.checkLogin=false;
+      }
+
+    });
+    // if(user){
+    //   this.currrentUser = JSON.parse(user);
+    //   this.avatarUser = this.currrentUser.avatar;
+    //   this.checkLogin=true
+    // }else{
+    //   this.currrentUser=null;
+    //   this.checkLogin=false;
+    // }
 
   }
 
@@ -90,11 +99,12 @@ export class MenuHorizontalComponent implements OnInit{
             this.listHistory.pop();
         }
         const encodedSearchHistory = this.listHistory.map((item:any) => encodeURIComponent(item));
-        if(this.checkLogin){
-            CommonFunction.setCookie(this.currentUser.account,JSON.stringify(encodedSearchHistory));
-        }else{
-            CommonFunction.setCookie('user',JSON.stringify(encodedSearchHistory));
-        }
+        // if(this.checkLogin){
+        //     CommonFunction.setCookie(this.currentUser?.account,JSON.stringify(encodedSearchHistory));
+        // }else{
+        // }
+      CommonFunction.setCookie('user',JSON.stringify(encodedSearchHistory));
+
         this.cdr.detectChanges();
     }
 
@@ -282,5 +292,13 @@ export class MenuHorizontalComponent implements OnInit{
 
   gotoCart() {
 
+  }
+
+  routerTo(s: string) {
+    if(this.checkLogin){
+      this.router.navigateByUrl(s)
+    }else{
+      this.toast.warning("Bạn cần đăng nhập để thực hiện chức năng này")
+    }
   }
 }

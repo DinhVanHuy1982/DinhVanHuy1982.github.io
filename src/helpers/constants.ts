@@ -83,6 +83,12 @@ export const menuleft : MenuNode[]=[
     target: "productManagement",
     child:[
       {
+        name: "Quản lý nhập hàng",
+        hasChild: false,
+        router: "/import-product-management",
+        code:"QLNH"
+      },
+      {
         name: "Quản lý sản phẩm",
         hasChild: false,
         router: "/product-management",

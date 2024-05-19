@@ -57,7 +57,11 @@ export class OrderService {
     return this.http.get(this.api+'order/detail/'+orderId)
   }
 
-  getLinkPayMent(amount:number){
-    return this.http.get(this.apiGetPayMentOnline+amount)
+  getLinkPayMent(amount:number,orderCode:string){
+    return this.http.get(this.apiGetPayMentOnline+"/"+amount+"/"+orderCode)
+  }
+
+  getListCartShippingAndComplete(userId:number,type:number){
+    return this.http.get(this.api+"order/get-list-order-ship-complete/"+userId+"/"+type)
   }
 }

@@ -9,6 +9,7 @@ import {HttpHeaders} from "@angular/common/http";
 import {ProductService} from "../../admin/Views/Pages/product-management/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../cart/cart.service";
+import {UserService} from "../../viewsShare/Views/user.service";
 // import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -32,15 +33,6 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   toTalRate5 :any;
   totalReviewsBook :any;
   avatarBook = 'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/72ce1bb0d1cb8b3c32dc254d35dbca3ca335aa25a39a1060e7dd5ed340d96b83/ming6.jpg';
-  listAvatarBook = [
-    'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/72ce1bb0d1cb8b3c32dc254d35dbca3ca335aa25a39a1060e7dd5ed340d96b83/ming6.jpg',
-    'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/de366a9b4644c6c2d968a5ae664e1ad7fae2085f34941811767736c14ed0c479/img3.jpg',
-    'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/72ce1bb0d1cb8b3c32dc254d35dbca3ca335aa25a39a1060e7dd5ed340d96b83/ming6.jpg',
-    'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/725b26fdfc02b1c7174da5d940e2c46d4232e159fbec43a9ff1ee42653cbfde0/img4.jpg',
-    'https://cdn-migi-2.laosedu.la/f/laosedu/4fc25ce6eb8c97f4cb1deb10be041ce3/0cb922589e4f88eeb43339c5a18193658c961545fcf813e0924e49b821a22d44/img5.jpg'
-  ]
-  // modalRef!: BsModalRef ;
-  disableWishList=false;
   bookInfo={
     "id": 6,
     "code": "BK2024335260",
@@ -119,7 +111,8 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
      private toast: ToastrService,
      private productService:ProductService,
      private activatedRoute: ActivatedRoute,
-     private cartService: CartService
+     private cartService: CartService,
+     private userService:UserService
    ) {
 
      this.lstReviewsView=[{
@@ -173,13 +166,8 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   typeProduct:any;
   sizeProduct:any;
   currentUser:any;
+  allowComment:any;
   ngOnInit(): void {
-
-    const user = localStorage.getItem("user")
-    if(user){
-        this.currentUser = JSON.parse(user);
-    }
-
      this.activatedRoute.queryParams.subscribe((data:any)=>{
        if(this.queryParam===data){
          return;
@@ -231,6 +219,19 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
          this.toast.error("Có lỗi trong quá trính xử lý: ", error.message)
        })
      })
+    this.userService.getUserCurrent().subscribe((user:any)=>{
+      if(user){
+        this.currentUser = user;
+        this.productService.checkAllowComment(this.currentUser.id, this.queryParam.id).subscribe((res:any)=>{
+          if(res.status==="OK"){
+            this.allowComment=res.data;
+          }else{
+            this.allowComment=null;
+          }
+        })
+      }
+    })
+
 
   }
   changeShowAvatar(item :any){
@@ -367,21 +368,62 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   }
 
   sentComment(){
-    if(this.formImgComment){
-
-      this.detailProduct.uploadComment(this.formImgComment).subscribe((res:any)=>{
-        if(res.status === 'OK'){
-          this.toast.success("Bình luận thành công")
-        }else{
-          this.toast.error("Lỗi bình luận")
+    if(this.validateComment()){
+      if(this.fileUploadComment){
+        const data = {
+          rating: this.reviewDto.rate,
+          userID:this.currentUser.id,
+          productID: this.queryParam.id,
+          comment: this.reviewDto.content,
+          orderDetailID:this.allowComment.id
         }
-      })
+
+        for(let i =0;i<this.fileUploadComment.length;i++){
+          this.formImgComment.append("fileComment", this.fileUploadComment[i])
+        }
+        this.formImgComment.append("comment", new Blob([ JSON.stringify(data)],{type: 'application/json'}))
+
+        this.detailProduct.uploadComment(this.formImgComment).subscribe((res:any)=>{
+          if(res.status === 'OK'){
+            this.toast.success("Bình luận thành công")
+          }else{
+            this.toast.error("Lỗi bình luận")
+          }
+        })
+        this.formImgComment.delete("filesComment")
+        this.formImgComment.delete("inforComment")
+      }
+      // this.detailProduct.testAPI().subscribe((data:any)=>{
+      //   console.log(data)
+      // })
     }
-    this.detailProduct.testAPI().subscribe((data:any)=>{
-      console.log(data)
-    })
+
   }
+  errComment=""
+  validateComment(){
+    this.reviewDto.productId=this.queryParam.id;
+    this.reviewDto.userId = this.currentUser.id;
+    this.errComment="";
+    if(!this.reviewDto.content){
+      this.errComment="Nội dung bình luận không được để trống"
+      return false;
+    }else{
+      this.errComment=""
+    }
+
+    if(this.reviewDto.rate<=0 || this.reviewDto.rate>5){
+      this.errComment="Vui lòng chọn đánh giá sao"
+      return false;
+    }else{
+      this.errComment="";
+    }
+
+    return true;
+
+  }
+
   comment(template:any){
+
     this.matdialogPopup = this.matDialog.open(template);
   }
 
@@ -404,30 +446,22 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   }
 
   commentValue:any;
-  fileUploadComment:any;
-  formImgComment:any;
+  fileUploadComment:any[]=[];
+  fileUploadUrl:any[]=[];
+  formImgComment= new FormData();
+
   uploadComment(event:any){
-    this.formImgComment  = event.target.files;
-    // console.log('File Import in upload : ',files);
-    // this.fileUploadComment = files;
-    // if (files.length > 0) {
-    //
-    //   const formData = new FormData();
-    //
-    //   // thêm 1 field vào formData
-    //   console.log('File: ', files);
-    //   // files.forEach((file: any) => {
-    //   //
-    //   // });
-    //   formData.append('file', files);
-    //
-    //   this.formImgComment = formData;
-    //   console.log('Form Data: ', this.formImgComment);
-    //   // this.isShowImport = false;
-    //   return ;
-    // }else{
-    //   return ;
-    // }
+    const files = event.target.files;
+    this.fileUploadComment  = Array.from(event.target.files);
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.fileUploadUrl.push(reader.result as string);
+        };
+        reader.readAsDataURL(files[i]);
+      }
+    }
   }
 
   changeChooseProduct() {
@@ -460,5 +494,57 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   changeSizeProduct(event:any, itemSize: any) {
     this.sizeProduct=itemSize.id
     this.changeChooseProduct();
+  }
+
+  star1=false;
+  star2=false;
+  star3=false;
+  star4=false;
+  star5=false;
+  reviewDto = {
+    rate: 0,
+    content: '',
+    userId:null,
+    productId:null,
+  }
+  clickStar(star:any){
+    this.reviewDto.rate = star
+    if(star === 1){
+      this.star1 = true
+      this.star2 = false
+      this.star3 = false
+      this.star4 = false
+      this.star5 = false
+    }else if(star === 2){
+      this.star1 = true
+      this.star2 = true
+      this.star3 = false
+      this.star4 = false
+      this.star5 = false
+    }else if(star === 3){
+      this.star1 = true
+      this.star2 = true
+      this.star3 = true
+      this.star4 = false
+      this.star5 = false
+    }else if(star === 4){
+      this.star1 = true
+      this.star2 = true
+      this.star3 = true
+      this.star4 = true
+      this.star5 = false
+    }else if(star === 5){
+      this.star1 = true
+      this.star2 = true
+      this.star3 = true
+      this.star4 = true
+      this.star5 = true
+    }
+    this.changeDetectorRef.detectChanges()
+  }
+
+  deleteFileUpload(index: number) {
+    this.fileUploadComment.splice(index,1)
+    this.fileUploadUrl.splice(index,1)
   }
 }
