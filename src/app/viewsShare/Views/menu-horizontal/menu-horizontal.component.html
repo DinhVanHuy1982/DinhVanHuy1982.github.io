@@ -157,12 +157,12 @@
           </div>
           <div class="categories col-10">
             <div class="row">
-              <div *ngFor="let item of CategoriesTemplate; let i index"  class="categori-item categories-parent">
-                <div class="nameCategories">
-                  <span>{{item.categoriName}}</span><i *ngIf="item.categoriesDTOList " class="fa-solid fa-angle-right"></i>
+              <div *ngFor="let item of lstCategories; let i= index"  class="categori-item categories-parent">
+                <div class="nameCategories"  [ngStyle]="{'cursor':item.children.length==0?'pointer':'auto'}"  (click)="item.children.length==0 ? viewProductByCategories(item):''">
+                  <span>{{item.categoriName}}</span><i *ngIf="item.children.length>0 " class="fa-solid fa-angle-right"></i>
                 </div>
-                <div *ngIf="item.categoriesDTOList " class="categories-child">
-                  <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item.categoriesDTOList}"></ng-container>
+                <div *ngIf="item.children.length>0 " class="categories-child">
+                  <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item.children}"></ng-container>
                 </div>
               </div>
             </div>
@@ -172,12 +172,12 @@
     </div>
 </div>
 <ng-template #categiries let-item="item">
-  <div *ngFor="let item1 of item; let i index" class="categori-item ">
-    <div class="nameCategories">
-      <span>{{item1.categoriName}}</span><i *ngIf="item1.categoriesDTOList " class="fa-solid fa-angle-right"></i>
+  <div *ngFor="let item1 of item; let i= index" class="categori-item ">
+    <div class="nameCategories" [ngStyle]="{'cursor':item1.children.length==0?'pointer':'auto'}" (click)="item1.children.length==0 ? viewProductByCategories(item1):''">
+      <span>{{item1.categoriName}}</span><i *ngIf="item1.children.length>0 " class="fa-solid fa-angle-right"></i>
     </div>
-    <div *ngIf="item1.categoriesDTOList  "  class="categories-child">
-      <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item1.categoriesDTOList}"></ng-container>
+    <div *ngIf="item1.children.length>0  "  class="categories-child">
+      <ng-container [ngTemplateOutlet]="categiries" [ngTemplateOutletContext] = "{item: item1.children}"></ng-container>
     </div>
   </div>
 </ng-template>

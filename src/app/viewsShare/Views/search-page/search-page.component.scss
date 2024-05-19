@@ -236,9 +236,9 @@
               margin: 0 6px;
               background: #FFFFFF;
               &:focus {
-                background: #FCE9E2;
+                background: #DDE3FF;
                 color: #3643BA;
-                border: 1px solid #FCE9E2 !important;
+                border: 1px solid #DDE3FF !important;
               }
             }
           }
@@ -345,7 +345,7 @@
             }
             .item-box__content {
               font-style: normal;
-              font-weight: 600;
+              font-weight: 500;
               font-size: 14px;
               line-height: 24px;
               color: #101840;
@@ -504,3 +504,39 @@
   color: #3643BA !important;
   border: 1px solid #3643BA !important;
 }
+.categories-search{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  span{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #101840;
+    margin-right: 15px;
+  }
+  .group-item {
+    background: #F4F6FA;
+    color: #101840;
+    white-space: nowrap;
+    border: 1px solid #D8DAE5;
+    border-radius: 4px;
+    padding: 4px;
+    height: 28px;
+    width: max-content;
+    svg{
+      cursor: pointer;
+    }
+    .group-namegv{
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: left;
+      color: #101840;
+      margin-left: 15px;
+    }
+  }
+}
+

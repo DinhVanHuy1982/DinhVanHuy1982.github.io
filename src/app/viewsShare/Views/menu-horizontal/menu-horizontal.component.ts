@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {SearchPageComponent} from "../search-page/search-page.component";
 import {UserService} from "../user.service";
 import {ToastrService} from "ngx-toastr";
+import {CategoriesService} from "../../../admin/Views/Pages/categories-management/categories.service";
 
 @Component({
   selector: 'app-menu-horizontal',
@@ -22,6 +23,8 @@ export class MenuHorizontalComponent implements OnInit{
   domainFileLocal = environment.DOMAIN_FILE_LOCAL;
   listHistory: string[];
   keyword = '';
+  categoriesIdSearch :any;
+  categoriesNameSearch :any;
   currentUser : any;
   checkLogin: boolean = false;
   listHistoryFilter : string[];
@@ -38,7 +41,8 @@ export class MenuHorizontalComponent implements OnInit{
               private router: Router,
               private sagePage:SearchPageComponent,
               private userService:UserService,
-              private toast:ToastrService
+              private toast:ToastrService,
+              private categoriesService:CategoriesService
               ) {
     this.listHistory=[];
     this.listHistoryFilter = [];
@@ -47,6 +51,7 @@ export class MenuHorizontalComponent implements OnInit{
   avatarUser:any;
 
   currrentUser:any;
+  lstCategories:any;
   ngOnInit(): void {
 
     const user = localStorage.getItem("user")
@@ -61,6 +66,14 @@ export class MenuHorizontalComponent implements OnInit{
       }
 
     });
+
+    // get list danh mục
+    const data={}
+    this.categoriesService.apiGetDataTree(data).subscribe((res:any)=>{
+      this.lstCategories=res.data;
+      console.log(this.lstCategories)
+    })
+
     // if(user){
     //   this.currrentUser = JSON.parse(user);
     //   this.avatarUser = this.currrentUser.avatar;
@@ -114,15 +127,24 @@ export class MenuHorizontalComponent implements OnInit{
         }
     }
     search(){
+        let urlNavigate='/search-page-product';
+        let  dataSearch={
+          keyword:'',
+          categoriesId:null,
+          categoriName:''
+        }
         if(this.keyword.trim().length > 0){
             this.setHistory();
             this.getHistory();
             let keyword = this.keyword.trim();
             this.sagePage.searchProduct.nameSearch=keyword;
-            this.router.navigateByUrl(`/search-page-product?keyword=${encodeURIComponent(keyword)}`)
-        }else{
-            this.router.navigateByUrl(`/search-page-product`);
+            dataSearch.keyword=keyword;
         }
+        if(this.categoriesIdSearch){
+          dataSearch.categoriesId = this.categoriesIdSearch
+          dataSearch.categoriName=this.categoriesNameSearch
+        }
+        this.router.navigate(["/search-page-product"], {queryParams: dataSearch})
         this.showHistory = false;
         this.inputSearch.nativeElement.blur();
     }
@@ -300,5 +322,11 @@ export class MenuHorizontalComponent implements OnInit{
     }else{
       this.toast.warning("Bạn cần đăng nhập để thực hiện chức năng này")
     }
+  }
+
+  viewProductByCategories(item:any) {
+    this.categoriesIdSearch=item.id;
+    this.categoriesNameSearch=item.categoriName
+    this.search();
   }
 }

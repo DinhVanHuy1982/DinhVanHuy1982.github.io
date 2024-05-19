@@ -4,6 +4,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CommonFunction} from "../../../../core/service/utils/common-function";
 import {environment} from "../../../../environment/environment";
 import {ProductService} from "../../../admin/Views/Pages/product-management/product.service";
+import {MenuHorizontalComponent} from "../menu-horizontal/menu-horizontal.component";
 
 @Component({
   selector: 'app-search-page',
@@ -85,12 +86,14 @@ export class SearchPageComponent implements OnInit{
   ]
   priceInvalid=false;
   private priceDisable=false;
+  categoriesId:any;
+  categoriesName:any;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private productService:ProductService,
+    private productService:ProductService
   )
   {
     this.lstProduct=[];
@@ -101,6 +104,10 @@ export class SearchPageComponent implements OnInit{
         this.searchProduct.nameSearch = resp.keyword;
       }else{
         this.searchProduct.nameSearch = '';
+      }
+      if(resp.categoriesId){
+        this.searchProduct.categoriesId=resp.categoriesId
+        this.categoriesName=resp.categoriName
       }
       this.search();
       // this.onClearSearch()
@@ -136,20 +143,36 @@ export class SearchPageComponent implements OnInit{
   }
 
   search(){
-    this.route.queryParams.subscribe((resp:any)=>{
-      console.log(resp)
-      if(resp.keyword){
-        this.searchProduct.nameSearch = resp.keyword;
-      }else{
-        this.searchProduct.nameSearch = '';
-      }
-    })
+    // this.route.queryParams.subscribe((resp:any)=>{
+    //   console.log(resp)
+    //   if(resp.keyword){
+    //     this.searchProduct.nameSearch = resp['keyword'];
+    //   }else{
+    //     this.searchProduct.nameSearch = '';
+    //   }
+    //   if(resp.categoriesId){
+    //     this.searchProduct.categoriesId =resp['categoriesId'];
+    //   }else{
+    //     this.searchProduct.categoriesId=undefined;
+    //   }
+    // })
+    if(this.searchProduct.fromPrice){
+      this.searchProduct.fromPrice = this.convertStringToNumber(this.searchProduct.fromPrice+"");
+    }
+    if(this.searchProduct.toPrice){
+
+      this.searchProduct.toPrice = this.convertStringToNumber(this.searchProduct.toPrice+"");
+    }
+
     this.productService.searchProduct(this.searchProduct).subscribe((res:any)=>{
       this.lstProduct = res.data.content;
       this.totalPage=res.data.totalPages;
       this.totalElement = res.data.totalElements
-
     })
+  }
+  convertStringToNumber(numberString: string): number {
+    // Loại bỏ dấu phẩy và chuyển đổi sang số
+    return Number(numberString.replace(/,/g, ''));
   }
 
   fomatPrice(){
@@ -206,6 +229,21 @@ export class SearchPageComponent implements OnInit{
   sortBy(sort: string) {
     this.searchProduct.propertySort=sort
   }
+
+  removeSearchCategories() {
+    // params['vnp_Amount'];
+    // this.menuHorizon.categoriesIdSearch
+    this.categoriesId=null;
+    this.categoriesName=null;
+    this.searchProduct.categoriesId=undefined
+    let dataSearch
+    if(this.searchProduct.nameSearch){
+      dataSearch={
+        keyword:this.searchProduct.nameSearch
+      }
+    }
+    this.router.navigate(["/search-page-product"], {queryParams: dataSearch})
+  }
 }
 export class SearchProduct {
   propertySort?: string = '';
@@ -213,6 +251,7 @@ export class SearchProduct {
   toPrice?: any;
   nameSearch?: string = '';
   star?: number[];
+  categoriesId?: number;
   page:number=1;
   pageSize:number=9;
 }
