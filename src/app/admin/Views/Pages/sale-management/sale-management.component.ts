@@ -7,6 +7,7 @@ import {ActionProductComponent} from "../product-management/action-product/actio
 import {ActionSaleComponent} from "./action-sale/action-sale.component";
 import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
 import {SaleService} from "./sale.service";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-sale-management',
@@ -37,9 +38,16 @@ export class SaleManagementComponent implements OnInit{
   totalPage=0;
   totalElement=0;
   currentPage=1;
+  action:any;
   constructor(private dialog:MatDialog,
               private productService:ProductService,
-              private saleService: SaleService) {
+              private saleService: SaleService,
+              private userService:UserService) {
+    this.userService.getAction().subscribe((res:any)=>{
+      console.log("Action: ",res)
+      this.action = res;
+    })
+
   }
 
   ngOnInit(): void {
@@ -50,7 +58,7 @@ export class SaleManagementComponent implements OnInit{
       disableClose: false,
       hasBackdrop: true,
       width: '760px',
-      height: '886px',
+      height: '600px',
       data: {
         isCreate: true
       }

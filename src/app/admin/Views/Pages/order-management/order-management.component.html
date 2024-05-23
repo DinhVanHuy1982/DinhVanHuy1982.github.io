@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="col-md-6  text-end">
-      <button class="btn-search btn btn-hover" (click)="searchButton()">Tìm kiếm</button>
+      <button class="btn-search btn btn-hover" *ngIf="action.search" (click)="searchButton()">Tìm kiếm</button>
     </div>
   </div>
   <ag-grid-angular

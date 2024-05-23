@@ -6,6 +6,7 @@ import {ITooltipAngularComp} from "ag-grid-angular";
 import {ITooltipParams} from "ag-grid-community";
 import {CreateUpdateRoleComponent} from "../../role-management/create-update-role/create-update-role.component";
 import {CreateUpdateProductComponent} from "../create-update-product/create-update-product.component";
+import {UserService} from "../../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-action-product',
@@ -13,18 +14,28 @@ import {CreateUpdateProductComponent} from "../create-update-product/create-upda
   styleUrls: ['./action-product.component.scss']
 })
 export class ActionProductComponent implements ITooltipAngularComp{
-
+  action:any;
   disableDelete=false;
   constructor(
     private toast:ToastrService,
     public matdialog: MatDialog,
-    private productService: ProductService
+    private productService: ProductService,
+    private userService:UserService
   ) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
   data: any;
 
   openModal(template:any){
-
+    const dialogConfig= {
+      disableClose: false,
+      hasBackdrop: true,
+      width: '450px',
+      borderRadius:'10px'
+    };
+    this.matdialog.open(template,dialogConfig)
   }
   updateProduct(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
@@ -42,7 +53,13 @@ export class ActionProductComponent implements ITooltipAngularComp{
     )
   }
   deleteProduct(){
-
+    this.productService.deleteProduct(this.data.id).subscribe((res:any)=>{
+      if(res.status==="OK"){
+        this.toast.success("Xóa sản phẩm thành công")
+      }else{
+        this.toast.error(res.message)
+      }
+    })
   }
 
   agInit(params: ITooltipParams): void {

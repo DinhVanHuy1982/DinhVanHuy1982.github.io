@@ -52,4 +52,8 @@ export class ProductService {
   public updatePayMentStatusOfOrder(orderCode:any){
     return this.http.get(this.api+"/update/pay-status/"+orderCode)
   }
+
+  deleteProduct(id:number) {
+    return this.http.get(this.api+"/delete/product/"+id);
+  }
 }

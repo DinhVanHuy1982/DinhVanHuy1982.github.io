@@ -7,6 +7,7 @@ import {
   ActionBrandManagementComponent
 } from "../brand-management/action-brand-management/action-brand-management.component";
 import {ActionOrderManagementComponent} from "./action-order-management/action-order-management.component";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-order-management',
@@ -121,9 +122,14 @@ export class OrderManagementComponent implements OnInit{
     page:1,
     pageSize:10
   };
+  action:any;
   constructor(private dialog: MatDialog,
               private toast:ToastrService,
-              private orderService:OrderService) {
+              private orderService:OrderService,
+              private userService:UserService) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
   ngOnInit(): void {
     this.search()

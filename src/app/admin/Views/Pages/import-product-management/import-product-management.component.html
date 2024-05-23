@@ -2,7 +2,7 @@
 <div class="product-management">
   <div class="title-manangement">
     <div class="title-screen">Quản lý nhập hàng</div>
-    <div class="action">
+    <div class="action"  *ngIf="action.create">
       <div class="action-create"><button (click)="createProduct()">Tạo mới</button></div>
     </div>
   </div>
@@ -22,7 +22,7 @@
     <div class="col-md-3">
       <input class="form-control" placeholder="Mã hoặc tên sản phẩm..." [(ngModel)]="formSearch.nameSearch">
     </div>
-    <div class="action-search col-md-6" style="text-align: end;">
+    <div class="action-search col-md-6"  *ngIf="action.search" style="text-align: end;">
       <button class="search btn-search btn btn-hover" (click)="search()">Tìm kiếm</button>
     </div>
   </div>

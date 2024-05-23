@@ -11,6 +11,7 @@ import {
 import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
 import {CreateImportProductComponent} from "./create-import-product/create-import-product.component";
 import {ActionImportProductComponent} from "./action-import-product/action-import-product.component";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-import-product-management',
@@ -18,11 +19,16 @@ import {ActionImportProductComponent} from "./action-import-product/action-impor
   styleUrls: ['./import-product-management.component.scss']
 })
 export class ImportProductManagementComponent {
+  action:any;
   constructor(private prductService: ProductService,
               private toast:ToastrService,
               private dialog : MatDialog,
-              private brandService: BrandService
+              private brandService: BrandService,
+              private userService:UserService
   ) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
   noRowsTemplate = NO_ROW_GRID_TEMPLATE;
 

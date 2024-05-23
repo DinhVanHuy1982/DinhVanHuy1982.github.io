@@ -97,6 +97,9 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   typeBookChoose = this.bookInfo.hardBook;
   priceOfTypeBook: number | 0 | undefined;
   commentInfor:any;
+  commentInforDisplay:any[]=[];
+  totalPageCmt=0;
+  currentPageCmt=1;
   rate1: any;
   rate2: any;
   rate3: any;
@@ -180,6 +183,10 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
            this.lstType=res.data.typeProductDTOS
            this.lstSize=res.data.sizeDTOS
            this.commentInfor=res.data.commentResponseDTO;
+           this.commentInforDisplay = this.commentInfor.userComment.slice(0,5);
+           this.totalReviewsBook=this.commentInfor.userComment.length;
+           this.totalPageCmt = Math.ceil(this.commentInfor?.userComment.length/5);
+
            this.typeProduct=this.lstType[0].id
            this.sizeProduct=this.lstSize[0].id
 
@@ -194,9 +201,9 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
            this.descriptionProduct = descript.join(", ")
 
            // lấy ảnh đại diện
-           this.avatarBook = res.data.pathImg.map((item:any) =>{
+           res.data.lstProductIMG.forEach((item:any) =>{
              if(item?.avatar){
-               return item?.fileName ;
+               this.avatarBook =  item?.fileName ;
              }
            })
 
@@ -386,6 +393,7 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
         this.detailProduct.uploadComment(this.formImgComment).subscribe((res:any)=>{
           if(res.status === 'OK'){
             this.toast.success("Bình luận thành công")
+            this.matDialog.closeAll()
           }else{
             this.toast.error("Lỗi bình luận")
           }

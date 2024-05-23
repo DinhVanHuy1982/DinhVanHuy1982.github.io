@@ -41,6 +41,13 @@
     .modal-header {
       flex-direction: column;
       align-items: center;
+      height: 50px !important;
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #EBEDF3;
+      h4{
+        margin-bottom: 0px;
+      }
     }
     .modal-title {
       font-weight: bold;
@@ -57,7 +64,7 @@
       margin: 0;
     }
     .modal-footer {
-      padding: 24px 0;
+      padding: 10px;
       justify-content: center;
       .modal-actions {
         display: flex;
@@ -66,6 +73,12 @@
           margin: 0 6px;
         }
       }
+      .btn-action{
+        .btn-or{
+          background: #3643BA;
+        }
+      }
+
     }
   }
 }

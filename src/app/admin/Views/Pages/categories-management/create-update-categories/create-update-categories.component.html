@@ -4,14 +4,14 @@
     <div *ngIf="!data.isCreate">Cập nhật</div>
   </div>
   <div class="body">
-    <div class="row">
+    <div class="row infor-categories">
       <div class="col-md-6">
         <label>Mã danh mục</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.categoriCode" class="form-control">
+        <input type="text" placeholder="Mã danh mục" [disabled]="!data.isCreate" [(ngModel)]="formCreateUpdate.categoriCode" class="form-control">
       </div>
       <div class="col-md-6">
         <label>Tên danh mục</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.categoriName" class="form-control">
+        <input type="text"  placeholder="Tên danh mục"  [(ngModel)]="formCreateUpdate.categoriName" class="form-control">
       </div>
       <div class="col-md-6">
         <label>Danh mục cha</label>
@@ -32,7 +32,7 @@
           bindLabel="name"
           bindValue="code"
           placeholder="Lựa chọn..."
-          [clearable]="true"
+          [clearable]="false"
           [(ngModel)]="formCreateUpdate.status"
         >
           <ng-template let-item="item" ng-option-tmp>
@@ -44,7 +44,7 @@
     </div>
     <div class="col-md-12">
       <label>Mô tả</label>
-      <textarea  class="form-control" [(ngModel)]="formCreateUpdate.description"></textarea>
+      <textarea  class="form-control"  placeholder="Mô tả danh  mục" [(ngModel)]="formCreateUpdate.description"></textarea>
     </div>
   </div>
   <div class="footer">

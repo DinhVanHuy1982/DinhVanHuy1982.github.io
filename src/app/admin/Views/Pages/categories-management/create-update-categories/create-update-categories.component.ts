@@ -14,7 +14,7 @@ export class CreateUpdateCategoriesComponent implements OnInit{
     id:null,
     categoriName:null,
     categoriCode:null,
-    status:"",
+    status:"1",
     parentId:null,
     description:""
   }

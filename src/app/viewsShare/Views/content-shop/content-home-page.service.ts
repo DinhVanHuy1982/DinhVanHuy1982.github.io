@@ -13,4 +13,7 @@ export class ContentHomePageService {
   getProductBestSeller(){
     return this.http.get(this.api+"product/best-seller")
   }
+  getLstProductBestSale(){
+    return this.http.get(this.api+"product/get-best-sell");
+  }
 }

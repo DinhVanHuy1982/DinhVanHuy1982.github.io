@@ -228,6 +228,7 @@ export class CreateUpdateSaleComponent implements OnInit{
   errStartTime="";
   errEndTime="";
   errQuantitySale="";
+  errSaleProduct="";
 
   validateCreateSale(){
     this.errCode="";
@@ -235,7 +236,8 @@ export class CreateUpdateSaleComponent implements OnInit{
     this.errMaxPurchase="";
     this.errStartTime="";
     this.errEndTime="";
-    this.errQuantitySale=""
+    this.errQuantitySale="";
+    this.errSaleProduct="";
     // validate code
     if(this.body.code.trim() === '' ){
       this.errCode = "Mã giảm giá không được để trống";
@@ -258,11 +260,25 @@ export class CreateUpdateSaleComponent implements OnInit{
       this.errMaxPurchase="";
     }
 
-    if(this.body.type=1){
+    if(this.body.type==1){
       if(this.body.quantity<=0 ){
         this.errQuantitySale="Số lượng phiếu giảm giá không được để trống";
       }
     }
+
+    if(this.body.type ==0){
+      let check=true;
+      this.body.productIdLst.forEach((item:any)=>{
+        if(item.selected){}
+        check=false;
+      })
+      if(check){
+        this.errSaleProduct="Cần chọn ít nhất một sản phẩm cho mã giảm giá";
+      }else{
+        this.errSaleProduct="";
+      }
+    }
+
 
     if(this.body.startTime.trim()===""){
       this.errStartTime="Ngày bắt đầu khuyến mãi không được để trống"
@@ -274,7 +290,7 @@ export class CreateUpdateSaleComponent implements OnInit{
       this.errStartTime ="";
       this.errEndTime="";
     }
-    return (this.errCode=="" && this.errStartTime=="" && this.errName=="" && this.errEndTime=="")
+    return (this.errCode=="" && this.errStartTime=="" && this.errName=="" && this.errEndTime=="" && this.errSaleProduct=="")
   }
 
   changeStartTime(event:any) {

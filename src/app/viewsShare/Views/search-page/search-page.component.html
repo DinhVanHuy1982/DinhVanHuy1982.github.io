@@ -85,18 +85,20 @@
         </div>
       </div>
       <div class="search-container">
-        <div class="filter-item" *ngIf="lstProduct.length>0">
-          <span class="filter-seller__title">Các sản phẩm liên quan đến <span class="keyword">"{{this.searchProduct.nameSearch}}"</span></span>
-          <div class="categories-search">
-            <span>Danh mục tìm kiếm</span>
-            <div class="group-item d-flex align-items-center text-bold mr-2" *ngIf="categoriesName">
-              <span class="group-namegv">Bóng đá</span>
-              <svg class="mx-2 cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none"  (click)="removeSearchCategories()">
-                <path d="M8.5 1L1 8.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M1 1L8.5 8.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
+        <span class="filter-seller__title">Các sản phẩm liên quan đến <span class="keyword">"{{this.searchProduct.nameSearch}}"</span></span>
+        <div class="categories-search">
+
+          <span>Danh mục tìm kiếm</span>
+          <div class="group-item d-flex align-items-center text-bold mr-2" *ngIf="categoriesName">
+            <span class="group-namegv">{{categoriesName}}</span>
+            <svg class="mx-2 cursor-pointer" width="10" height="10" viewBox="0 0 10 10" fill="none"  (click)="removeSearchCategories()">
+              <path d="M8.5 1L1 8.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 1L8.5 8.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
+        </div>
+        <div class="filter-item" *ngIf="lstProduct.length>0">
+
           <div class="sort-by">
             <span class="sort-by__title">Lọc theo</span>
             <div class="btn-group">

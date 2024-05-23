@@ -70,6 +70,22 @@
         .image {
           flex: 1;
           height: 100%;
+          .maxPurchase{
+            color:white;
+            padding: 3px 12px;
+            background: rgb(202, 33, 44);
+            font-size: 12px;
+            border-radius: 2px;
+            font-weight: 500;
+            bottom: 190px;
+            left: 105px;
+            height: 22px;
+            text-align: center;
+            line-height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
         .titleEmployee {
           flex: 1;
@@ -749,3 +765,11 @@
 .button-buy:hover svg path {
   fill: #FDF7F4;
 }
+.price-product{
+  display: flex;
+  justify-content: space-between;
+  .price-not-sale{
+    text-decoration-line: line-through;
+  }
+}
+

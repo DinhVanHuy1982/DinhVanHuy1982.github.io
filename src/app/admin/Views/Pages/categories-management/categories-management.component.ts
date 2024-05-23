@@ -6,6 +6,8 @@ import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CreateUpdateRoleComponent} from "../role-management/create-update-role/create-update-role.component";
 import {CreateUpdateCategoriesComponent} from "./create-update-categories/create-update-categories.component";
+import {ToastrService} from "ngx-toastr";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-categories-management',
@@ -14,6 +16,8 @@ import {CreateUpdateCategoriesComponent} from "./create-update-categories/create
 })
 export class CategoriesManagementComponent implements OnInit{
   displayedColumns: string[] = ['categoriCode','categoriName', 'createTime','status','description','action'];
+
+  action :any;
 
   private transformer = (node: any, level: number) => {
     return {
@@ -48,7 +52,12 @@ export class CategoriesManagementComponent implements OnInit{
 
 
   constructor(private categoriService:CategoriesService,
-              public matdialog:MatDialog) {
+              public matdialog:MatDialog,
+              public toast:ToastrService,
+              private userService:UserService) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -84,10 +93,8 @@ export class CategoriesManagementComponent implements OnInit{
 
   openCreate() {
     const dialogConfig: MatDialogConfig<{ isCreate: boolean}> = {
-      height: '60vh',
-      maxHeight: '90vh',
-      minWidth:'30vw',
-      maxWidth: '90vw',
+      height: '500px',
+      width:'600px',
       data: {
         isCreate: true
       }
@@ -99,10 +106,8 @@ export class CategoriesManagementComponent implements OnInit{
 
   updateCategories(data:any) {
     const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
-      height: '60vh',
-      maxHeight: '90vh',
-      minWidth:'30vw',
-      maxWidth: '90vw',
+      height: '500px',
+      width:'600px',
       data: {
         isCreate: false,
         itemData: data
@@ -113,12 +118,29 @@ export class CategoriesManagementComponent implements OnInit{
     )
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.matdialog.open(template)
+  categoriesDelete:any
+  openModal(template: TemplateRef<any>, data:any) {
+    console.log("Data delete: ", data)
+    this.categoriesDelete=data;
+    const dialogConfig= {
+      disableClose: false,
+      hasBackdrop: true,
+      width: '450px',
+      borderRadius:'10px'
+    };
+    this.matdialog.open(template,dialogConfig).afterClosed().subscribe(()=>{
+      this.categoriesDelete=null;
+    })
   }
 
   deleteCategories() {
-
+    this.categoriService.deleteCategories(this.categoriesDelete?.id).subscribe((res:any)=>{
+      if(res.status==='OK'){
+        this.toast.success("Xóa danh mục thành công")
+      }else {
+        this.toast.error(res.message)
+      }
+    });
   }
 }
 

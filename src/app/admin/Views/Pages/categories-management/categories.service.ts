@@ -26,4 +26,8 @@ export class CategoriesService {
   public getById(id:any){
     return this.http.get(this.api+"/get-by-id/"+ id)
   }
+
+  deleteCategories(idCategories:number) {
+    return this.http.get(this.api+"/delete-by-id/"+idCategories)
+  }
 }

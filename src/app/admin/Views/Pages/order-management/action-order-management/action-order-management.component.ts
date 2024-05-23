@@ -6,6 +6,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {CreateUpdateBrandComponent} from "../../brand-management/create-update-brand/create-update-brand.component";
 import {OrderManagementComponent} from "../order-management.component";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
+import {UserService} from "../../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-action-order-management',
@@ -14,11 +15,15 @@ import {OrderDetailComponent} from "../order-detail/order-detail.component";
 })
 export class ActionOrderManagementComponent  implements ITooltipAngularComp{
   data:any;
+  action:any;
   constructor( private toast:ToastrService,
                public matdialog: MatDialog,
-               private orderManagement:OrderManagementComponent)
+               private orderManagement:OrderManagementComponent,
+               private userService:UserService)
   {
-
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
 
   agInit(params: ITooltipParams): void {

@@ -9,6 +9,7 @@ import {CreateUpdateProductComponent} from "./create-update-product/create-updat
 import {FormControl} from "@angular/forms";
 import {BrandService} from "../brand-management/brand.service";
 import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-product-management',
@@ -16,23 +17,17 @@ import {NO_ROW_GRID_TEMPLATE} from "../../../../../helpers/constants";
   styleUrls: ['./product-management.component.scss']
 })
 export class ProductManagementComponent implements OnInit{
-
-  public treeItems: TreeviewItem[];
+  action:any;
   constructor(private prductService: ProductService,
               private toast:ToastrService,
               private dialog : MatDialog,
-              private brandService: BrandService
+              private brandService: BrandService,
+              private userService:UserService
   ) {
-    this.treeItems = [
-      new TreeviewItem({ text: 'Parent 1', value: 1, children: [
-          { text: 'Child 1.1', value: 11 },
-          { text: 'Child 1.2', value: 12 }
-        ]}),
-      new TreeviewItem({ text: 'Parent 2', value: 2, children: [
-          { text: 'Child 2.1', value: 21 },
-          { text: 'Child 2.2', value: 22 }
-        ]})
-    ];
+    this.userService.getAction().subscribe((res:any)=>{
+      console.log("Action: ",res)
+      this.action = res;
+    })
   }
   noRowsTemplate = NO_ROW_GRID_TEMPLATE;
 

@@ -7,6 +7,7 @@ import {environment} from "../../../../environment/environment";
 import {BannerService} from "../../../admin/Views/Pages/banner-management/banner.service";
 import {UserService} from "../user.service";
 import {CartService} from "../../../client/cart/cart.service";
+import { formatDistanceToNow } from 'date-fns';
 
 @Component({
   selector: 'app-content-shop',
@@ -47,7 +48,7 @@ export class ContentShopComponent implements OnInit{
     },
   };
 
-  myCarouselOptions1:any = {
+  myCarouselOptionsNoop:any = {
     items: 5,
     dots: true,
     nav: true,
@@ -79,6 +80,40 @@ export class ContentShopComponent implements OnInit{
       2162: this.getOptionByScreen(5),
     },
   };
+
+  myCarouselOptionsNoNoop:any = {
+    items: 5,
+    dots: true,
+    nav: true,
+    navText: [`<svg style="rotate: 180deg;" width="32" height="32" viewBox="-1 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#3643BA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `, `<svg width="32" height="32" viewBox="-2 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.168 7.05664L19.8346 16.0011L12.168 24.9455" stroke="#3643BA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `],
+    autoplay: false,
+    responsiveClass: true,
+    mouseDrag: true,
+    responsive: {
+      0: this.getOptionByScreen(1),
+      200: this.getOptionByScreen(3),
+      405: this.getOptionByScreen(3),
+      600: this.getOptionByScreen(5),
+      795: this.getOptionByScreen(5),
+      990: this.getOptionByScreen(5),
+      992: this.getOptionByScreen(5),
+      1187: this.getOptionByScreen(5),
+      1382: this.getOptionByScreen(5),
+      1577: this.getOptionByScreen(5),
+      1772: this.getOptionByScreen(5),
+      1967: this.getOptionByScreen(5),
+      1846: this.getOptionByScreen(5),
+      2162: this.getOptionByScreen(5),
+    },
+  };
+
+
 
   images1: string[]=[];
   imagesBanner: string[]=[];
@@ -131,6 +166,8 @@ export class ContentShopComponent implements OnInit{
   }
 
   dataBestSeller:any;
+  dataBestSale:any;
+  endTimeSale:any;
   ngOnInit(): void {
     this.contentHomePageService.getProductBestSeller().subscribe((data:any)=>{
       this.dataBestSeller = data.data;
@@ -143,7 +180,18 @@ export class ContentShopComponent implements OnInit{
       }
     })
 
-    this.startCountdown();
+    this.contentHomePageService.getLstProductBestSale().subscribe((data:any)=>{
+      if(data.status=='OK'){
+        this.dataBestSale = data.data;
+        this.endTimeSale = data.data.endDate;
+        const currentTime = Math.floor(Date.now() / 1000);
+        this.durationInSeconds = this.endTimeSale - currentTime;
+        console.log("Time sale: ", this.durationInSeconds)
+        this.startCountdown();
+      }else{
+
+      }
+    })
     this.checkUserLogin();
   }
 

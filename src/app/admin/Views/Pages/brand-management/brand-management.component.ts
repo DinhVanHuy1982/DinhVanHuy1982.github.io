@@ -10,6 +10,7 @@ import {
   CreateUpdateProductComponent
 } from "../product-management/create-update-product/create-update-product.component";
 import {CreateUpdateBrandComponent} from "./create-update-brand/create-update-brand.component";
+import {UserService} from "../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-brand-management',
@@ -24,10 +25,15 @@ export class BrandManagementComponent implements OnInit{
     status:null,
     searchBrand: ""
   }
+  action: any;
   constructor(private brandService: BrandService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private userService:UserService
   ) {
-
+    this.userService.getAction().subscribe((res:any)=>{
+      console.log("Action: ",res)
+      this.action = res;
+    })
   }
 
   ngOnInit(): void {

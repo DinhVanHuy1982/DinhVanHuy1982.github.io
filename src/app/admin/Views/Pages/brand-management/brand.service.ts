@@ -27,4 +27,8 @@ export class BrandService {
   public updateBrand(formData: any){
     return this.http.post(this.api+'/updateBrand', formData);
   }
+
+  deleteBrand(id:any) {
+    return this.http.get(this.api+"/delete-brand/"+id);
+  }
 }

@@ -101,14 +101,19 @@
       </div>
     </div>
     <div *ngIf="body.type===0">
+      <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errSaleProduct">
+        {{errSaleProduct}}
+      </small>
       <table style="width: 100%">
         <tr>
-          <th><mat-checkbox class="example-margin"
+          <th>
+            <mat-checkbox class="example-margin"
                             [checked]="allComplete"
                             [indeterminate]="someComplete()"
                             (change)="setAll($event.checked)">
-            <span class="header"></span>
-          </mat-checkbox></th>
+              <span class="header"></span>
+            </mat-checkbox>
+          </th>
           <th>Mã sản phẩm</th>
           <th>Tên sản phẩm</th>
           <th>Số lượng hiện có</th>

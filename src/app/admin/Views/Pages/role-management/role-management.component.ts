@@ -32,6 +32,7 @@ export class RoleManagementComponent implements OnInit{
               private userService:UserService) {
 
     this.userService.getAction().subscribe((res:any)=>{
+      console.log("Action: ", res)
       this.action = res;
     })
   }

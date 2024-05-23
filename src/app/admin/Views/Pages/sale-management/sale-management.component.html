@@ -2,7 +2,7 @@
 <div class="role-management">
   <div class="role-action">
     <div class="title-screen">QUẢN LÝ GIẢM GIÁ</div>
-    <div class="action">
+    <div class="action" *ngIf="action.create">
       <div class="action-create">
         <button (click)="openCreate()">Tạo mới</button>
       </div>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="col-md-6  text-end">
-      <button class="btn-search btn btn-hover" (click)="search()">Tìm kiếm</button>
+      <button class="btn-search btn btn-hover"  *ngIf="action.search" (click)="search()">Tìm kiếm</button>
     </div>
   </div>
   <div class="row">

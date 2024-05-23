@@ -90,15 +90,24 @@ th {
   margin-left:15px;
 }
 .btn-search, .btn-search:hover{
-  background-color: #f26522;
+  background-color: #3643BA;
   align-content: flex-end;
   color: white;
   font-weight: 500;
   font-size: 14px;
-  margin-right: 10px;
 }
 .form-search{
   align-content: space-between;
+  margin: 0 0 10px 0 !important;
+  .atributeSearch{
+    padding: 0px !important;
+    .row2{
+      margin: 0 !important;
+      .searchStatus{
+        padding-left:0px !important;
+      }
+    }
+  }
 }
 
 
@@ -373,13 +382,13 @@ label span {
   color: #696f8c;
 }
 .btn-or {
-  background: #f26522;
+  background: #3643BA;
 }
 .btn-md:focus {
   border: 1px solid #007eff;
 }
 .modal-footer {
-  border-top: none;
+  border-top:1px solid #ebedf3 ;
 }
 .modal-footer .btn-action {
   display: flex;
@@ -395,11 +404,10 @@ label span {
   width: 100%;
 }
 .des {
-  font-weight: normal;
-  font-size: 14px;
   text-align: center;
   color: #8f95b2;
-  margin-top: 10px;
+  height: 100px;
+  align-items: center;
 }
 
 .modal-dialog-custom .title-list-file {
@@ -485,3 +493,32 @@ angular-file-uploader,
   background: #F4F6FA !important;
 
 }
+.modal-content{
+  border-bottom: 1px solid #EBEDF3;
+  border-top: 1px solid #EBEDF3;
+  .modal-header{
+    padding: 10px 0;
+    border-bottom:1px solid #ebedf3 ;
+    flex-direction: column;
+    h4{
+      color: #101840;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 0px;
+    }
+  }
+  .modal-body{
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    .des{
+      color: #101840;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+

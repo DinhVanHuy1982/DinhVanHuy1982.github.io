@@ -9,6 +9,7 @@ import {ITooltipParams} from "ag-grid-community";
 import {ITooltipAngularComp} from "ag-grid-angular";
 import {CreateUpdateSaleComponent} from "../create-update-sale/create-update-sale.component";
 import {SaleManagementComponent} from "../sale-management.component";
+import {UserService} from "../../../../../viewsShare/Views/user.service";
 
 @Component({
   selector: 'app-action-sale',
@@ -17,23 +18,35 @@ import {SaleManagementComponent} from "../sale-management.component";
 })
 export class ActionSaleComponent implements ITooltipAngularComp{
   disableDelete=false;
+  action:any;
   constructor(
     private toast:ToastrService,
     public matdialog: MatDialog,
     private productService: ProductService,
-    private saleComponent:SaleManagementComponent
+    private saleComponent:SaleManagementComponent,
+  private userService:UserService
   ) {
+    this.userService.getAction().subscribe((res:any)=>{
+      this.action = res;
+    })
   }
   data: any;
 
   openModal(template:any){
-
+    const dialogConfig= {
+      disableClose: false,
+      hasBackdrop: true,
+      width: '450px',
+      borderRadius:'10px'
+    };
+    this.matdialog.open(template,dialogConfig)
   }
   updateProduct(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
-      height: '60vh',
-      maxHeight: '90vh',
-      maxWidth: '90vw',
+      disableClose: false,
+      hasBackdrop: true,
+      width: '760px',
+      height: '600px',
       data: {
         isCreate: false,
         itemData: this.data
