@@ -7,7 +7,7 @@
       <mat-tab label="Thông tin đơn hàng">
         <div class="row">
           <div class="col-md-6">
-            <label class="input-label">Mã đơn hàng <span>*</span></label>
+            <label class="input-label">Mã đơn hàng <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="inforOrder.code" disabled readonly  class="form-control">
           </div>
           <div class="col-md-6">
@@ -17,7 +17,6 @@
               bindLabel="name"
               bindValue="code"
               placeholder="Lựa chọn..."
-              [clearable]="true"
               [(ngModel)]="inforOrder.status"
               (ngModelChange)="changeStatus()"
             >
@@ -30,27 +29,27 @@
             </ng-select>
           </div>
           <div class="col-md-6">
-            <label class="input-label">Họ tên người nhận <span>*</span></label>
+            <label class="input-label">Họ tên người nhận <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="inforOrder.fullName" disabled readonly  class="form-control">
           </div>
           <div class="col-md-6">
-            <label class="input-label">Số điện thoại người nhận <span>*</span></label>
+            <label class="input-label">Số điện thoại người nhận <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="inforOrder.phoneNumber" disabled readonly  class="form-control">
           </div>
           <div class="col-md-6">
-            <label class="input-label">Tỉnh <span>*</span></label>
+            <label class="input-label">Tỉnh <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="nameProvince" disabled readonly  class="form-control">
           </div>
           <div class="col-md-6">
-            <label class="input-label">Quận huyện <span>*</span></label>
+            <label class="input-label">Quận huyện <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="nameDistict"  disabled readonly class="form-control">
           </div>
           <div class="col-md-6">
-            <label class="input-label">Xã, phường <span>*</span></label>
+            <label class="input-label">Xã, phường <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="nameWard"  disabled readonly class="form-control">
           </div>
           <div class="col-md-6">
-            <label class="input-label">Đơn vị vận chuyển <span>*</span></label>
+            <label class="input-label">Đơn vị vận chuyển <span class="require-start">*</span></label>
             <input type="text" [(ngModel)]="nameShippingUnit"  disabled readonly class="form-control">
           </div>
           <div class="col-md-6">
@@ -91,19 +90,19 @@
       </mat-tab>
       <mat-tab  label="Danh sách sản phẩm">
         <table class="table-order" >
-          <tr class="row">
+          <tr class="row tb-header-bg">
             <th  class="col-md-3 center-align">Tên sản phẩm</th>
             <th class="col-md-2 col-price">Số lượng</th>
-            <th class="col-md-1 col-price">Đơn giá</th>
-            <th class="col-md-3 center-align">Size</th>
+            <th class="col-md-2 col-price">Đơn giá</th>
+            <th class="col-md-2 center-align">Size</th>
             <th class="col-md-3 center-align">Type</th>
           </tr>
-          <tr  class="row" *ngFor="let product of orderDetail; let index = index">
-            <td class="col-md-3 center-align">{{product.productName}}</td>
-            <td class="col-md-2 col-price">
+          <tr class="row"  *ngFor="let product of orderDetail; let index = index" >
+            <td [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'" class="col-md-3 center-align">{{product.productName}}</td>
+            <td  [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'" class="col-md-2 col-price">
               {{product.quantity}}
             </td>
-            <td class="col-md-1 col-price">
+            <td  [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'" class="col-md-2 col-price">
               <div class="price" [ngClass]="product.priceSale?'line-through':''">
                 {{product.price}}
               </div>
@@ -111,8 +110,8 @@
                 {{product.priceSale}}
               </div>
             </td>
-            <td class="col-md-3 center-align">{{product.sizeName}}</td>
-            <td class="col-md-3 center-align">{{product.typeName}}</td>
+            <td [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'"  class="col-md-2 center-align">{{product.sizeName}}</td>
+            <td  [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'" class="col-md-3 center-align">{{product.typeName}}</td>
           </tr>
         </table>
       </mat-tab>

@@ -28,6 +28,15 @@
 }
 
 ::ng-deep{
+  .tb-header-bg{
+    background-color: #e6e8f0 !important;
+  }
+  .tb-body-0{
+    background-color: white !important;
+  }
+  .tb-body-1{
+    background-color: #e6e8f0 !important;
+  }
   .mat-mdc-tab-body-content{
     overflow-x: hidden !important;
     overflow-y: hidden !important;

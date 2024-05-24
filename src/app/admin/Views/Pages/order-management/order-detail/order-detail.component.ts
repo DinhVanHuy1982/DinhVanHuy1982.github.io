@@ -155,14 +155,14 @@ export class OrderDetailComponent implements OnInit{
   }
 
   changeStatus() {
-    if(this.statusCurrent==0 && (this.inforOrder.status !==1 && this.inforOrder.status !==this.statusCurrent)){
-      this.toast.warning("Cần phải xác nhận đơn hàng trước")
-      setTimeout((data:any)=>{this.inforOrder.status=this.statusCurrent},100)
-      this.changeDetef.detectChanges()
-    }else if(this.statusCurrent>this.inforOrder.status){
-      this.toast.warning("Không thể chuyển trạng thái đơn hàng về trạng thái trước đó")
-      setTimeout((data:any)=>{this.inforOrder.status=this.statusCurrent},100)
-      this.changeDetef.detectChanges()
-    }
+    // if(this.statusCurrent==0 && (this.inforOrder.status !==1 && this.inforOrder.status !==this.statusCurrent)){
+    //   this.toast.warning("Cần phải xác nhận đơn hàng trước")
+    //   setTimeout((data:any)=>{this.inforOrder.status=this.statusCurrent},100)
+    //   this.changeDetef.detectChanges()
+    // }else if(this.statusCurrent>this.inforOrder.status){
+    //   this.toast.warning("Không thể chuyển trạng thái đơn hàng về trạng thái trước đó")
+    //   setTimeout((data:any)=>{this.inforOrder.status=this.statusCurrent},100)
+    //   this.changeDetef.detectChanges()
+    // }
   }
 }

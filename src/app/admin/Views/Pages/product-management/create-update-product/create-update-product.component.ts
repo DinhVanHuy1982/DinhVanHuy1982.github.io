@@ -309,6 +309,12 @@ export class CreateUpdateProductComponent implements OnInit{
   }
 
   updateProduct() {
+
+    this.validateProduct()
+    if(!this.errPrice.done || this.errDescription?.maxLength || !this.errBrandId.done|| !this.errCategoriesId.done|| !this.errProductCode.done|| !this.errProductName.done || this.validateLstSize()||this.validateLstType()){
+      return
+    }
+
     this.productInfor.listProductDetail = this.listProductDetail;
     this.productInfor.imgDelete = this.productImgDelete
     if(this.lstFileProduct){

@@ -75,6 +75,18 @@
   padding: 10px;
   width: 100%;
   margin-top: 10px;
+  th{
+    height: 52px;
+    padding-left: 25px;
+  }
+  td{
+    cursor: pointer;
+    height: 35px;
+    padding-left: 25px;
+  }
+  tr:nth-child(n+2):hover{
+    background-color: #efefef !important;
+  }
 }
 .table-order td:nth-child(n+2){
   height: 35px;
@@ -83,7 +95,7 @@
   text-decoration-line:line-through ;
 }
 .col-price{
-  justify-content: center;
+  justify-content: space-between;
   display: flex;
   align-content: space-around;
   flex-wrap: wrap;

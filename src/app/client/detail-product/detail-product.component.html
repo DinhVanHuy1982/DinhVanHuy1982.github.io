@@ -7,7 +7,7 @@
             <span class="icon-best-seller-same-topic maxPurchase"  *ngIf="dataProduct?.maxPurchase">-{{dataProduct?.maxPurchase}}%</span>
             <img src="{{domainFile+avatarBook}}" style="height: 344px; width: 260px; object-fit: cover">
           </div>
-          <div style="margin-top: 24px; display: flex; gap: 12px;justify-content: center;">
+          <div class="lst-file-product" style="margin-top: 24px; display: flex; gap: 12px;justify-content: center;">
             <img [ngClass]="{'focus-avatar-choose': item == avatarBook}" *ngFor="let item of dataProduct?.pathImg" (click)="changeShowAvatar(item)" src="{{domainFile+item}}" style="height: 80px; width: 64px; object-fit: cover; cursor: pointer;">
           </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="price over-flow-dot" [ngClass]="{'price-not-sale':dataProduct?.priceSale}">
           <div>{{this.dataProduct?.price | number: '1.0-0'}} VND</div>
         </div>
-        <div class="price over-flow-dot">
+        <div class="price over-flow-dot" *ngIf="this.dataProduct?.priceSale">
           <div>{{this.dataProduct?.priceSale | number: '1.0-0'}} VND</div>
         </div>
       </div>

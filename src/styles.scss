@@ -88,6 +88,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     align-items: center;
   }
 }
+.require-start{
+  color:red;
+}
 .ag-header-cell-resize{
   display: none;
 }
@@ -110,6 +113,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   .mat-mdc-dialog-container .mdc-dialog__surface{
     background-color: white;
+  }
+  .grid-title{
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 16px;
+    color: #8F95B2;
+    text-transform: uppercase;
   }
 }
 

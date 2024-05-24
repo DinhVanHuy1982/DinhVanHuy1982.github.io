@@ -4,26 +4,48 @@
     <div *ngIf="!data.isCreate" class="title">Cập nhật</div>
   </div>
   <div class="body">
-    <div class="row">
+    <div class="row infor-brand">
       <div class="col-md-6">
-        <label>Mã nhãn hàng</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.brandCode" class="form-control">
+        <label>Mã nhãn hàng <span class="require-start">*</span></label>
+        <input [disabled]="!data.isCreate" (blur)="validateCodeBrand()" type="text" [(ngModel)]="formCreateUpdate.brandCode" class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errCodeBrand.done ">
+          <p *ngIf="errCodeBrand.empty">{{'Mã nhãn hàng không được để trống'}}</p>
+          <p *ngIf="errCodeBrand.maxLength">{{'Mã nhãn hàng không được lớn hơn 50 kí tự'}}</p>
+          <p *ngIf="errCodeBrand.UTF8">{{'Mã nhãn hàng không được chứa tiếng việt có dấu'}}</p>
+          <p *ngIf="errCodeBrand.space">{{'Mã nhãn hàng không được chứa dấu cách'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
-        <label>Tên nhãn hàng</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.brandName"  class="form-control">
+        <label>Tên nhãn hàng <span class="require-start">*</span></label>
+        <input type="text" (blur)="validateNameBrand()" [(ngModel)]="formCreateUpdate.brandName"  class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errNameBrand.done ">
+          <p *ngIf="errNameBrand.empty">{{'Tên nhãn hàng không được để trống'}}</p>
+          <p *ngIf="errNameBrand.maxLength">{{'Tên nhãn hàng không được lớn hơn 50 kí tự'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
-        <label>Địa chỉ</label>
-        <input type="text"  [(ngModel)]="formCreateUpdate.address" class="form-control">
+        <label>Địa chỉ <span class="require-start">*</span></label>
+        <input type="text" (blur)="validateAddress()" [(ngModel)]="formCreateUpdate.address" class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errAddressBrand.done ">
+          <p *ngIf="errAddressBrand.empty">{{'Địa chỉ nhãn hàng không được để trống'}}</p>
+          <p *ngIf="errAddressBrand.maxLength">{{'Địa chỉ nhãn hàng không được lớn hơn 150 kí tự'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
-        <label>Số điện thoại</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+        <label>Số điện thoại <span class="require-start">*</span></label>
+        <input type="text"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" (blur)="validatePhoneNumber()" [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errPhoneNumber.done ">
+          <p *ngIf="errPhoneNumber.empty">{{'Số điện thoại nhãn hàng không được để trống'}}</p>
+          <p *ngIf="errPhoneNumber.maxLength">{{'Số điện thoại nhãn hàng không được lớn hơn 12 kí tự'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
-        <label>Email</label>
-        <input type="text" [(ngModel)]="formCreateUpdate.email"  class="form-control">
+        <label>Email <span class="require-start">*</span></label>
+        <input type="text" (blur)="validateEmail()" [(ngModel)]="formCreateUpdate.email"  class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errEmailBrand.done ">
+          <p *ngIf="errEmailBrand.empty">{{'Email nhãn hàng không được để trống'}}</p>
+          <p *ngIf="errEmailBrand.regex">{{'Email không đúng định dạng'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
         <label>Trạng thái</label>
@@ -32,7 +54,6 @@
           bindLabel="name"
           bindValue="code"
           placeholder="Lựa chọn..."
-          [clearable]="true"
           [(ngModel)]="formCreateUpdate.status"
         >
           <ng-template let-item="item" ng-option-tmp>
@@ -42,7 +63,10 @@
       </div>
       <div class="col-md-12">
         <label>Mô tả</label>
-        <textarea  [(ngModel)]="formCreateUpdate.description"  class="form-control"></textarea>
+        <textarea (blur)="validateDescription()" [(ngModel)]="formCreateUpdate.description"  class="form-control"></textarea>
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errValidateDescription.done ">
+          <p *ngIf="errValidateDescription.maxLength">{{'Mô tả nhãn hàng không được lớn hơn 1000 kí tự'}}</p>
+        </small>
       </div>
       <div class="col-md-12">
         <label>Ảnh đại diện</label>
@@ -58,6 +82,11 @@
         <div class="list-image-selected">
           <div class="img-item" *ngIf="formCreateUpdate.avatar">
             <img [src]="formCreateUpdate.avatar" class="img-selected" alt="Selected Image">
+            <div class="icon-view" (click)="expandImg()">
+              <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.326 5.586L10.526 3.786C10.413 3.67302 10.2598 3.60955 10.1 3.60955C9.94021 3.60955 9.78698 3.67302 9.674 3.786C9.56101 3.89899 9.49754 4.05222 9.49754 4.212C9.49754 4.37178 9.56101 4.52502 9.674 4.638L10.448 5.4H7.1V2.04601L7.874 2.826C7.93006 2.88161 7.99655 2.92561 8.06965 2.95547C8.14276 2.98533 8.22103 3.00046 8.3 3C8.37896 3.00046 8.45724 2.98533 8.53034 2.95547C8.60344 2.92561 8.66993 2.88161 8.726 2.826C8.78223 2.77023 8.82687 2.70387 8.85733 2.63075C8.88779 2.55764 8.90347 2.47921 8.90347 2.40001C8.90347 2.3208 8.88779 2.24238 8.85733 2.16926C8.82687 2.09614 8.78223 2.02978 8.726 1.97401L6.926 0.17401C6.86994 0.118401 6.80345 0.0744059 6.73034 0.0445472C6.65724 0.0146885 6.57896 -0.000446507 6.5 1.00286e-05C6.3426 0.0006728 6.19176 0.0631634 6.08 0.17401L4.28 1.97401C4.22406 2.02956 4.17961 2.09558 4.14918 2.16831C4.11875 2.24104 4.10295 2.31905 4.10267 2.39788C4.10239 2.47672 4.11764 2.55484 4.14756 2.62778C4.17747 2.70073 4.22145 2.76706 4.277 2.823C4.33255 2.87895 4.39858 2.9234 4.47131 2.95383C4.54403 2.98426 4.62204 3.00006 4.70088 3.00034C4.8601 3.0009 5.01302 2.93819 5.126 2.826L5.9 2.05201V5.4H2.54601L3.326 4.626C3.43899 4.51302 3.50246 4.35978 3.50246 4.2C3.50246 4.04022 3.43899 3.88699 3.326 3.774C3.21302 3.66102 3.05979 3.59755 2.90001 3.59755C2.74023 3.59755 2.58699 3.66102 2.47401 3.774L0.67401 5.574C0.618401 5.63006 0.574406 5.69655 0.544547 5.76966C0.514688 5.84276 0.499553 5.92104 0.50001 6C0.499553 6.07896 0.514688 6.15724 0.544547 6.23034C0.574406 6.30345 0.618401 6.36994 0.67401 6.426L2.47401 8.226C2.53007 8.2816 2.59656 8.3256 2.66966 8.35546C2.74276 8.38532 2.82104 8.40045 2.90001 8.4C2.97897 8.40045 3.05725 8.38532 3.13035 8.35546C3.20345 8.3256 3.26994 8.2816 3.326 8.226C3.38224 8.17022 3.42688 8.10386 3.45734 8.03074C3.4878 7.95763 3.50348 7.8792 3.50348 7.8C3.50348 7.72079 3.4878 7.64237 3.45734 7.56925C3.42688 7.49614 3.38224 7.42978 3.326 7.374L2.55201 6.6H5.9V9.95399L5.126 9.174C5.07006 9.11805 5.00364 9.07367 4.93055 9.0434C4.85746 9.01312 4.77912 8.99754 4.7 8.99754C4.62089 8.99754 4.54255 9.01312 4.46945 9.0434C4.39636 9.07367 4.32995 9.11805 4.274 9.174C4.21806 9.22994 4.17368 9.29635 4.14341 9.36944C4.11313 9.44254 4.09755 9.52088 4.09755 9.59999C4.09755 9.67911 4.11313 9.75745 4.14341 9.83054C4.17368 9.90364 4.21806 9.97005 4.274 10.026L6.074 11.826C6.13006 11.8816 6.19655 11.9256 6.26966 11.9555C6.34276 11.9853 6.42104 12.0004 6.5 12C6.6574 11.9993 6.80824 11.9368 6.92 11.826L8.72 10.026C8.83298 9.91301 8.89645 9.75977 8.89645 9.59999C8.89645 9.44021 8.83298 9.28698 8.72 9.174C8.60701 9.06101 8.45378 8.99754 8.294 8.99754C8.13422 8.99754 7.98098 9.06101 7.868 9.174L7.1 9.94799V6.6H10.454L9.674 7.374C9.61776 7.42978 9.57312 7.49614 9.54266 7.56925C9.5122 7.64237 9.49652 7.72079 9.49652 7.8C9.49652 7.8792 9.5122 7.95763 9.54266 8.03074C9.57312 8.10386 9.61776 8.17022 9.674 8.226C9.73006 8.2816 9.79655 8.3256 9.86965 8.35546C9.94275 8.38532 10.021 8.40045 10.1 8.4C10.179 8.40045 10.2572 8.38532 10.3303 8.35546C10.4034 8.3256 10.4699 8.2816 10.526 8.226L12.326 6.426C12.3816 6.36994 12.4256 6.30345 12.4555 6.23034C12.4853 6.15724 12.5004 6.07896 12.5 6C12.4978 5.84468 12.4354 5.69627 12.326 5.586Z" fill="#101840"/>
+              </svg>
+            </div>
             <div class="icon" (click)="removeImgProduct()">
               <i class="fa-regular fa-trash-can" style="color: red; width: 10px;left: -1.5px;position: relative;"></i>
             </div>
@@ -69,12 +98,10 @@
   <div class="footer">
     <button class="btn-cancel" (click)="dialog.closeAll()">Hủy bỏ</button>
     <button class="submit" *ngIf="data.isCreate" (click)="create()">
-      <span *ngIf="data.isCreate">Thêm mới</span>
-      <span *ngIf="!data.isCreate">Cập nhật</span>
+      <span>Thêm mới</span>
     </button>
     <button class="submit" *ngIf="!data.isCreate"  (click)="update()">
-      <span *ngIf="data.isCreate">Thêm mới</span>
-      <span *ngIf="!data.isCreate">Cập nhật</span>
+      <span>Cập nhật</span>
     </button>
   </div>
 </div>

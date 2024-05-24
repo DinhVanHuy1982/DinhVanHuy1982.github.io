@@ -109,19 +109,19 @@
       </mat-tab>
       <mat-tab  label="Danh sách sản phẩm">
         <table class="table-order" >
-          <tr class="row">
+          <tr class="row tb-header-bg">
             <th  class="col-md-3 center-align">Tên sản phẩm</th>
             <th class="col-md-2 col-price">Số lượng</th>
-            <th class="col-md-1 col-price">Đơn giá</th>
-            <th class="col-md-3 center-align">Size</th>
+            <th class="col-md-2 col-price">Đơn giá</th>
+            <th class="col-md-2 center-align">Size</th>
             <th class="col-md-3 center-align">Type</th>
           </tr>
-          <tr  class="row" *ngFor="let product of orderDetail; let index = index">
+          <tr  [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'"  class="row" *ngFor="let product of orderDetail; let index = index">
             <td class="col-md-3 center-align">{{product.productName}}</td>
             <td class="col-md-2 col-price">
               {{product.quantity}}
             </td>
-            <td class="col-md-1 col-price">
+            <td class="col-md-2 col-price">
               <div class="price" [ngClass]="product.priceSale?'line-through':''">
                 {{product.price}}
               </div>
@@ -129,7 +129,7 @@
                 {{product.priceSale}}
               </div>
             </td>
-            <td class="col-md-3 center-align">{{product.sizeName}}</td>
+            <td class="col-md-2 center-align">{{product.sizeName}}</td>
             <td class="col-md-3 center-align">{{product.typeName}}</td>
           </tr>
         </table>

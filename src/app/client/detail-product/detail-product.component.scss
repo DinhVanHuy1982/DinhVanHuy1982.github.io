@@ -27,7 +27,35 @@
   justify-content: center;
   border-radius: 8px;
   border: 1px solid var(--neutral-border-muted-separators-n-300, #E6E8F0);
+  .lst-file-product{
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    overflow: auto;
+    width: 409px;
+  }
+  .lst-file-product::-webkit-scrollbar-track {
+    background: #fff; /* Màu nền */
+  }
 
+  .lst-file-product::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .lst-file-product::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu của thanh cuộn */
+    border-radius: 10px; /* Bo góc */
+    border: 2px solid #fff; /* Viền để tạo khoảng cách */
+  }
+
+  .lst-file-product::-webkit-scrollbar-thumb:hover {
+    background: #3643BA; /* Màu của thanh cuộn khi hover */
+  }
+
+  .lst-file-product::-webkit-scrollbar-button {
+    display: none; /* Ẩn mũi tên */
+  }
 }
 .over-view{
   width: 413px;

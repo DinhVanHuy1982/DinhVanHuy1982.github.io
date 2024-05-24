@@ -4,6 +4,9 @@ import {BrandService} from "../brand.service";
 import {ToastrService} from "ngx-toastr";
 import {environment} from "../../../../../../environment/environment";
 import {BrandManagementComponent} from "../brand-management.component";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
+import {FileDetailComponent} from "../../../../../core/compontnts/file-detail/file-detail.component";
 
 @Component({
   selector: 'app-create-update-brand',
@@ -25,6 +28,12 @@ export class CreateUpdateBrandComponent implements OnInit{
     status:1,
     avatar:""
   }
+  errCodeBrand:ValidateInput= new ValidateInput();
+  errNameBrand:ValidateInput=new ValidateInput();
+  errAddressBrand:ValidateInput=new ValidateInput();
+  errPhoneNumber:ValidateInput= new ValidateInput();
+  errEmailBrand :ValidateInput= new ValidateInput();
+  errValidateDescription:ValidateInput= new ValidateInput();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
               public dialog:MatDialog,
@@ -61,6 +70,12 @@ export class CreateUpdateBrandComponent implements OnInit{
   ];
 
   create(){
+
+    this.validateBrandProduct();
+    if(!this.errCodeBrand.done || this.errValidateDescription?.maxLength || !this.errNameBrand.done|| !this.errAddressBrand.done|| !this.errPhoneNumber.done|| !this.errEmailBrand.done){
+      return
+    }
+
     if(this.avatarBrand){
       this.formDataSend.append("avatar",this.avatarBrand)
     }
@@ -76,6 +91,12 @@ export class CreateUpdateBrandComponent implements OnInit{
     });
   }
   update(){
+
+    this.validateBrandProduct();
+    if(!this.errCodeBrand.done || this.errValidateDescription?.maxLength || !this.errNameBrand.done|| !this.errAddressBrand.done|| !this.errPhoneNumber.done|| !this.errEmailBrand.done){
+      return
+    }
+
     if(this.avatarBrand){
       this.formDataSend.append("avatar",this.avatarBrand)
     }
@@ -112,5 +133,62 @@ export class CreateUpdateBrandComponent implements OnInit{
   }
   removeImgProduct(){
     this.formCreateUpdate.avatar="";
+  }
+
+  validateBrandProduct(){
+    this.errCodeBrand= new ValidateInput();
+    this.errNameBrand=new ValidateInput();
+    this.errAddressBrand=new ValidateInput();
+    this.errPhoneNumber= new ValidateInput();
+    this.errEmailBrand = new ValidateInput();
+
+    this.errCodeBrand = CommonFunction.validateInputUTF8Space(this.formCreateUpdate.brandCode,50,null, true, true);
+    this.errNameBrand = CommonFunction.validateInput(this.formCreateUpdate.brandName,50,null)
+    this.errAddressBrand = CommonFunction.validateInput(this.formCreateUpdate.address,150,null)
+    this.errPhoneNumber = CommonFunction.validateInput(this.formCreateUpdate.phoneNumber,12,null);
+    this.errEmailBrand = CommonFunction.validateInput(this.formCreateUpdate.email,null,/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/);
+    this.errValidateDescription = CommonFunction.validateInput(this.formCreateUpdate.description,1000,null);
+
+  }
+
+  validateCodeBrand() {
+    this.errCodeBrand = CommonFunction.validateInputUTF8Space(this.formCreateUpdate.brandCode,50,null, true, true);
+  }
+
+  validateNameBrand() {
+    this.errNameBrand = CommonFunction.validateInput(this.formCreateUpdate.brandName,50,null)
+  }
+
+  validateAddress() {
+    this.errAddressBrand = CommonFunction.validateInput(this.formCreateUpdate.address,150,null)
+  }
+
+  validatePhoneNumber() {
+    this.errPhoneNumber = CommonFunction.validateInput(this.formCreateUpdate.phoneNumber,12,null);
+  }
+
+  validateEmail() {
+    this.errEmailBrand = CommonFunction.validateInput(this.formCreateUpdate.email,null,/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/);
+  }
+
+  validateDescription() {
+    this.errValidateDescription = CommonFunction.validateInput(this.formCreateUpdate.description,1000,null);
+  }
+
+  expandImg() {
+    let lstFileAvatar = []
+    lstFileAvatar.push(this.formCreateUpdate.avatar)
+    const data = { lstFile: lstFileAvatar, index: 0 };
+
+    this.dialog.open(FileDetailComponent, {
+      data,
+      disableClose: false,
+      hasBackdrop: true,
+      panelClass: 'overflow-hidden-cus',
+      width: '860px',
+      height: '860px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    }).afterClosed()
   }
 }

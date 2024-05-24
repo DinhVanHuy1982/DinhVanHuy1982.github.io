@@ -60,26 +60,112 @@ export class BrandManagementComponent implements OnInit{
       },
       width: 100,
       pinned: 'left',
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
     },{
       headerName: 'Mã nhãn hàng',
       field:"brandCode",
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
 
     },{
       headerName: 'Tên nhãn hàng',
       field:"brandName",
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
 
     },{
       headerName: 'Mã nhãn hàng',
       field:"brandCode",
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
 
     },{
       headerName: 'Địa chỉ',
       field:"address",
-
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
     },{
       headerName: 'Liên hệ',
-      valueGetter: (param:any) => {
-        return param.data.phoneNumber +"<br>"+ param.data.email
+      headerClass: 'grid-title center',
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
+      cellRenderer: (param:any) => {
+        if(param.data?.phoneNumber && param.data?.email ){
+          var temDiv = document.createElement('div');
+          var dateDiv = document.createElement('div');
+          var timeDiv = document.createElement('div');
+          dateDiv.innerText = param.data?.phoneNumber;
+          temDiv.innerText = param.data?.email;
+          temDiv.style.textAlign='left'
+          dateDiv.style.textAlign='left'
+          timeDiv.style.textAlign='left'
+          temDiv.appendChild(dateDiv);
+          temDiv.appendChild(timeDiv);
+          return temDiv;
+        }else{
+          return null
+        }
       },
       autoHeight: true,
       suppressSizeToFit: true
@@ -95,7 +181,19 @@ export class BrandManagementComponent implements OnInit{
       },
       cellClass: (param: any) => {
         return param.data?.status === 1 ? 'active-status' : 'inactive-status';
-      }
+      },
+      cellStyle: (param:any) => {
+        return {
+          'font-weight': '500',
+          'font-size': '12px',
+          'align-items': 'center',
+          display: 'flex',
+          top: '0px',
+          'white-space': 'nowrap',
+          'text-overflow': 'ellipsis',
+          overflow: 'hidden',
+        };
+      },
     },{
       headerName: 'Action',
       cellRenderer: ActionBrandManagementComponent,
@@ -137,9 +235,9 @@ export class BrandManagementComponent implements OnInit{
   }
   openCreate(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
-      height: '600vh',
+      maxHeight: '600px',
+      minHeight: '400px',
       width:'600px',
-      maxWidth: '90vw',
       disableClose: false,
       hasBackdrop: true,
       data: {
