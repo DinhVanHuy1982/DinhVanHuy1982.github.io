@@ -440,6 +440,11 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   }
 
   showMore(lst:any, i:number) {
+
+    lst = lst.map((item:any)=> {
+      return this.domainFile + item
+    })
+
     const data = { lstFile: lst, index: i };
     this.matDialog.open(FileDetailComponent, {
       data,

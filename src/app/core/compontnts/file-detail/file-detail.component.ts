@@ -10,7 +10,7 @@ import {Optional} from "ag-grid-community";
 })
 export class FileDetailComponent {
   itemFile:any;
-  linkFile = environment.DOMAIN_FILE_SERVER;
+  // linkFile = environment.DOMAIN_FILE_SERVER;
   popup = (document.querySelector('.file-position') as HTMLElement)
   checkHeight = false;
   checkWidth = false;
@@ -22,7 +22,7 @@ export class FileDetailComponent {
   ngOnInit(): void {
     this.itemFile = this.data.lstFile[this.data.index];
     console.log(this.data);
-    console.log('linkFile', this.linkFile);
+    // console.log('linkFile', this.linkFile);
     setTimeout(() => {
       this.checkSize();
       this.checkSize2();

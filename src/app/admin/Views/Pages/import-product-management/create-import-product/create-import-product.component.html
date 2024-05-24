@@ -16,19 +16,20 @@
               placeholder="Sản phẩm"
               [clearable]="true"
               [(ngModel)]="productId"
+              (blur)="validateChoiceProduct()"
               (ngModelChange)="changeProduct()"
             >
 <!--              <ng-template let-item="item" ng-option-tmp>-->
 <!--                <div [matTooltip]="item.productCode +' - '+ item.productName">{{item.id +' - '+item.productCode +' - '+ item.productName}}</div>-->
 <!--              </ng-template>-->
             </ng-select>
-            <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errProduct">
+            <small style="color: red;font-size: 12px" class="error-validate" *ngIf="!this.errChoiceProduct.done">
               {{errProduct}}
             </small>
           </div>
           <div class="col-md-6" *ngIf="data.isCreate">
             <label>Giá mua: </label>
-            <input type="text" [(ngModel)]="priceBuy"  class="form-control">
+            <input type="text" [(ngModel)]="priceBuy" (blur)="validatePrice()" placeholder="Nhập giá sản phẩm" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
             <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errPriceImport">
               {{errPriceImport}}
             </small>

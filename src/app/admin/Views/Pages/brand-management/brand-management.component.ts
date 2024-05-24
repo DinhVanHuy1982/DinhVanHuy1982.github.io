@@ -137,9 +137,8 @@ export class BrandManagementComponent implements OnInit{
   }
   openCreate(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
-      height: '60vh',
+      height: '600vh',
       width:'600px',
-      maxHeight: '90vh',
       maxWidth: '90vw',
       disableClose: false,
       hasBackdrop: true,

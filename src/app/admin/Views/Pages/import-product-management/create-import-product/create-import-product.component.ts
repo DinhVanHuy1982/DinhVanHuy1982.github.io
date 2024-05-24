@@ -8,6 +8,8 @@ import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {FileDetailComponent} from "../../../../../core/compontnts/file-detail/file-detail.component";
 import {DatePipe} from "@angular/common";
 import {ImportProductService} from "../import-product.service";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
 
 @Component({
   selector: 'app-create-import-product',
@@ -229,6 +231,8 @@ export class CreateImportProductComponent implements OnInit{
   }
   lstHistoryImport:any;
 
+  errChoiceProduct:ValidateInput = new ValidateInput();
+  errPriceProduct:ValidateInput = new ValidateInput();
   changeProduct() {
     this.productService.getDetailProduct(this.productId).subscribe((res:any)=>{
       console.log(res)
@@ -271,6 +275,25 @@ export class CreateImportProductComponent implements OnInit{
       maxHeight: '90vh',
     }).afterClosed()
   }
+
+  validateChoiceProduct() {
+    this.errChoiceProduct = CommonFunction.validateInput(this.productId,null, null);
+    if (!this.errChoiceProduct.done){
+      this.errProduct="Sản phẩm nhập không được để trống"
+    }else{
+      this.errProduct="";
+    }
+  }
+
+  validatePrice(){
+    this.errPriceProduct = CommonFunction.validateInput(this.priceBuy,null,null);
+    if(!this.errPriceProduct.done){
+      this.errPriceImport="Giá sản phẩm không được để trống"
+    }else{
+      this.errPriceImport =""
+    }
+  }
+
 }
 interface sizeProduct{
   sizeName: "",

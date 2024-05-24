@@ -7,11 +7,20 @@
     <div class="row infor-categories">
       <div class="col-md-6">
         <label>Mã danh mục</label>
-        <input type="text" placeholder="Mã danh mục" [disabled]="!data.isCreate" [(ngModel)]="formCreateUpdate.categoriCode" class="form-control">
+        <input type="text" placeholder="Mã danh mục" (blur)="validateCategiesCode()" [disabled]="!data.isCreate" [(ngModel)]="formCreateUpdate.categoriCode" class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errCategoriesCode.done ">
+          <p *ngIf="errCategoriesCode.empty">{{'Mã danh mục không được để trống'}}</p>
+          <p *ngIf="errCategoriesCode.maxLength">{{'Mã danh mục không được lớn hơn 50 kí tự'}}</p>
+          <p *ngIf="errCategoriesCode.UTF8 || errCategoriesCode.space">{{'Mã danh mục không được chứa dấu cách hoặc tiếng việt có dấu'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
         <label>Tên danh mục</label>
-        <input type="text"  placeholder="Tên danh mục"  [(ngModel)]="formCreateUpdate.categoriName" class="form-control">
+        <input type="text" (blur)="validateCategiesName()" placeholder="Tên danh mục"  [(ngModel)]="formCreateUpdate.categoriName" class="form-control">
+        <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errCategoriesName.done ">
+          <p *ngIf="errCategoriesName.empty">{{'Mã danh mục không được để trống'}}</p>
+          <p *ngIf="errCategoriesName.maxLength">{{'Tên danh mục không được lớn hơn 50 kí tự'}}</p>
+        </small>
       </div>
       <div class="col-md-6">
         <label>Danh mục cha</label>
@@ -45,6 +54,9 @@
     <div class="col-md-12">
       <label>Mô tả</label>
       <textarea  class="form-control"  placeholder="Mô tả danh  mục" [(ngModel)]="formCreateUpdate.description"></textarea>
+      <small style="color: red;font-size: 12px" class="error-validate"  *ngIf="!errDescription.done ">
+        <p *ngIf="errDescription.maxLength">{{'Mô tả danh mục không được lớn hơn 250 kí tự'}}</p>
+      </small>
     </div>
   </div>
   <div class="footer">

@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {CategoriesService} from "../categories.service";
 import {ToastrService} from "ngx-toastr";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
 
 @Component({
   selector: 'app-create-update-categories',
@@ -12,8 +14,8 @@ export class CreateUpdateCategoriesComponent implements OnInit{
 
   formCreateUpdate={
     id:null,
-    categoriName:null,
-    categoriCode:null,
+    categoriName:"",
+    categoriCode:"",
     status:"1",
     parentId:null,
     description:""
@@ -78,6 +80,12 @@ export class CreateUpdateCategoriesComponent implements OnInit{
   }
 
   create(){
+
+    this.validateCategories()
+    if(!this.errCategoriesName.done || !this.errCategoriesCode.done || !this.errDescription.done){
+      return
+    }
+
     this.cateService.createCategories(this.formCreateUpdate).subscribe((res:any)=>{
       if(res.status==="OK"){
         this.dialog.closeAll()
@@ -97,5 +105,29 @@ export class CreateUpdateCategoriesComponent implements OnInit{
         this.toast.error(res.message)
       }
     })
+  }
+  errCategoriesName:ValidateInput =new ValidateInput();
+  errCategoriesCode:ValidateInput = new ValidateInput();
+  errDescription:ValidateInput = new ValidateInput();
+
+  validateCategiesName(){
+    this.errCategoriesName=CommonFunction.validateInput(this.formCreateUpdate.categoriName, 50, null);
+  }
+
+  validateCategiesCode(){
+    this.errCategoriesCode=CommonFunction.validateInputUTF8Space(this.formCreateUpdate.categoriCode, 50, null,true, true);
+  }
+
+  validateCategories(){
+
+    this.errCategoriesName=new ValidateInput();
+    this.errCategoriesCode=new ValidateInput();
+    this.errDescription=new ValidateInput();
+
+    this.errCategoriesName=CommonFunction.validateInput(this.formCreateUpdate.categoriName, 50, null);
+    this.errCategoriesCode=CommonFunction.validateInputUTF8Space(this.formCreateUpdate.categoriCode, 50, null,true, true);
+    this.errDescription=CommonFunction.validateInput(this.formCreateUpdate.description, 1000, null);
+
+
   }
 }

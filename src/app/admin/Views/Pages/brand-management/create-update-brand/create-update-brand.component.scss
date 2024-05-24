@@ -14,9 +14,10 @@
     }
   }
   .body{
-    overflow: auto;
+    overflow-y: auto;
     overflow-x: hidden;
     padding: 10px;
+    height: 500px;
     .upload-file{
       width: 110px;
       height: 36px;

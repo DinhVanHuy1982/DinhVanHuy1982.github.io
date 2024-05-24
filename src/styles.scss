@@ -101,12 +101,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
   .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
-    stroke: #f26522 !important;
+    stroke: #3643BA !important;
   }
 }
 ::ng-deep{
   .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
-    stroke: #f26522 !important;
+    stroke: #3643BA !important;
   }
   .mat-mdc-dialog-container .mdc-dialog__surface{
     background-color: white;
@@ -118,10 +118,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: 600;
 }
 .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label{
-  color:#f26522!important;
+  color:#3643BA!important;
 }
 .mat-mdc-tab:hover .mdc-tab__text-label{
-  color:#f26522!important;
+  color:#3643BA!important;
 }
 .mat-mdc-tab .mdc-tab__ripple::before{
   background-color: unset !important;
@@ -130,10 +130,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-bottom: 1px  #ebedf3 solid;
 }
 .mat-mdc-tab .mdc-tab-indicator__content--underline{
-  border-color: #f26522 !important;
+  border-color: #3643BA !important;
 }
 body{
   color: black !important;
+}
+.over-flow-dot{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 //.btn-hover:hover{
 //  background-color: #ffffff69 !important;

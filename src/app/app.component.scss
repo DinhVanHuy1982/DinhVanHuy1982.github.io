@@ -65,9 +65,6 @@
     }
   }
 
-  .mat-ripple.mat-mdc-tab-ripple *{
-    background-color: #f26522 !important;
-  }
   .list-item {
     .owl-prev {
         rotate: 180deg;
@@ -119,6 +116,11 @@
   .mat-mdc-dialog-container .mdc-dialog__surface{
     background-color: white !important;
   }
+
+  .mat-ripple.mat-mdc-tab-ripple *{
+    background-color: #3643BA !important;
+  }
+
   .error-validate{
     color:red;
   }

@@ -119,10 +119,8 @@ export class ProductManagementComponent implements OnInit{
 
   createProduct(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
-      height: '80vh',
-      width: '60vw',
-      maxHeight: '90vh',
-      maxWidth: '90vw',
+      height: '600px',
+      width: '600px',
       disableClose: false,
       hasBackdrop: true,
       data: {

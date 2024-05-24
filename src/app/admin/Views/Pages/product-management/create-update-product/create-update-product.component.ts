@@ -1,10 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ProductService} from "../product.service";
 import {BrandService} from "../../brand-management/brand.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {CategoriesService} from "../../categories-management/categories.service";
 import {ToastrService} from "ngx-toastr";
 import {environment} from "../../../../../../environment/environment";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
+import {FileDetailComponent} from "../../../../../core/compontnts/file-detail/file-detail.component";
 
 @Component({
   selector: 'app-create-update-product',
@@ -18,7 +21,8 @@ export class CreateUpdateProductComponent implements OnInit{
               private brandService:BrandService,
               private categoriesService:CategoriesService,
               private toast:ToastrService,
-              @Inject(MAT_DIALOG_DATA) public data:any
+              @Inject(MAT_DIALOG_DATA) public data:any,
+              private dialog:MatDialog
   ) {
   }
   listPathImg:any // chứa danh sách các product_img
@@ -31,6 +35,13 @@ export class CreateUpdateProductComponent implements OnInit{
     categoriesID:null,
     brandId:null,
   }
+  errDescription:ValidateInput=new ValidateInput();
+  errPrice:ValidateInput=new ValidateInput();
+  errProductName:ValidateInput=new ValidateInput();
+  errProductCode:ValidateInput=new ValidateInput();
+  errCategoriesId:ValidateInput=new ValidateInput();
+  errBrandId:ValidateInput=new ValidateInput();
+
 
   listBrand:any;
   listCategories:any[]=[];
@@ -215,6 +226,12 @@ export class CreateUpdateProductComponent implements OnInit{
     console.log(event)
   }
   submit(){
+
+    this.validateProduct()
+    if(!this.errPrice.done || this.errDescription?.maxLength || !this.errBrandId.done|| !this.errCategoriesId.done|| !this.errProductCode.done|| !this.errProductName.done || this.validateLstSize()||this.validateLstType()){
+      return
+    }
+
     if(this.lstFileProduct){
       this.lstFileProduct=Array.from(this.lstFileProduct);
       this.lstFileProduct.forEach((item:any)=>{
@@ -233,6 +250,7 @@ export class CreateUpdateProductComponent implements OnInit{
     this.productService.saveProduct(this.formDataSend).subscribe((data:any)=>{
       if(data.status==='OK'){
         this.toast.success("Thêm mới sản phẩm thành công")
+        this.dialog.closeAll();
       }else{
         this.toast.error(data.message);
       }
@@ -240,6 +258,7 @@ export class CreateUpdateProductComponent implements OnInit{
     this.formDataSend.delete("productDTO");
     this.formDataSend.delete("sizeList");
     this.formDataSend.delete("typeProductList");
+    this.formDataSend.delete("file");
   }
 
   ngOnInit(): void {
@@ -304,6 +323,7 @@ export class CreateUpdateProductComponent implements OnInit{
     this.productService.updateProduct(this.formDataSend).subscribe((res:any)=>{
       if(res.status==="OK"){
         this.toast.success(res.message)
+        this.dialog.closeAll();
       }else{
         this.toast.error(res.message)
       }
@@ -311,7 +331,6 @@ export class CreateUpdateProductComponent implements OnInit{
     this.formDataSend.delete("productDTO");
     this.formDataSend.delete("sizeList");
     this.formDataSend.delete("typeProductList");
-    this.formDataSend.delete("file");
     this.formDataSend.delete("file");
 
     // this.formDataSend.append('productDTO',new Blob([ JSON.stringify(this.productInfor)],{type: 'application/json'}));
@@ -322,6 +341,104 @@ export class CreateUpdateProductComponent implements OnInit{
     console.log("Size: ", this.listSize)
     console.log("Type: ", this.listType)
 
+  }
+  validateProduct(){
+    this.errDescription=new ValidateInput();
+    this.errPrice=new ValidateInput();
+    this.errProductName=new ValidateInput();
+    this.errProductCode=new ValidateInput();
+    this.errCategoriesId=new ValidateInput();
+    this.errBrandId=new ValidateInput();
+
+    this.errProductCode = CommonFunction.validateInputUTF8Space(this.productInfor.productCode,50,null, null,true)
+    this.errProductName = CommonFunction.validateInput(this.productInfor.productName,50,null)
+    this.errCategoriesId = CommonFunction.validateInput(this.productInfor.categoriesID, null,null)
+    this.errBrandId = CommonFunction.validateInput(this.productInfor.brandId, null,null)
+    this.errDescription = CommonFunction.validateInput(this.productInfor.description, 1000,null)
+    this.errPrice = CommonFunction.validateInput(this.productInfor.price, null,null)
+
+  }
+
+  errSize="";
+  errType="";
+  validateLstSize(){
+    for (let i=0;i<this.listSize.length;i++){
+      if(this.listSize[i].sizeName.trim()==''){
+        this.errSize="Tên kích cỡ sản phẩm không được để trống"
+        return true;
+      }
+    }
+    this.errSize=""
+    return false;
+  }
+  validateLstType(){
+    for (let i=0;i<this.listType.length;i++){
+      if(this.listType[i].typeName.trim()==''){
+        this.errType="Tên loại sản phẩm không được để trống"
+        return true;
+      }
+    }
+    this.errType=""
+    return false;
+  }
+
+  validateProductCode() {
+    this.errProductCode = CommonFunction.validateInputUTF8Space(this.productInfor.productCode,50,null, true,true)
+  }
+
+  validateProductName() {
+    this.errProductName = CommonFunction.validateInput(this.productInfor.productName,50,null)
+  }
+
+
+  validateCategories() {
+    this.errCategoriesId = CommonFunction.validateInput(this.productInfor.categoriesID, null,null)
+  }
+
+  validateBrand() {
+    this.errBrandId = CommonFunction.validateInput(this.productInfor.brandId, null,null)
+  }
+
+  validateDescription() {
+    this.errDescription = CommonFunction.validateInput(this.productInfor.description, 1000,null)
+  }
+
+  validatePrice() {
+    this.errPrice = CommonFunction.validateInput(this.productInfor.price, null,null)
+  }
+
+  lstAllUrlExpand:any[]=[]
+  expandImg(index:number,isFileSerVer:boolean) {
+    this.lstAllUrlExpand=[]
+    if(this.lstUrlImgUpdate.length>0){
+      this.lstAllUrlExpand = this.lstUrlImgUpdate.map((item:any)=>{
+        return this.domainFile + item;
+      })
+    }
+    if(this.imageUrls.length>0){
+      this.lstAllUrlExpand=[...this.lstAllUrlExpand,...this.imageUrls]
+    }
+
+    let indexFile = 0
+    if(isFileSerVer){
+      indexFile = index
+    }else{
+      indexFile = this.lstUrlImgUpdate.length + indexFile+1;
+    }
+
+
+    const data = { lstFile: this.lstAllUrlExpand, index: indexFile };
+
+    this.dialog.open(FileDetailComponent, {
+      data,
+      disableClose: false,
+      hasBackdrop: true,
+      panelClass: 'overflow-hidden-cus',
+      width: '860px',
+      height: '860px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    }).afterClosed()
   }
 }
 interface sizeProduct{
