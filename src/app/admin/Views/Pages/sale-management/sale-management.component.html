@@ -11,9 +11,10 @@
   </div>
   <hr>
   <div class="row form-search">
-    <div class="col-md-6">
+    <div class="col-md-10">
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
+          <label>Trạng thái</label>
           <ng-select
             [items]='item'
             bindLabel="name"
@@ -27,13 +28,21 @@
             </ng-template>
           </ng-select>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
+          <label>Từ khóa</label>
           <input type="text" placeholder="Nhập mã hoặc tên giảm giá" class="w-100 form-control" [(ngModel)]="formSearch.keySearch">
+        </div>
+        <div class="col-md-4">
+          <label>Ngày áp dụng</label>
+          <input type="date" class="w-100 form-control" (change)="changeApplySearch()" [(ngModel)]="applyDate">
         </div>
       </div>
     </div>
-    <div class="col-md-6  text-end">
-      <button class="btn-search btn btn-hover"  *ngIf="action.search" (click)="search()">Tìm kiếm</button>
+    <div class="col-md-2  text-end">
+      <div class="action-search">
+        <label style="opacity: 0;width: 100%">tìm kiếm</label>
+        <button class="btn-search btn btn-hover"  *ngIf="action.search" (click)="search()">Tìm kiếm</button>
+      </div>
     </div>
   </div>
   <div class="row">

@@ -184,3 +184,17 @@
     background-color: #fff;
   }
 }
+.table-sale-product{
+  width: 100%;
+  margin-top: 10px;
+  th{
+    height: 52px;
+  }
+  td{
+    cursor: pointer;
+    height: 35px;
+  }
+  tr:nth-child(n+2):hover{
+    background-color: #efefef !important;
+  }
+}

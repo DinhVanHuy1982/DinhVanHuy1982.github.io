@@ -20,7 +20,7 @@ export class SaleManagementComponent implements OnInit{
     page:1,
     keySearch:"",
     type:null,
-    applySearch:null
+    applySearch:""
   }
   item=[
       {
@@ -100,6 +100,19 @@ export class SaleManagementComponent implements OnInit{
     },{
       headerName: "Loại giảm giá",
       field: "type",
+      valueGetter: (param:any) => {
+        if(param.data?.type == 0){
+          return "Sản phẩm"
+        }else{
+          return "Hóa đơn"
+        }
+      },
+    },{
+      headerName: "Phần trăm khuyến mãi",
+      field: "maxPurchase",
+      valueGetter: (param:any) => {
+          return param.data?.maxPurchase+" %"
+      },
     },{
       headerName: "Ngày bắt đầu",
       field: "startTime",
@@ -134,5 +147,12 @@ export class SaleManagementComponent implements OnInit{
     // this.formSearch.page=page;
     this.search();
   }
-
+  applyDate=""
+  changeApplySearch() {
+    if(this.applyDate){
+      this.formSearch.applySearch = this.applyDate.toString()+"T00:00:00Z";
+    }else{
+      this.formSearch.applySearch="";
+    }
+  }
 }

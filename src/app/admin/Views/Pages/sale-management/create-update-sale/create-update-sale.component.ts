@@ -12,6 +12,8 @@ import {SaleService} from "../sale.service";
 import {ToastrService} from "ngx-toastr";
 import {toJSDate} from "@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar";
 import {parseIsoWeekday} from "ngx-bootstrap/chronos/units/day-of-week";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
 
 @Component({
   selector: 'app-create-update-sale',
@@ -191,7 +193,18 @@ export class CreateUpdateSaleComponent implements OnInit{
         }
       }).filter((item:any)=> item!==null)
     }
-    if(this.validateCreateSale()){
+
+    this.validateCreateSale()
+    if(!this.errSaleName.done ||
+      !this.errSaleCode.done ||
+      this.errMaxPurchase ||
+      this.errQuantitySale||
+      this.errSaleDescription?.maxLength ||
+      this.errStartTime ||
+      this.errEndTime ||
+      this.errSaleProduct){
+      return;
+    }else{
       if(this.body.startTime!=="" && this.body.endTime!==""){
         if(this.data.isCreate){
           this.saleService.createSale(this.body).subscribe((res:any)=>{
@@ -231,41 +244,41 @@ export class CreateUpdateSaleComponent implements OnInit{
   errSaleProduct="";
 
   validateCreateSale(){
-    this.errCode="";
-    this.errName = "";
-    this.errMaxPurchase="";
-    this.errStartTime="";
-    this.errEndTime="";
-    this.errQuantitySale="";
-    this.errSaleProduct="";
-    // validate code
-    if(this.body.code.trim() === '' ){
-      this.errCode = "Mã giảm giá không được để trống";
-    }else if(this.body.code.length <=6){
-      this.errCode = "Mã giảm giá không ngắn hơn 6 kí tự"
-    }else{
-      this.errCode="";
-    }
-
-    // validate name
-    if(this.body.name.trim()===""){
-      this.errName="Tên mã giảm giá không được để trống"
-    }else {
-      this.errName="";
-    }
-
-    if(this.body.maxPurchase<=0 || this.body.maxPurchase>100){
-      this.errMaxPurchase="Phần trăm khuyến mãi không đúng"
-    }else{
-      this.errMaxPurchase="";
-    }
-
-    if(this.body.type==1){
-      if(this.body.quantity<=0 ){
-        this.errQuantitySale="Số lượng phiếu giảm giá không được để trống";
-      }
-    }
-
+    // this.errCode="";
+    // this.errName = "";
+    // this.errMaxPurchase="";
+    // this.errStartTime="";
+    // this.errEndTime="";
+    // this.errQuantitySale="";
+    // this.errSaleProduct="";
+    // // validate code
+    // if(this.body.code.trim() === '' ){
+    //   this.errCode = "Mã giảm giá không được để trống";
+    // }else if(this.body.code.length <=6){
+    //   this.errCode = "Mã giảm giá không ngắn hơn 6 kí tự"
+    // }else{
+    //   this.errCode="";
+    // }
+    //
+    // // validate name
+    // if(this.body.name.trim()===""){
+    //   this.errName="Tên mã giảm giá không được để trống"
+    // }else {
+    //   this.errName="";
+    // }
+    //
+    // if(this.body.maxPurchase<=0 || this.body.maxPurchase>100){
+    //   this.errMaxPurchase="Phần trăm khuyến mãi không hợp lệ"
+    // }else{
+    //   this.errMaxPurchase="";
+    // }
+    //
+    // if(this.body.type==1){
+    //   if(this.body.quantity<=0 ){
+    //     this.errQuantitySale="Số lượng phiếu giảm giá không được để trống";
+    //   }
+    // }
+    //
     if(this.body.type ==0){
       let check=true;
       this.body.productIdLst.forEach((item:any)=>{
@@ -280,6 +293,27 @@ export class CreateUpdateSaleComponent implements OnInit{
     }
 
 
+    // return (this.errCode=="" && this.errStartTime=="" && this.errName=="" && this.errEndTime=="" && this.errSaleProduct=="")
+
+    this.validateTimeSale();
+    this.validateSaleCode();
+    this.validateSaleName();
+    this.validateQuantitySale();
+    this.validateMaxPurCharse();
+    this.validateDescription();
+
+  }
+
+  changeStartTime(event:any) {
+    this.body.startTime=this.startDateStr.toString()+"T00:00:00Z";
+    this.validateTimeSale()
+  }
+
+  changeEndTime(event:any) {
+    this.body.endTime = this.endDateStr.toString()+"T00:00:00Z";
+    this.validateTimeSale()
+  }
+  validateTimeSale(){
     if(this.body.startTime.trim()===""){
       this.errStartTime="Ngày bắt đầu khuyến mãi không được để trống"
     }else if(this.body.endTime.trim()===""){
@@ -290,15 +324,37 @@ export class CreateUpdateSaleComponent implements OnInit{
       this.errStartTime ="";
       this.errEndTime="";
     }
-    return (this.errCode=="" && this.errStartTime=="" && this.errName=="" && this.errEndTime=="" && this.errSaleProduct=="")
   }
 
-  changeStartTime(event:any) {
-    this.body.startTime=this.startDateStr.toString()+"T00:00:00Z";
+  errSaleCode:ValidateInput=new ValidateInput();
+  errSaleName:ValidateInput=new ValidateInput();
+  errSaleDescription:ValidateInput= new ValidateInput();
+  validateSaleCode() {
+    this.errSaleCode = CommonFunction.validateInputUTF8Space(this.body.code,50,null, true, true);
   }
 
-  changeEndTime(event:any) {
-    this.body.endTime = this.endDateStr.toString()+"T00:00:00Z";
-    // this.body.endTime = new Date(event.value)
+  validateSaleName() {
+    this.errSaleName = CommonFunction.validateInput(this.body.name,50, null);
+  }
+
+  validateMaxPurCharse() {
+    if(this.body.maxPurchase==0 || this.body.maxPurchase>=100){
+      this.errMaxPurchase = "Phần trăm khuyến mãi không hợp lệ"
+    }else{
+      this.errMaxPurchase = ""
+    }
+  }
+
+  validateQuantitySale() {
+    if(this.body.type==1 && this.body.quantity<=0){
+      this.errQuantitySale="Số lượng mã giảm giá không hợp lệ"
+    }else{
+      this.errQuantitySale=""
+    }
+  }
+
+
+  validateDescription() {
+    this.errSaleDescription = CommonFunction.validateInput(this.body.description,1000, null);
   }
 }

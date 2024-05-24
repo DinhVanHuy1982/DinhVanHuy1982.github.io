@@ -14,6 +14,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-5">
+          <label>Trạng thái</label>
           <ng-select
             [items]='itemStatus'
             bindLabel="name"
@@ -31,11 +32,13 @@
           </ng-select>
         </div>
         <div class="col-md-5">
+          <label>Mã đặt hàng</label>
           <input type="text" placeholder="Nhập mã đặt hàng..." class="w-100 form-control" [(ngModel)]="dataSearch.keySearch">
         </div>
       </div>
     </div>
     <div class="col-md-6  text-end">
+      <label style="opacity: 0;width: 100%">Trạng thái</label>
       <button class="btn-search btn btn-hover" *ngIf="action.search" (click)="searchButton()">Tìm kiếm</button>
     </div>
   </div>
