@@ -13,6 +13,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-5">
+          <label>Trạng thái</label>
           <ng-select
             [items]='item'
             bindLabel="name"
@@ -27,11 +28,13 @@
           </ng-select>
         </div>
         <div class="col-md-5">
+          <label>Từ khóa</label>
           <input type="text" placeholder="Nhập mã hoặc tên role" class="w-100 form-control" [(ngModel)]="dataSearch.roleSearchName">
         </div>
       </div>
     </div>
     <div class="col-md-6  text-end">
+      <label style="width: 100%;opacity: 0"></label>
       <button class="btn-search btn btn-hover" (click)="search()">Tìm kiếm</button>
     </div>
   </div>

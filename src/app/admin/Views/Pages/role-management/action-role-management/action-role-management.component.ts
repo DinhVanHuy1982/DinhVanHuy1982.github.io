@@ -52,8 +52,9 @@ export class ActionRoleManagementComponent implements ITooltipAngularComp {
 
   updateRole() {
     const dialogConfig: MatDialogConfig<{ isCreate: boolean;itemData: any }> = {
-      height: '60vh',
+      height: '800px',
       maxHeight: '90vh',
+      width: '800px',
       maxWidth: '90vw',
       data: {
         isCreate: false,

@@ -5,12 +5,22 @@
   </div>
   <div class="row body">
     <div class="col-md-6">
-      <label>Mã role</label>
-      <input type="text" [(ngModel)]="roleCode" class="form-control">
+      <label>Mã role <span class="require-start">*</span></label>
+      <input placeholder="Mã role" type="text" [(ngModel)]="roleCode" (blur)="validateRoleCode()" class="form-control">
+      <small style="color: red;font-size: 12px" class="error-validate" *ngIf="!errRoleCode.done">
+        <p *ngIf="errRoleCode.maxLength">Mã role không được lớn hơn 50 ký tự</p>
+        <p *ngIf="errRoleCode.empty">Mã role không được để trống</p>
+        <p *ngIf="errRoleCode.UTF8">Tiêu đề giảm giá không được để trống</p>
+        <p *ngIf="errRoleCode.space">Tiêu đề giảm giá không được để trống</p>
+      </small>
     </div>
     <div class="col-md-6">
-      <label>Tên role</label>
-      <input type="text" [(ngModel)]="roleName" class="form-control">
+      <label>Tên role <span class="require-start">*</span></label>
+      <input placeholder="Tên role" type="text" (blur)="validateRoleName()" [(ngModel)]="roleName" class="form-control">
+      <small style="color: red;font-size: 12px" class="error-validate" *ngIf="!errRoleName.done">
+        <p *ngIf="errRoleName.maxLength">Tên role không được lớn hơn 50 ký tự</p>
+        <p *ngIf="errRoleName.empty">Tên role không được để trống</p>
+      </small>
     </div>
     <div class="col-md-6">
       <label>Trạng thái</label>
@@ -19,7 +29,7 @@
         bindLabel="name"
         bindValue="code"
         placeholder="Lựa chọn..."
-        [clearable]="true"
+        [clearable]="false"
         [(ngModel)]="roleStatus"
       >
         <ng-template let-item="item" ng-option-tmp>
@@ -29,18 +39,24 @@
     </div>
     <div class="col-md-6">
       <label>Mô tả</label>
-      <input type="text" [(ngModel)]="roleDescription" class="form-control">
+      <input placeholder="Mô tả role" type="text" (blur)="validateDescription()" [(ngModel)]="roleDescription" class="form-control">
+      <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errDescription.maxLength">
+        <p *ngIf="errRoleName.maxLength">Mô tả role không được lớn hơn 1000 ký tự</p>
+      </small>
     </div>
     <div class="col-12">
-      <div>Chọn quyền cho role *</div>
-      <table style="width: 100%">
-        <tr>
+      <div>Chọn quyền cho role  <span class="require-start">*</span></div>
+      <small style="color: red;font-size: 12px" class="error-validate" *ngIf="errFunctionApply">
+        <p>{{errFunctionApply}}</p>
+        </small>
+      <table style="width: 100%" class="function-role">
+        <tr class="tb-header-bg">
           <th class="stt">STT</th>
           <th class="functionName">Tên chức năng</th>
           <th class="applyFunction">Áp dụng</th>
           <th class="action">Action</th>
         </tr>
-        <tr *ngFor="let function of roleData ,let index = index">
+        <tr [ngClass]="index%2==0?'tb-body-0':'tb-header-bg'" *ngFor="let function of roleData ,let index = index">
           <td>{{index}}</td>
           <td>{{function?.functionName}}</td>
           <td>
@@ -53,7 +69,7 @@
               [items]="function.listActionDTO"
               bindLabel="name"
               [multiple]="true"
-              (change)="changeAction($event)"
+              (change)="changeAction($event, index,function)"
               [closeOnSelect]="false"
               [(ngModel)]="function.optionSelected"
               [selectableGroupAsModel]="false"
@@ -61,7 +77,7 @@
               [searchable]="false"
               [clearable]="true"
               [placeholder]="'Lựa chọn'"
-              [ngClass]="{'disabel':!function.checkApplyFunction }"
+              [disabled]="!function.checkApplyFunction"
               class="body_action_select"
             >
               <ng-template let-index="index"  let-item="item" let-item$="item$" ng-option-tmp>
@@ -77,8 +93,8 @@
     </div>
   </div>
   <div class="footer">
-    <button (click)="closeCreateUpdate()">Hủy bỏ</button>
-    <button (click)="createRole()" *ngIf="data?.isCreate==true">Tạo mới</button>
-    <button (click)="update()" *ngIf="data?.isCreate!==true">Cập nhật</button>
+    <button  class="btn-action-dv btn-cancel gray" style="margin-right: 12px;" (click)="closeCreateUpdate()">Hủy bỏ</button>
+    <button  class="btn-submit btn-action-dv gray" style="margin-right: 12px;"  (click)="createRole()" *ngIf="data?.isCreate==true">Tạo mới</button>
+    <button class=" btn-submit btn-action-dv gray" style="margin-right: 12px;"  (click)="update()" *ngIf="data?.isCreate!==true">Cập nhật</button>
   </div>
 </div>

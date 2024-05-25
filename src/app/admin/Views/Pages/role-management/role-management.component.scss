@@ -8,6 +8,11 @@
 }
 .form-search{
   align-content: space-between;
+  margin-bottom: 20px;
+  label{
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
 ::ng-deep{
   .cell-action{

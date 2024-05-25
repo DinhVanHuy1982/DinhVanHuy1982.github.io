@@ -19,6 +19,23 @@
   .body{
     overflow-y: auto;
     height: 700px;
+    .function-role{
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      th{
+        height: 52px;
+        padding-left: 25px;
+      }
+      td{
+        cursor: pointer;
+        margin-bottom: 15px;
+        padding-left: 25px;
+      }
+      tr:nth-child(n+2):hover{
+        background-color: #efefef !important;
+      }
+    }
   }
   .footer{
     display: flex;
@@ -27,6 +44,32 @@
     align-content: center;
     flex-wrap: wrap;
     border-top: 1px solid gray;
+    .btn-action-dv{
+      width: 105px;
+      height: 32px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn-submit{
+      height: 35px;
+      background: #3463ba;
+      color: white;
+      font-weight: 500;
+    }
+    .btn-cancel{
+      color:#696f8c;
+    }
+    .btn-submit:hover{
+      border:1px solid #3463ba;
+    }
   }
 }
 .stt{
