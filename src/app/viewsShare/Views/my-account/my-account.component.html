@@ -1,0 +1,140 @@
+<div class="my-account">
+    <div class="row content-account-form">
+        <div class="col-md-2 col-sm-12 text-center">
+            <div class="group-gap">
+                <!-- Upload image -->
+                <div class="avatar-upload">
+                    <div class="avatar-edit">
+                        <!--accept=".png, .jpg, .jpeg"-->
+                        <input [hidden]="true" type='file' id="imageUpload" accept=".jpg, .png, .bmp, .tiff,.tif, .jpeg, .JPG, .PNG, .JPEG" #fileInput
+                               (change)="uploadFile($event)"/>
+                    </div>
+                    <div class="avatar-preview m-auto">
+                        <div id="imagePreview1" style="height: 240px;background-size: cover;" class="img-avatar" *ngIf="avatar" [style.backgroundImage]="'url('+ getUrl() +')'">
+                        </div>
+                        <div id="imagePreview2"  style="height: 240px;background-size: cover;" class="img-avatar"  *ngIf="!avatar"
+                             [style.backgroundImage]="'url(../../../../../assets/media/img/image_photo.png)'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" [disabled]="!isEdit" class="btn btn-primary btn-upload" (click)="fileInput.click()" style="background-color: #3366ff; font-size: 12px; font-weight: 600; margin-top: 20px" [ngStyle]="{'cursor': !isEdit ? 'default':'pointer'}">
+                <svg width="12"  height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.69882 7.5628L6.29258 5.45342C6.16212 5.25771 5.83801 5.25771 5.70755 5.45342L4.30131 7.5628C4.22954 7.67061 4.2227 7.80931 4.2838 7.92364C4.3449 8.03797 4.46403 8.10938 4.59381 8.10938H4.94537V10.5703C4.94537 10.7646 5.10261 10.9219 5.29693 10.9219H6.70318C6.8975 10.9219 7.05474 10.7646 7.05474 10.5703V8.10938H7.4063C7.53607 8.10938 7.65521 8.03797 7.71633 7.92364C7.77746 7.80931 7.77056 7.67061 7.69882 7.5628Z" fill="white"/>
+                    <path d="M10.206 4.11183C10.1751 3.69169 10.0045 3.29975 9.70413 2.99935C9.24981 2.54503 8.56588 2.40917 7.96511 2.57689C7.38742 1.64796 6.39362 1.07812 5.29689 1.07812C3.64824 1.07812 2.29041 2.34532 2.14861 3.98642C0.918471 4.29713 0 5.41738 0 6.70314C0 8.25393 1.28515 9.51564 2.83594 9.51564H4.2422V8.75245C3.99774 8.66627 3.79004 8.49152 3.66369 8.25496C3.48001 7.91197 3.50026 7.49725 3.71588 7.17315L5.12249 5.06342C5.31439 4.77537 5.64261 4.60372 6.00001 4.60372C6.35741 4.60372 6.68563 4.77537 6.87754 5.06342L8.28379 7.1728C8.49974 7.49725 8.51999 7.91197 8.33631 8.25496C8.20996 8.49152 8.00226 8.66627 7.7578 8.75245V9.51564H9.16406C10.7148 9.51564 12 8.25393 12 6.70314C12 5.54286 11.2722 4.53645 10.206 4.11183Z" fill="white"/>
+                </svg>
+                {{ 'COMMON.CHOOSE_FILE' | translate }}
+            </button>
+
+
+        </div>
+        <div class="col-md-10 col-sm-12 col-auto pr-7 infor-account">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Tên đăng nhập <span class="require-start">*</span></label>
+                    <input [disabled]="true" placeholder="Username" type="text" [ngModel]="formCreateUpdate.username" class="form-control">
+                </div>
+                <div class="col-md-6 col-right">
+                    <label>Họ và tên <span class="require-start">*</span></label>
+                    <input [disabled]="!isEdit"  (blur)="validateFullName()" placeholder="Họ và tên"  type="text"  [(ngModel)]="formCreateUpdate.fullName"  class="form-control">
+                    <small class="error-validate" *ngIf="!errFullName.done">
+                        <p *ngIf="errFullName.empty">Họ và tên không được để trống</p>
+                        <p *ngIf="errFullName.maxLength">Họ và tên không được quá 30 ký tự</p>
+                    </small>
+                </div>
+                <div class="col-md-6 col-right">
+                    <label>Số điện thoại <span class="require-start">*</span></label>
+                    <input  [disabled]="!isEdit"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            (blur)="validatePhoneNumber()" placeholder="Số điện thoại"  type="text"  [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+                    <small class="error-validate" *ngIf="!errSDT.done">
+                        <p *ngIf="errSDT.empty">Số điện thoại không được để trống</p>
+                        <p *ngIf="errSDT.maxLength">Số điện thoại không được quá 12 ký tự</p>
+                    </small>
+                </div>
+                <div class="col-md-6 col-right">
+                    <label class="input-label">Tỉnh <span class="require-start">*</span></label>
+                    <ng-select
+                            [items]='lstProvince'
+                            bindLabel="ProvinceName"
+                            bindValue="ProvinceID"
+                            placeholder="Lựa chọn..."
+                            [clearable]="true"
+                            [disabled]="!isEdit"
+                            [(ngModel)]="formCreateUpdate.provinceId"
+                            (ngModelChange)="changeProvince()"
+                            (blur)="validateProvince()"
+                    >
+                        <ng-template let-item="item" ng-option-tmp>
+                            <div [matTooltip]="item.ProvinceName" >{{item.ProvinceName}}</div>
+                        </ng-template>
+                    </ng-select>
+                    <small class="error-validate" *ngIf="!errProvince.done">
+                        <p *ngIf="errProvince.empty">Tỉnh không được để trống</p>
+                    </small>
+                </div>
+                <div class="col-md-6 col-right">
+                    <label class="input-label">Quận huyện <span class="require-start">*</span></label>
+                    <ng-select
+                            [items]='lstDistict'
+                            bindLabel="DistrictName"
+                            bindValue="DistrictID"
+                            placeholder="Lựa chọn..."
+                            [clearable]="true"
+                            [disabled]="!isEdit"
+                            [(ngModel)]="formCreateUpdate.districtId"
+                            (ngModelChange)="changeDistict()"
+                            (blur)="validateDistict()"
+                    >
+                        <ng-template let-item="item" ng-option-tmp>
+                            <div [matTooltip]="item.DistrictName" >{{item.DistrictName}}</div>
+                        </ng-template>
+                    </ng-select>
+                    <small class="error-validate" *ngIf="!errDistict.done">
+                        <p *ngIf="errDistict.empty">Quận huyện không được để trống</p>
+                    </small>
+                </div>
+                <div class="col-md-6 col-right">
+                    <label class="input-label">Xã, phường <span class="require-start">*</span></label>
+                    <ng-select
+                            [items]='lstWard'
+                            bindLabel="WardName"
+                            bindValue="WardCode"
+                            placeholder="Lựa chọn..."
+                            [clearable]="true"
+                            [disabled]="!isEdit"
+                            [(ngModel)]="formCreateUpdate.ward"
+                            (blur)="validateWard()"
+                    >
+                        <ng-template let-item="item" ng-option-tmp>
+                            <div [matTooltip]="item.WardName" >{{item.WardName}}</div>
+                        </ng-template>
+                    </ng-select>
+                    <small class="error-validate" *ngIf="!errWard.done">
+                        <p *ngIf="errWard.empty">Xã, phường không được để trống</p>
+                    </small>
+                </div>
+                <div class="col-md-6 col-right">
+                    <label>Email <span class="require-start">*</span></label>
+                    <input  [disabled]="!isEdit"  (blur)="validateEmail()" placeholder="Email"  type="text" [(ngModel)]="formCreateUpdate.email" class="form-control">
+                    <small class="error-validate" *ngIf="!errEmail.done">
+                        <p *ngIf="errEmail.empty">Email không được để trống</p>
+                        <p *ngIf="errEmail.regex">Email không hợp lệ</p>
+                    </small>
+                </div>
+            </div>
+            <div class=" w-100 text-center footer justify-content-center bottom-0 modal-footer  footer-custom">
+                <div class=" text-center m-auto">
+                    <button type="reset" class="btn  btn_cancel" *ngIf="isEdit" (click)="cancel()">{{'COMMON.CANCEL' | translate}} </button>
+                    <button type="submit" class="btn  btn_send w-auto" *ngIf="isEdit"
+                          (click)="onUpdate()"  (keyup.enter)="onUpdate()"> {{'COMMON.OK' | translate}}
+                        <!--<i class="position-absolute ml-10 mt-3 spinner spinner-right spinner-md spinner-light" *ngIf="loading"></i>-->
+                    </button>
+                    <button type="button" class="btn  btn-update" *ngIf="!isEdit" (click)="changeEditOrView()">
+                        {{'COMMON.UPDATE' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

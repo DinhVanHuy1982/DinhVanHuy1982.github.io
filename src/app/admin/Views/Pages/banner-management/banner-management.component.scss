@@ -834,3 +834,34 @@
   width: calc(100vw - 599px);
   margin-right: 19px;
 }
+
+.modal-footer {
+  border-top: none;
+  .btn-md {
+    width: 105px;
+    height: 32px;
+    left: 726px;
+    top: 774px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px;
+    border: none;
+  }
+  .btn-gray {
+    background: #e6e8f0;
+    margin-right: 10px;
+    color: #696f8c;
+  }
+  .btn-or {
+    background: #3643BA;
+  }
+  .btn-md:focus {
+    border: 1px solid #007eff;
+  }
+}
+.modal-footer .btn-action {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

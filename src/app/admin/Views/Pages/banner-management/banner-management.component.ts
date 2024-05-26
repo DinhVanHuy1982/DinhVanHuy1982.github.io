@@ -27,7 +27,7 @@ export class BannerManagementComponent implements OnInit{
 
   constructor(private bannerService:BannerService,
               private toast:ToastrService,
-              private dialog:MatDialog,
+              public dialog:MatDialog,
               private change:ChangeDetectorRef) {
   }
   @ViewChild('owlcarosel') owlElement?: OwlCarousel;
@@ -109,6 +109,16 @@ export class BannerManagementComponent implements OnInit{
     this.fileBanner.splice(index,1);
   }
 
+  openTemplateApply(template:any){
+    const dialogConfig= {
+      disableClose: false,
+      hasBackdrop: true,
+      width: '450px',
+      borderRadius:'10px'
+    };
+    this.dialog.open(template,dialogConfig)
+  }
+
   applyBanner() {
     console.log("File upload: ", this.fileBanner)
     console.log("Lst IdDelete", this.lstIdDelete)
@@ -119,6 +129,7 @@ export class BannerManagementComponent implements OnInit{
     this.bannerService.createUpdateBanner(this.formData).subscribe((res:any)=>{
       if(res.status==='OK'){
         this.toast.success("Thành công")
+        this.dialog.closeAll()
       }else{
         this.toast.warning(res.message)
       }

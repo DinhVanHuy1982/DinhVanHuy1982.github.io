@@ -19,6 +19,8 @@ import {BannerManagementComponent} from "./admin/Views/Pages/banner-management/b
 import {
   ImportProductManagementComponent
 } from "./admin/Views/Pages/import-product-management/import-product-management.component";
+import {MyAccountComponent} from "./viewsShare/Views/my-account/my-account.component";
+import {ChangePasswordComponent} from "./viewsShare/Views/change-password/change-password.component";
 
 // const userLogin =
 
@@ -38,6 +40,8 @@ const routes: Routes = [
   {path: "user-management", component: UserManagementComponent},
   {path: "banner-management", component: BannerManagementComponent},
   {path: "import-product-management", component: ImportProductManagementComponent},
+  {path: "my-account", component: MyAccountComponent},
+  {path: "change-pass-account", component: ChangePasswordComponent},
   {path: "**", component: ContentShopComponent}
 ];
 

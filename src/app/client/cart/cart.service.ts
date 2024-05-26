@@ -16,4 +16,8 @@ export class CartService {
   createCart(data: any) {
     return this.http.post(this.api + "create/cart", data)
   }
+
+  deleteCart(cartId:number) {
+    return this.http.get(this.api+"delete-cart/"+cartId)
+  }
 }

@@ -31,7 +31,7 @@ export class CartComponent implements OnInit{
   tabSlected=0;// tab chọn hiển thị 0 trong giỏ, 1 đang giao hàng, 2 đã hoàn thành
   noRowsTemplate = NO_ROW_GRID_TEMPLATE;
   constructor(private cartService:CartService,
-              private dialog: MatDialog,
+              public dialog: MatDialog,
               private toast:ToastrService,
               private activateRouter:ActivatedRoute,
               private productService: ProductService,
@@ -313,6 +313,33 @@ export class CartComponent implements OnInit{
   }
 
   protected readonly NO_ROW_GRID_TEMPLATE = NO_ROW_GRID_TEMPLATE;
+
+  removeOutCart() {
+
+    this.cartService.deleteCart(this.cartDelete).subscribe((res:any)=>{
+      if(res.status=='OK'){
+        this.toast.success("Xóa thành công")
+      }else{
+        this.toast.warning(res.message)
+      }
+      this.dialog.closeAll()
+    })
+
+  }
+  cartDelete:any;
+  openmodalDeleteCart(template:any,idCart:any){
+    this.cartDelete = idCart;
+    const dialogConfig= {
+      disableClose: false,
+      hasBackdrop: true,
+      width: '450px',
+      borderRadius:'10px'
+    };
+    this.dialog.open(template,dialogConfig).afterClosed().subscribe(()=>{
+      this.cartDelete=null;
+      this.serachCart();
+    })
+  }
 }
 export interface Task {
   name: string;

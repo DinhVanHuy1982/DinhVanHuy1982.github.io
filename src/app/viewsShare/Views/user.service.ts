@@ -58,4 +58,11 @@ export class UserService {
   confirmCodeVerify(data:any){
     return this.http.post(this.api+"/confirmResetPass",data);
   }
+
+  update(formCreateUpdate: any) {
+    return this.http.post(this.api+"/update",formCreateUpdate);
+  }
+  changePass(user: any) {
+    return this.http.post(this.api+"/change-pass",user);
+  }
 }

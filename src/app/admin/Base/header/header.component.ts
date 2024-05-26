@@ -22,10 +22,10 @@ export class HeaderComponent implements OnInit{
   }
   shouldShowGoToAccount: any;
   goToAccount() {
-    throw new Error('Method not implemented.');
+    this.router.navigateByUrl("/my-account")
   }
   goToChangePass() {
-    throw new Error('Method not implemented.');
+    this.router.navigateByUrl("/change-pass-account")
   }
   isAdmin = false;
   hasLogo =false;

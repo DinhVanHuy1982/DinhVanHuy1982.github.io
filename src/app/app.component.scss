@@ -171,4 +171,31 @@
   .ng-select-container.ng-has-value .ng-value-container .ng-value b{
     font-weight: unset !important;
   }
+
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
+
+  /* Cho các trình duyệt khác */
+  input[type="password"] {
+    /* Ẩn các yếu tố con mắt bằng cách thiết lập width và height của chúng */
+    &::-webkit-credentials-auto-fill-button,
+    &::-webkit-autofill,
+    &::-webkit-autofill-button {
+      display: none;
+      width: 0;
+      height: 0;
+      -webkit-appearance: none;
+    }
+  }
+  .btn_bsport{
+    background-color: #3463ba;
+    color:White;
+    font-weight: 500;
+  }
+  .btn_bsport:hover{
+    background-color:#7798d4 !important;
+    border: 1px solid #3463ba !important;
+  }
 }

@@ -1,13 +1,13 @@
 <div class="base-display-admin">
   <app-aside-left class="menu-base-left"></app-aside-left>
   <div class="content-right">
-    <div class="row w-100">
+    <div class="row w-100" style="z-index: 5">
       <app-header></app-header>
     </div>
-    <div class="breadcum row w-100" style="height: 30px">
+    <div class="breadcum row w-100" style="height: 30px;z-index: 4">
       <app-breadcrumb></app-breadcrumb>
     </div>
-    <div class="router-outlet">
+    <div class="router-outlet"  style="z-index: 3">
       <router-outlet style="width: 100%;"></router-outlet>
     </div>
   </div>

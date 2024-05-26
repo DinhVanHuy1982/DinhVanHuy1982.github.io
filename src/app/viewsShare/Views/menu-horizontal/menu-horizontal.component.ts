@@ -297,7 +297,11 @@ export class MenuHorizontalComponent implements OnInit{
   }
 
   goToAccount() {
-
+    if(this.checkLogin){
+      this.routerTo("/my-account")
+    }else{
+      this.toast.warning("Bạn cần đăng nhập để thực hiện chức năng này")
+    }
   }
 
   goToChangePass() {
@@ -329,4 +333,8 @@ export class MenuHorizontalComponent implements OnInit{
     this.categoriesNameSearch=item.categoriName
     this.search();
   }
+
+    gotoChangePass() {
+        this.routerTo("/change-pass-account")
+    }
 }

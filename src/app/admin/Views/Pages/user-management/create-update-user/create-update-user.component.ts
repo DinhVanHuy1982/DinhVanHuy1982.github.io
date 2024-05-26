@@ -5,6 +5,8 @@ import {OrderService} from "../../order-management/order.service";
 import {UserService} from "../../../../../viewsShare/Views/user.service";
 import {ToastrService} from "ngx-toastr";
 import {environment} from "../../../../../../environment/environment";
+import {ValidateInput} from "../../../../../../core/service/model/validate-input.model";
+import {CommonFunction} from "../../../../../../core/service/utils/common-function";
 
 @Component({
   selector: 'app-create-update-user',
@@ -17,15 +19,16 @@ export class CreateUpdateUserComponent {
   lstDistict:any= [];
   lstWard:any= [];
 
-  errFullName=""
-  errSDT="";
-  errProvince="";
-  errDistict="";
-  errWard="";
-  errUserName="";
-  errPassword=""
-  errRole="";
-  errDescription="";
+  errFullName:ValidateInput=new ValidateInput();
+  errSDT:ValidateInput=new ValidateInput();
+  errProvince:ValidateInput=new ValidateInput();
+  errDistict:ValidateInput=new ValidateInput();
+  errWard:ValidateInput=new ValidateInput();
+  errEmail:ValidateInput=new ValidateInput();
+  errUserName:ValidateInput=new ValidateInput();
+  errPassword:ValidateInput=new ValidateInput();
+  errRole:ValidateInput=new ValidateInput();
+  errDescription:ValidateInput=new ValidateInput();
 
   formDataSend = new FormData();
 
@@ -60,6 +63,11 @@ export class CreateUpdateUserComponent {
   fileImg:any;
   avatar :any;
   lstRoles:any=[];
+  passwordFirst="";
+  rePass="";
+  toggle1=false;
+  toggle2=false;
+  errRePasswordStr="";
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
               public dialog:MatDialog,
               private roleService:RolesService,
@@ -90,7 +98,43 @@ export class CreateUpdateUserComponent {
   }
 
   create(){
+
+    this.validateUser()
+    if(this.data.isCreate){
+      if(
+        !this.errUserName.done||
+        !this.errPassword.done||
+        !this.errFullName.done||
+        this.errRePasswordStr||
+        !this.errSDT.done||
+        !this.errProvince.done||
+        !this.errDistict.done||
+        !this.errWard.done||
+        !this.errEmail.done||
+        !this.errRole.done||
+        this.errDescription.maxLength
+      ){
+        return;
+      }
+    }else{
+      if(
+        !this.errUserName.done||
+        !this.errFullName.done||
+        !this.errSDT.done||
+        !this.errProvince.done||
+        !this.errDistict.done||
+        !this.errWard.done||
+        !this.errEmail.done||
+        !this.errRole.done||
+        this.errDescription.maxLength
+      ){
+        return;
+      }
+    }
+
+
     this.formDataSend.append("avatar",this.fileImg )
+    this.formCreateUpdate.password=this.passwordFirst;
     this.formDataSend.append('userDto',new Blob([ JSON.stringify(this.formCreateUpdate)],{type: 'application/json'}));
     // if(this.data.isCreate){
       this.userService.createUser(this.formDataSend).subscribe((res:any)=>{
@@ -106,10 +150,6 @@ export class CreateUpdateUserComponent {
     // }else{
     //
     // }
-  }
-
-  detailUser(){
-
   }
 
   onFileSelected(event: any) {
@@ -174,5 +214,81 @@ export class CreateUpdateUserComponent {
       this.lstWard = res.data;
     })
 
+  }
+  changeType(type:any, num:any) {
+    if (type.type === 'password') {
+      type.type = 'text';
+    } else {
+      type.type = 'password';
+    }
+    if(num==1){
+      this.toggle1 = !this.toggle1;
+    }else{
+      this.toggle2 = !this.toggle2;
+    }
+
+  }
+
+  validateUser(){
+    this.validatePassWord()
+    this.validateUserName()
+    this.validateRepass()
+    this.validateFullName()
+    this.validatePhoneNumber()
+    this.validateRole()
+    this.validateProvince()
+    this.validateDistict()
+    this.validateWard()
+    this.validateEmail()
+    this.validateDescription()
+  }
+
+  validatePassWord() {
+    this.errPassword=CommonFunction.validateInputUTF8Space(this.passwordFirst,15,/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,true, true)
+  }
+
+  validateUserName() {
+    this.errUserName=CommonFunction.validateInputUTF8Space(this.formCreateUpdate.username,15,/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,true, true)
+  }
+
+  validateRepass() {
+    // this.errRePassword=CommonFunction.validateInput(this.rePass,15,/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)
+    if(this.rePass != this.passwordFirst){
+      this.errRePasswordStr = "Không trùng khớp với mật khẩu"
+    }else{
+      this.errRePasswordStr = ""
+    }
+
+  }
+
+  validateFullName() {
+    this.errFullName = CommonFunction.validateInput(this.formCreateUpdate.fullName, 30,null);
+  }
+  validatePhoneNumber(){
+    this.errSDT = CommonFunction.validateInput(this.formCreateUpdate.phoneNumber, 12,null);
+  }
+
+  validateRole() {
+    this.errRole = CommonFunction.validateInput(this.formCreateUpdate.roleId, null,null);
+  }
+
+  validateProvince() {
+    this.errProvince = CommonFunction.validateInput(this.formCreateUpdate.provinceId, null,null);
+  }
+
+  validateDistict() {
+    this.errDistict = CommonFunction.validateInput(this.formCreateUpdate.districtId, null,null);
+  }
+
+  validateWard() {
+    this.errWard = CommonFunction.validateInput(this.formCreateUpdate.ward, null,null);
+  }
+
+  validateEmail() {
+    this.errEmail = CommonFunction.validateInput(this.formCreateUpdate.email, null,/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/);
+  }
+
+  validateDescription() {
+    this.errRole = CommonFunction.validateInput(this.formCreateUpdate.roleId, null,null);
   }
 }

@@ -44,7 +44,26 @@
       <input id="selectFile" type="file" (change)="onFileSelected($event)" multiple hidden="true">
     </div>
     <div class="apply-file">
-      <button class="button-apply-file btn" (click)="applyBanner()">Áp dụng</button>
+      <button class="button-apply-file btn" (click)="openTemplateApply(template)">Áp dụng</button>
     </div>
   </div>
 </div>
+
+<ng-template #template style="width: 464px">
+
+  <div class="modal-content">
+    <div class="modal-header" style=" padding: 24px 23px 16px; flex-direction: column;">
+      <h4 class="modal-title" style="text-align: center;">ÁP DỤNG</h4>
+    </div>
+    <div class="modal-body" style="padding: 24px 10px 24px !important; border-bottom: 1px solid #EBEDF3;">
+      <p class="des" style="text-align: center; color: #101840; font-weight: 500;">Bạn có chắc chắn muốn áp dụng banner này</p>
+    </div>
+    <div class="modal-footer">
+      <div class="btn-action">
+        <button type="button" class="btn-md btn-gray" (click)="dialog.closeAll()">{{'LIBRARY_ORGANIZATION.CANCEL'|translate}}</button>
+        <button type="button" class="btn-md btn-or"  (click)="applyBanner()">{{'LIBRARY_ORGANIZATION.OK'|translate}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

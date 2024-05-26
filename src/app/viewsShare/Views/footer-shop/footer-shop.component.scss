@@ -1,0 +1,30 @@
+.footer-shop{
+  width: 100%;
+  background-color: #3463ba;
+}
+.icon-infor{
+  justify-content: space-around;
+  display: flex;
+  gap: 8px;
+  a{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    align-items: center;
+    line-height: 50px;
+    transition: all ease-in-out 0.3s;
+  }
+  a:hover{
+    border: 2px solid white;
+    background-color: white;
+    i{
+      color:#3463ba;
+    }
+  }
+}
+.product-in-store{
+  a{
+    text-decoration: none;
+  }
+}

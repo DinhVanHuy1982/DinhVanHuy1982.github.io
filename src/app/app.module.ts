@@ -87,6 +87,9 @@ import { CreateImportProductComponent } from './admin/Views/Pages/import-product
 import { ActionImportProductComponent } from './admin/Views/Pages/import-product-management/action-import-product/action-import-product.component';
 import { ViewOrderComponent } from './client/cart/view-order/view-order.component';
 import { ActionViewOrderComponent } from './client/cart/action-view-order/action-view-order.component';
+import { FooterShopComponent } from './viewsShare/Views/footer-shop/footer-shop.component';
+import { MyAccountComponent } from './viewsShare/Views/my-account/my-account.component';
+import { ChangePasswordComponent } from './viewsShare/Views/change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -134,7 +137,10 @@ import { ActionViewOrderComponent } from './client/cart/action-view-order/action
     CreateImportProductComponent,
     ActionImportProductComponent,
     ViewOrderComponent,
-    ActionViewOrderComponent
+    ActionViewOrderComponent,
+    FooterShopComponent,
+    MyAccountComponent,
+    ChangePasswordComponent
   ],
   imports: [
     MatDatepickerModule,

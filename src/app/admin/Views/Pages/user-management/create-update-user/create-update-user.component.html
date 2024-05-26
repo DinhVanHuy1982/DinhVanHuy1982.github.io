@@ -20,33 +20,75 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12 col-right">
-                        <label>Tên đăng nhập <span>*</span></label>
-                        <input type="text" [(ngModel)]="formCreateUpdate.username" class="form-control">
-                        <small class="error-validate" *ngIf="errUserName">
-                            {{errUserName}}
+                        <label>Tên đăng nhập <span class="require-start">*</span></label>
+                        <input [disabled]="!data.isCreate" (blur)="validateUserName()" placeholder="Username" type="text" [(ngModel)]="formCreateUpdate.username" class="form-control">
+                        <small class="error-validate" *ngIf="!errUserName.done">
+                            <p *ngIf="errUserName.maxLength">Tên đăng nhập không được lớn hơn 15 ký tự</p>
+                            <p *ngIf="errUserName.empty">Tên đăng nhập không được để trống</p>
+                            <p *ngIf="errUserName.space">Tên đăng nhập không được chứa khoảng trắng</p>
+                            <p *ngIf="errUserName.regex">Tên đăng nhập phải chứa ít nhất 1 ký tự hoa, thường, số và ký tự đặc biệt</p>
+                            <p *ngIf="errUserName.UTF8">Tên đăng nhập không được chứa ký tự tiếng việt có dấu</p>
                         </small>
                     </div>
                     <div class="col-md-12 col-right" *ngIf="data.isCreate">
-                        <label>Mật khẩu <span>*</span></label>
-                        <input type="text" [(ngModel)]="formCreateUpdate.password" class="form-control">
-                        <small class="error-validate" *ngIf="errPassword">
-                            {{errPassword}}
-                        </small>
+                        <label>Mật khẩu <span class="require-start">*</span></label>
+<!--                        <input type="text" [(ngModel)]="passwordFirst" class="form-control">-->
+                        <div id="password" class="input-group-append">
+                          <input (blur)="validatePassWord()" placeholder="Mật khẩu" autocomplete="new-password" type="password" class="form-control w-100 input-sm custom-input-error" #password
+                                 [(ngModel)]="passwordFirst"
+                                 (keydown.space)="$event.preventDefault();">
+                          <span class="input-group-text cursor-pointer  navi-hover text-hover-red custom-span-error"
+                                (click)="changeType(password, 1)">
+                                <i *ngIf="!toggle1" [ngClass]="{'fas fa-eye-slash': !toggle1}"></i>
+                                <i *ngIf="toggle1" [ngClass]="{'fas fa-eye':toggle1}"></i>
+                          </span>
+                        </div>
+                      <small class="error-validate" *ngIf="!errPassword.done">
+                        <p *ngIf="errPassword.maxLength">Mật khẩu không được lớn hơn 15 ký tự</p>
+                        <p *ngIf="errPassword.empty">Mật khẩu không được để trống</p>
+                        <p *ngIf="errPassword.space">Mật khẩu không được chứa khoảng trắng</p>
+                        <p *ngIf="errPassword.regex">Mật khẩu phải chứa ít nhất 1 ký tự hoa, thường, số và ký tự đặc biệt</p>
+                        <p *ngIf="errPassword.UTF8">Mật khẩu không được chứa ký tự tiếng việt có dấu</p>
+                      </small>
                     </div>
-                    <div class="col-md-12  col-right">
-                        <label>Họ và tên <span>*</span></label>
-                        <input type="text"  [(ngModel)]="formCreateUpdate.fullName"  class="form-control">
-                        <small class="error-validate" *ngIf="errFullName">
-                            {{errFullName}}
-                        </small>
+                    <div class="col-md-12  col-right"  *ngIf="data.isCreate">
+                      <label>Nhập lại khẩu <span class="require-start">*</span></label>
+                      <!--                        <input type="text" [(ngModel)]="passwordFirst" class="form-control">-->
+                      <div id="password2" class="input-group-append">
+                        <input (blur)="validateRepass()" type="password" class="form-control w-100 input-sm custom-input-error"
+                               id="rePass" #password2
+                               [(ngModel)]="rePass"
+                               (keydown.space)="$event.preventDefault();"
+                               autocomplete="new-password"
+                               placeholder="Nhập lại mật khẩu"  >
+                        <span class="input-group-text cursor-pointer  navi-hover text-hover-red custom-span-error"
+                              (click)="changeType(password2, 2)">
+                                <i *ngIf="!toggle2" [ngClass]="{'fas fa-eye-slash': !toggle2}"></i>
+                                <i *ngIf="toggle2" [ngClass]="{'fas fa-eye':toggle2}"></i>
+                          </span>
+                      </div>
+                      <small class="error-validate" *ngIf="errRePasswordStr">
+                        <p *ngIf="errRePasswordStr">{{errRePasswordStr}}</p>
+                      </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-right">
-                <label>Số điện thoại <span>*</span></label>
-                <input type="text"  [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
-                <small class="error-validate" *ngIf="errSDT">
-                    {{errSDT}}
+              <label>Họ và tên <span class="require-start">*</span></label>
+              <input (blur)="validateFullName()" placeholder="Họ và tên"  type="text"  [(ngModel)]="formCreateUpdate.fullName"  class="form-control">
+              <small class="error-validate" *ngIf="!errFullName.done">
+                <p *ngIf="errFullName.empty">Họ và tên không được để trống</p>
+                <p *ngIf="errFullName.maxLength">Họ và tên không được quá 30 ký tự</p>
+              </small>
+            </div>
+            <div class="col-md-6 col-right">
+                <label>Số điện thoại <span class="require-start">*</span></label>
+                <input
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                  (blur)="validatePhoneNumber()" placeholder="Số điện thoại"  type="text"  [(ngModel)]="formCreateUpdate.phoneNumber"  class="form-control">
+                <small class="error-validate" *ngIf="!errSDT.done">
+                  <p *ngIf="errSDT.empty">Số điện thoại không được để trống</p>
+                  <p *ngIf="errSDT.maxLength">Số điện thoại không được quá 12 ký tự</p>
                 </small>
             </div>
             <div class="col-md-6 col-right">
@@ -56,7 +98,7 @@
                         bindLabel="name"
                         bindValue="code"
                         placeholder="Lựa chọn..."
-                        [clearable]="true"
+                        [clearable]="false"
                         [(ngModel)]="formCreateUpdate.status"
                 >
                     <ng-template let-item="item" ng-option-tmp>
@@ -64,7 +106,7 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div class="col-md-6 col-right">
+            <div class="col-md-6 col-right" *ngIf="formCreateUpdate.roleId">
                 <label>Role</label>
                 <ng-select
                         [items]='lstRoles'
@@ -73,17 +115,18 @@
                         placeholder="Lựa chọn..."
                         [clearable]="true"
                         [(ngModel)]="formCreateUpdate.roleId"
+                        (blur)="validateRole()"
                 >
                     <ng-template let-item="item" ng-option-tmp>
                         <div [matTooltip]="item.roleName" >{{item.roleName}}</div>
                     </ng-template>
                 </ng-select>
-                <small class="error-validate" *ngIf="errRole">
-                    {{errRole}}
+                <small class="error-validate" *ngIf="!errRole.done">
+                  <p *ngIf="errRole.empty">Role không được để trống</p>
                 </small>
             </div>
             <div class="col-md-6 col-right">
-                <label class="input-label">Tỉnh <span>*</span></label>
+                <label class="input-label">Tỉnh <span class="require-start">*</span></label>
                 <ng-select
                         [items]='lstProvince'
                         bindLabel="ProvinceName"
@@ -92,17 +135,18 @@
                         [clearable]="true"
                         [(ngModel)]="formCreateUpdate.provinceId"
                         (ngModelChange)="changeProvince()"
+                        (blur)="validateProvince()"
                 >
                     <ng-template let-item="item" ng-option-tmp>
                         <div [matTooltip]="item.ProvinceName" >{{item.ProvinceName}}</div>
                     </ng-template>
                 </ng-select>
-                <small class="error-validate" *ngIf="errProvince">
-                    {{errProvince}}
+                <small class="error-validate" *ngIf="!errProvince.done">
+                  <p *ngIf="errProvince.empty">Tỉnh không được để trống</p>
                 </small>
             </div>
             <div class="col-md-6 col-right">
-                <label class="input-label">Quận huyện <span>*</span></label>
+                <label class="input-label">Quận huyện <span class="require-start">*</span></label>
                 <ng-select
                         [items]='lstDistict'
                         bindLabel="DistrictName"
@@ -111,17 +155,18 @@
                         [clearable]="true"
                         [(ngModel)]="formCreateUpdate.districtId"
                         (ngModelChange)="changeDistict()"
+                        (blur)="validateDistict()"
                 >
                     <ng-template let-item="item" ng-option-tmp>
                         <div [matTooltip]="item.DistrictName" >{{item.DistrictName}}</div>
                     </ng-template>
                 </ng-select>
-                <small class="error-validate" *ngIf="errDistict">
-                    {{errDistict}}
-                </small>
+              <small class="error-validate" *ngIf="!errDistict.done">
+                <p *ngIf="errDistict.empty">Quận huyện không được để trống</p>
+              </small>
             </div>
             <div class="col-md-6 col-right">
-                <label class="input-label">Xã, phường <span>*</span></label>
+                <label class="input-label">Xã, phường <span class="require-start">*</span></label>
                 <ng-select
                         [items]='lstWard'
                         bindLabel="WardName"
@@ -129,24 +174,29 @@
                         placeholder="Lựa chọn..."
                         [clearable]="true"
                         [(ngModel)]="formCreateUpdate.ward"
+                        (blur)="validateWard()"
                 >
                     <ng-template let-item="item" ng-option-tmp>
                         <div [matTooltip]="item.WardName" >{{item.WardName}}</div>
                     </ng-template>
                 </ng-select>
-                <small class="error-validate" *ngIf="errWard">
-                    {{errWard}}
+                <small class="error-validate" *ngIf="!errWard.done">
+                    <p *ngIf="errWard.empty">Xã, phường không được để trống</p>
                 </small>
             </div>
             <div class="col-md-6 col-right">
                 <label>Email</label>
-                <input type="text" [(ngModel)]="formCreateUpdate.email" class="form-control">
+                <input (blur)="validateEmail()" placeholder="Email"  type="text" [(ngModel)]="formCreateUpdate.email" class="form-control">
+                <small class="error-validate" *ngIf="!errEmail.done">
+                  <p *ngIf="errEmail.empty">Email không được để trống</p>
+                  <p *ngIf="errEmail.regex">Email không hợp lệ</p>
+                </small>
             </div>
-            <div class="col-md-6 col-right">
+            <div class="col-md-12 col-right">
                 <label>Mô tả</label>
-                <input type="text"  [(ngModel)]="formCreateUpdate.description"  class="form-control">
-                <small class="error-validate" *ngIf="errDescription">
-                    {{errDescription}}
+                <textarea (blur)="validateDescription()" placeholder="Mô tả tài khoản"  type="text"  [(ngModel)]="formCreateUpdate.description"  class="form-control"></textarea>
+                <small class="error-validate" *ngIf="!errDescription.done">
+                    <p *ngIf="errDescription.maxLength">Mô tả không được lớn hơn 1000 ký tự</p>
                 </small>
             </div>
         </div>
