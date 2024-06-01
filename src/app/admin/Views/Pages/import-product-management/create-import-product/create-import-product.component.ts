@@ -109,6 +109,7 @@ export class CreateImportProductComponent implements OnInit{
       this.importProductService.importProduct(this.productInfor).subscribe((res:any)=>{
         if(res.status==="OK"){
           this.toast.success("Nhập hàng thành công")
+          this.dialog.closeAll();
         }else{
           this.toast.error(res.message)
         }
@@ -263,7 +264,11 @@ export class CreateImportProductComponent implements OnInit{
   }
 
   viewFile(index: number) {
-    const data = { lstFile: this.lstUrlImgUpdate, index: index };
+    const lstFile = this.lstUrlImgUpdate.map((item:any)=>{
+      item = this.domainFile + item;
+      return item;
+    })
+    const data = { lstFile: lstFile, index: index };
     this.dialog.open(FileDetailComponent, {
       data,
       disableClose: false,

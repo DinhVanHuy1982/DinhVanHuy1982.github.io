@@ -58,7 +58,7 @@ export class RoleManagementComponent implements OnInit{
     {
       headerName: 'STT',
       valueGetter: (param:any) => {
-          return (param.node.rowIndex + 1)
+          return (param.node.rowIndex + 1)+ (this.dataSearch.page-1)*10
       },
       width: 100,
       pinned: 'left',

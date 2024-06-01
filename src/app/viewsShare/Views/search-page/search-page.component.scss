@@ -376,6 +376,9 @@
               }
             }
             .item-box__price {
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
               .price-sale{
                 text-decoration-line: line-through;
               }

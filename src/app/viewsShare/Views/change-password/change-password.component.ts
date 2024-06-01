@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {OrderService} from "../../../admin/Views/Pages/order-management/order.service";
 import {CommonFunction} from "../../../../core/service/utils/common-function";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-change-password',
@@ -23,7 +24,8 @@ export class ChangePasswordComponent implements OnInit{
   currentUser:any;
   constructor(private userService:UserService,
               private toast:ToastrService,
-              public  dialog:MatDialog) {
+              public  dialog:MatDialog,
+              public router:Router) {
     this.userService.getUserCurrent().subscribe((user:any)=>{
       if(user){
         this.currentUser = user;
@@ -96,5 +98,9 @@ export class ChangePasswordComponent implements OnInit{
     this.validateCurerntPassWord()
     this.validateRepass()
     this.validatePassWord()
+  }
+
+  routerHome() {
+    this.router.navigateByUrl("/home-page-content")
   }
 }

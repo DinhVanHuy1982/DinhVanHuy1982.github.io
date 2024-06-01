@@ -43,6 +43,9 @@
               [(ngModel)]="productInfor.categoriesID"
               (blur)="validateCategories()"
             >
+              <ng-template let-item="item" ng-option-tmp>
+                <div [matTooltip]="item.categoriCode +' - '+item.categoriName">{{item.categoriCode +" - "+item.categoriName}}</div>
+              </ng-template>
             </ng-select>
             <small style="color: red;font-size: 12px" class="error-validate" *ngIf="!this.errCategoriesId.done">
               <p *ngIf="errCategoriesId.empty">Danh mục sản phẩm không được để trống</p>

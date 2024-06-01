@@ -69,7 +69,7 @@ export class MenuHorizontalComponent implements OnInit{
 
     // get list danh mục
     const data={}
-    this.categoriesService.apiGetDataTree(data).subscribe((res:any)=>{
+    this.categoriesService.getTreeCategoriesActive().subscribe((res:any)=>{
       this.lstCategories=res.data;
       console.log(this.lstCategories)
     })

@@ -7,6 +7,7 @@ import {ITooltipParams} from "ag-grid-community";
 import {OrderDetailComponent} from "../../../admin/Views/Pages/order-management/order-detail/order-detail.component";
 import {CartComponent} from "../cart.component";
 import {ViewOrderComponent} from "../view-order/view-order.component";
+import {OrderService} from "../../../admin/Views/Pages/order-management/order.service";
 
 @Component({
   selector: 'app-action-view-order',
@@ -17,7 +18,8 @@ export class ActionViewOrderComponent implements ITooltipAngularComp{
   data:any;
   constructor( private toast:ToastrService,
                public matdialog: MatDialog,
-               private cartComponent:CartComponent)
+               private cartComponent:CartComponent,
+               private orderService:OrderService)
   {
 
   }
@@ -51,4 +53,14 @@ export class ActionViewOrderComponent implements ITooltipAngularComp{
     })
   }
 
+  payment() {
+    this.orderService.getLinkPayMent(this.data.price*100, this.data.orderCode).subscribe((res:any)=>{
+      if(res.status =='Ok'){
+        const anchor = document.createElement('a');
+        anchor.href = res.url;
+        anchor.target='_blank'
+        anchor.click()
+      }
+    })
+  }
 }

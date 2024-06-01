@@ -87,8 +87,18 @@ export class CategoriesManagementComponent implements OnInit{
 
   search() {
     this.categoriService.apiGetDataTree(this.formSearch).subscribe((data:any)=>{
-      this.dataSource.data=data.data;
+      this.dataSource.data=data.data.map((item:any)=>{
+        // item.createTime = )
+        return item
+      });
     })
+  }
+  formatDate(dateStr: any): string {
+    const date = new Date(dateStr*1000)
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${day}-${month}-${year}`;
   }
 
   openCreate() {

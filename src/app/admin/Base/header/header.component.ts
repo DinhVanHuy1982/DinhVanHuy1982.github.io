@@ -30,11 +30,20 @@ export class HeaderComponent implements OnInit{
   isAdmin = false;
   hasLogo =false;
   logoHeader = '';
-
+  currentUser:any;
   ngOnInit(): void {
+    this.userService.getUserCurrent().subscribe((user:any)=>{
+      this.currentUser= user;
+    })
     setInterval(() => {
       this.estimateLogOut();
     }, 1000);
+  }
+  getLastThreeCharsOfLastWord(input: string): string {
+    if (!input) return '';
+    const words = input.split(' ');
+    const lastWord = words[words.length - 1];
+    return lastWord.slice(-3);
   }
 
   estimateLogOut() {

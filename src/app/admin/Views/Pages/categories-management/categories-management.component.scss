@@ -10,7 +10,12 @@ th, td {
   text-align: left;
   padding: 8px;
 }
-
+.cell-value-tbl{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
 th {
   background-color: #f2f2f2;
 }

@@ -84,19 +84,25 @@ export class SaleManagementComponent implements OnInit{
     {
     headerName: 'STT',
     valueGetter: (param:any) => {
-      return (param.node.rowIndex + 1)
+      return (param.node.rowIndex + 1)+ (this.formSearch.page-1)*10
     },
     width: 100,
     pinned: 'left',
     },{
       headerName: "Mã giảm giá",
       field: "code",
+      headerTooltip: "Mã giảm giá",
+      tooltipField: 'code',
     },{
       headerName: "Tên mã giảm giá",
       field: "name",
+      headerTooltip: "Tên mã giảm giá",
+      tooltipField: 'name',
     },{
       headerName: "Số lượng",
       field: "quantity",
+      headerTooltip: "Số lượng",
+      tooltipField: 'quantity',
     },{
       headerName: "Loại giảm giá",
       field: "type",
@@ -116,9 +122,13 @@ export class SaleManagementComponent implements OnInit{
     },{
       headerName: "Ngày bắt đầu",
       field: "startTime",
+      headerTooltip: "Ngày bắt đầu",
+      tooltipField: 'startTime',
     },{
       headerName: "Ngày kết thúc",
       field: "endTime",
+      headerTooltip: "Ngày kết thúc",
+      tooltipField: 'endTime',
     },{
       headerName: 'Action',
       cellRenderer: ActionSaleComponent,

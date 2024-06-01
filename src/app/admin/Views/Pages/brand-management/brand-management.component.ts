@@ -75,6 +75,8 @@ export class BrandManagementComponent implements OnInit{
     },{
       headerName: 'Mã nhãn hàng',
       field:"brandCode",
+      headerTooltip: "Mã nhãn hàng",
+      tooltipField: 'productCode',
       cellStyle: (param:any) => {
         return {
           'font-weight': '500',
@@ -91,22 +93,8 @@ export class BrandManagementComponent implements OnInit{
     },{
       headerName: 'Tên nhãn hàng',
       field:"brandName",
-      cellStyle: (param:any) => {
-        return {
-          'font-weight': '500',
-          'font-size': '12px',
-          'align-items': 'center',
-          display: 'flex',
-          top: '0px',
-          'white-space': 'nowrap',
-          'text-overflow': 'ellipsis',
-          overflow: 'hidden',
-        };
-      },
-
-    },{
-      headerName: 'Mã nhãn hàng',
-      field:"brandCode",
+      headerTooltip: "Tên nhãn hàng",
+      tooltipField: 'brandName',
       cellStyle: (param:any) => {
         return {
           'font-weight': '500',
@@ -123,6 +111,8 @@ export class BrandManagementComponent implements OnInit{
     },{
       headerName: 'Địa chỉ',
       field:"address",
+      headerTooltip: "Địa chỉ",
+      tooltipField: 'address',
       cellStyle: (param:any) => {
         return {
           'font-weight': '500',
@@ -171,7 +161,7 @@ export class BrandManagementComponent implements OnInit{
       suppressSizeToFit: true
     },{
       headerName: 'Trạng thái',
-      field: 'status',
+      headerTooltip: "Trạng thái",
       valueGetter: (param:any) => {
         if(param.data?.status == 1){
           return "Đang hoạt động"

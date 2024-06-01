@@ -15,6 +15,9 @@ export class CategoriesService {
   public getNoTree(){
     return this.http.get(this.api+"/get-categories-no-tree")
   }
+  public getTreeCategoriesActive(){
+    return this.http.get(this.api+"/getCategories-status")
+  }
 
   public updateCategories(categories:any){
     return this.http.post(this.api+"/update-categories", categories)

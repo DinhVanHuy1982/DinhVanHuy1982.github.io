@@ -22,19 +22,25 @@ export class OrderManagementComponent implements OnInit{
       headerName: 'STT',
       headerClass:'header-center wrap-Htext title-cell-violation',
       valueGetter: (param:any) => {
-        return (param.node.rowIndex + 1)
+        return (param.node.rowIndex + 1) + (this.dataSearch.page-1)* 10
       },
       width: 100,
       pinned: 'left',
     },{
       headerName: 'Mã đặt hàng',
       field:"code",
+      headerTooltip: "Mã đặt hàng",
+      tooltipField: 'code',
     },{
       headerName: 'Người đặt hàng',
       field:"userBuy",
+      headerTooltip: "Người đặt hàng",
+      tooltipField: 'userBuy',
     },{
       headerName: 'Ngày đặt hàng',
       field:"orderDate",
+      headerTooltip: "Ngày đặt hàng",
+      tooltipField: 'orderDate',
     },{
       headerName: 'Phương thức thanh toán',
       field:"paymentMethod",
@@ -48,6 +54,8 @@ export class OrderManagementComponent implements OnInit{
     },{
       headerName: 'Tổng hóa đơn',
       field:"priceOrder",
+      headerTooltip: "Tổng hóa đơn",
+      tooltipField: 'priceOrder',
     },{
       headerName: 'Trạng thái',
       field:"nameStatus",

@@ -4,6 +4,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 import {RegisterAccountService} from "./register-account.service";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../user.service";
+import {OrderService} from "../../../admin/Views/Pages/order-management/order.service";
 
 @Component({
   selector: 'app-register-account',
@@ -19,25 +20,42 @@ export class RegisterAccountComponent implements OnInit{
   messErrRePassword='';
   messErrFullName='';
   messErrEmail='';
+  messErrSDT="";
+  messErrProvince="";
+  messErrDistict="";
+  messErrWard="";
+  lstProvince= [];
+  lstDistict= [];
+  lstWard= [];
   constructor(private fb: FormBuilder,
               private dialogRef: MatDialogRef<RegisterAccountComponent>,
               private userService: UserService,
-              private toastService: ToastrService) {
+              private toastService: ToastrService,
+              private orderService:OrderService,) {
   }
   formRegis!:FormGroup;
   formDataAvatar=new FormData();
   formDataSent = new FormData();
+  toggle1=false;
+  toggle2=false;
   ngOnInit(): void {
+    this.orderService.getListProvince().subscribe((res:any)=>{
+      this.lstProvince=res.data;
+    })
     this.buildForm();
   }
   buildForm(){
     this.formRegis= this.fb.group({
-      username:new FormControl(null, [Validators.required, Validators.maxLength(16), Validators.minLength(6)]),
+      username:new FormControl(null, [Validators.required, Validators.maxLength(15), Validators.minLength(6)]),
       address: new FormControl(),
+      provinceId: new FormControl(null, [Validators.required]),
+      phoneNumber: new FormControl(null, [Validators.required, Validators.maxLength(12)]),
+      districtId: new FormControl(null, [Validators.required]),
+      ward: new FormControl(null, [Validators.required]),
       fullName:new FormControl(null,[Validators.required, Validators.maxLength(30)]),
       password: new FormControl(null, [Validators.required, Validators.maxLength(16), Validators.minLength(6)]),
       rePassword: new FormControl(),
-      email: new FormControl(null , [Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/)]),
+      email: new FormControl(null , [Validators.required,Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/)]),
     })
   }
   uploadFile(event:any){
@@ -62,7 +80,7 @@ export class RegisterAccountComponent implements OnInit{
 
   validatorPassWord(){
     // valid pass
-    if(this.formRegis.get('password')?.value != null){
+    // if(this.formRegis.get('password')?.value != null){
       const regexUserName = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
       const regexSpaceBetween = /^\s*\S+\s*$/;
       const space = /^\s*$/;
@@ -78,7 +96,7 @@ export class RegisterAccountComponent implements OnInit{
       }else{
         this.messErrPassword ='';
       }
-    }
+    // }
   }
   validatorUserName(){
     if(this.formRegis.get('username')?.value != null){
@@ -89,7 +107,7 @@ export class RegisterAccountComponent implements OnInit{
       if(!regexSpaceBetween.test(this.formRegis.get('username')?.value)){
         this.messErrUserName = 'Tên đăng nhập không được chứa khoảng trắng';
       }else if(this.formRegis.get('username')?.errors?.['maxlength']){
-        this.messErrUserName = 'Tên đăng nhập không được vượt quá 16 kí tự';
+        this.messErrUserName = 'Tên đăng nhập không được vượt quá 15 kí tự';
       }else if(space.test(this.formRegis.get('username')?.value)){
         this.messErrUserName = 'Tên đăng nhập không không thể là kí tự trắng';
       }else if(!regexUserName.test(this.formRegis.get('username')?.value)){
@@ -113,6 +131,8 @@ export class RegisterAccountComponent implements OnInit{
   validatorEmail(){
     if(this.formRegis.get('email')?.errors?.['pattern']){
       this.messErrEmail='Email không đúng định dạng';
+    }else if(this.formRegis.get('email')?.errors?.['required']){
+      this.messErrEmail='Email không được để trống';
     }else{
       this.messErrEmail='';
     }
@@ -136,10 +156,24 @@ export class RegisterAccountComponent implements OnInit{
   }
   register(){
     this.validatorEmail();
+    this.validatorUserName()
     this.validatorFullName();
     this.validatorPassWord();
     this.validatorRePass();
-    if(!this.messErrUserName && !this.messErrEmail && !this.messErrRePassword && !this.messErrFullName && !this.messErrFileAvatar){
+    // this.changeProvince();
+    // this.changeDistict();
+    // this.validateWard();
+    this.validateAddressUser()
+    this.validateSDT()
+    if(!this.messErrUserName &&
+      !this.messErrEmail &&
+      !this.messErrRePassword &&
+      !this.messErrFullName &&
+      !this.messErrFileAvatar &&
+    !this.messErrWard &&
+    !this.messErrProvince &&
+    !this.messErrDistict &&
+    !this.messErrSDT){
       console.log("Avatar: ", this.formDataAvatar)
       this.formDataSent = new FormData();
       if(this.fileAvatar){
@@ -151,6 +185,7 @@ export class RegisterAccountComponent implements OnInit{
       this.userService.registerAccountClient(this.formDataSent).subscribe((data:any)=>{
         if(data?.status === 'OK'){
           this.toastService.success('Đăng kí tài khoản thành công');
+          this.dialogRef.close();
         }else{
           this.toastService.error(data.message);
         }
@@ -160,5 +195,90 @@ export class RegisterAccountComponent implements OnInit{
 
   close(){
     this.dialogRef.close();
+  }
+
+  changeType(type:any, number: number) {
+    if (type.type === 'password') {
+      type.type = 'text';
+    } else {
+      type.type = 'password';
+    }
+    if(number==1){
+      this.toggle1 = !this.toggle1;
+    }else{
+      this.toggle2 = !this.toggle2;
+    }
+  }
+
+  validateAddressUser(){
+    if(this.formRegis.get("provinceId")?.value==null){
+      this.messErrProvince="Tỉnh không được để trống"
+    }else{
+      this.messErrProvince=""
+    }
+    if(this.formRegis.get("districtId")?.value==null){
+      this.messErrDistict="Quận, huyện không được để trống"
+    }else{
+      this.messErrDistict=""
+    }
+    if(this.formRegis.get("ward")?.value==null){
+      this.messErrWard="Xã, phường không được để trống"
+    }else{
+      this.messErrWard=""
+    }
+  }
+
+  changeProvince() {
+    if(this.formRegis.get("provinceId")?.value===null){
+      this.lstDistict=[]
+      this.lstWard=[]
+      this.messErrProvince="Tỉnh không được để trống"
+      this.formRegis.get("districtId")?.setValue(null);
+      this.formRegis.get("ward")?.setValue(null);
+    }else{
+      const data={
+        province_id:this.formRegis.get("provinceId")?.value
+      }
+      this.orderService.getListDistict(data).subscribe((res:any)=>{
+        this.lstDistict=res.data;
+      })
+      this.messErrProvince=""
+      this.lstWard=[]
+      this.formRegis.get("districtId")?.setValue(null);
+      this.formRegis.get("ward")?.setValue(null);
+    }
+  }
+
+  changeDistict() {
+    if(this.formRegis.get("districtId")?.value===null){
+      this.lstWard=[]
+      this.formRegis.get("ward")?.setValue(null)
+      this.messErrDistict="Quận, huyện không được để trống"
+    }else{
+      this.messErrDistict=""
+      this.lstWard=[]
+      this.formRegis.get("ward")?.setValue(null)
+      this.orderService.getListWard(this.formRegis.get("districtId")?.value).subscribe((res:any)=>{
+        this.lstWard=res.data
+      })
+    }
+  }
+
+  validateSDT() {
+    if(this.formRegis.get('phoneNumber')?.errors?.['maxlength']){
+      this.messErrSDT = 'Số điện thoại không được vượt quá 12 kí tự';
+    }else if(this.formRegis.get('phoneNumber')?.errors?.['required']){
+      this.messErrSDT = 'Số điện thoại không được để trống';
+    }else{
+      this.messErrSDT =""
+    }
+  }
+
+  validateWard() {
+    if(this.formRegis.get('ward')?.errors?.['required']){
+      this.messErrWard = 'Xã, phường không được để trống';
+    }else{
+      this.messErrWard=""
+    }
   }
 }

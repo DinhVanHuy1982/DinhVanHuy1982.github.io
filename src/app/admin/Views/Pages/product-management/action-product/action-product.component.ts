@@ -7,6 +7,7 @@ import {ITooltipParams} from "ag-grid-community";
 import {CreateUpdateRoleComponent} from "../../role-management/create-update-role/create-update-role.component";
 import {CreateUpdateProductComponent} from "../create-update-product/create-update-product.component";
 import {UserService} from "../../../../../viewsShare/Views/user.service";
+import {ProductManagementComponent} from "../product-management.component";
 
 @Component({
   selector: 'app-action-product',
@@ -20,7 +21,8 @@ export class ActionProductComponent implements ITooltipAngularComp{
     private toast:ToastrService,
     public matdialog: MatDialog,
     private productService: ProductService,
-    private userService:UserService
+    private userService:UserService,
+    private productComponent:ProductManagementComponent
   ) {
     this.userService.getAction().subscribe((res:any)=>{
       this.action = res;
@@ -49,7 +51,8 @@ export class ActionProductComponent implements ITooltipAngularComp{
       }
     };
     this.matdialog.open(CreateUpdateProductComponent, dialogConfig).afterClosed().subscribe((data:any)=>
-      {}
+
+        this.productComponent.search()
     )
   }
   deleteProduct(){

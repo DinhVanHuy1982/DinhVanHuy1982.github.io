@@ -7,7 +7,7 @@ import {DetailProductService} from "./detail-product.service";
 import {ToastrService} from "ngx-toastr";
 import {HttpHeaders} from "@angular/common/http";
 import {ProductService} from "../../admin/Views/Pages/product-management/product.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../cart/cart.service";
 import {UserService} from "../../viewsShare/Views/user.service";
 // import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -114,6 +114,7 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
      private toast: ToastrService,
      private productService:ProductService,
      private activatedRoute: ActivatedRoute,
+     private router: Router,
      private cartService: CartService,
      private userService:UserService
    ) {
@@ -177,54 +178,7 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
        }
        this.queryParam = data;
        // console.log(this.queryParam)
-       this.productService.getDetailProductForClient(this.queryParam.id).subscribe((res:any)=>{
-         if(res.status=="OK"){
-           this.dataProduct= res.data;
-           this.lstType=res.data.typeProductDTOS
-           this.lstSize=res.data.sizeDTOS
-           this.commentInfor=res.data.commentResponseDTO;
-           this.commentInforDisplay = this.commentInfor.userComment.slice(0,5);
-           this.totalReviewsBook=this.commentInfor.userComment.length;
-           this.totalPageCmt = Math.ceil(this.commentInfor?.userComment.length/5);
-
-           this.typeProduct=this.lstType[0].id
-           this.sizeProduct=this.lstSize[0].id
-
-           // nối mô tả nhanh giữa loại và size
-           const descript = [];
-           if(this.lstType[0].description){
-             descript.push(this.lstType[0].description)
-           }
-           if(this.lstSize[0].description){
-             descript.push(this.lstSize[0].description)
-           }
-           this.descriptionProduct = descript.join(", ")
-
-           // lấy ảnh đại diện
-           res.data.lstProductIMG.forEach((item:any) =>{
-             if(item?.avatar){
-               this.avatarBook =  item?.fileName ;
-             }
-           })
-
-           // lấy thông tin sao đánh giá
-           this.rate1 = (this.commentInfor.rate1 / this.commentInfor.totalRate)*100;
-           this.rate2 = (this.commentInfor.rate2 / this.commentInfor.totalRate) *100;
-           this.rate3 = (this.commentInfor.rate3 / this.commentInfor.totalRate) *100;
-           this.rate4 = (this.commentInfor.rate4 / this.commentInfor.totalRate) *100;
-           this.rate5 = (this.commentInfor.rate5 / this.commentInfor.totalRate) *100;
-           this.setPercentRate()
-           setTimeout((data:any)=>{
-
-           },500)
-         }else{
-           this.toast.error(res.message)
-         }
-         this.changeChooseProduct()
-         console.log(res)
-       }, (error:any) => {
-         this.toast.error("Có lỗi trong quá trính xử lý: ", error.message)
-       })
+       this.search();
      })
     this.userService.getUserCurrent().subscribe((user:any)=>{
       if(user){
@@ -240,6 +194,56 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
     })
 
 
+  }
+  search(){
+    this.productService.getDetailProductForClient(this.queryParam.id).subscribe((res:any)=>{
+      if(res.status=="OK"){
+        this.dataProduct= res.data;
+        this.lstType=res.data.typeProductDTOS
+        this.lstSize=res.data.sizeDTOS
+        this.commentInfor=res.data.commentResponseDTO;
+        this.commentInforDisplay = this.commentInfor.userComment.slice(0,5);
+        this.totalReviewsBook=this.commentInfor.userComment.length;
+        this.totalPageCmt = Math.ceil(this.commentInfor?.userComment.length/5);
+
+        this.typeProduct=this.lstType[0].id
+        this.sizeProduct=this.lstSize[0].id
+
+        // nối mô tả nhanh giữa loại và size
+        const descript = [];
+        if(this.lstType[0].description){
+          descript.push(this.lstType[0].description)
+        }
+        if(this.lstSize[0].description){
+          descript.push(this.lstSize[0].description)
+        }
+        this.descriptionProduct = descript.join(", ")
+
+        // lấy ảnh đại diện
+        res.data.lstProductIMG.forEach((item:any) =>{
+          if(item?.avatar){
+            this.avatarBook =  item?.fileName ;
+          }
+        })
+
+        // lấy thông tin sao đánh giá
+        this.rate1 = (this.commentInfor.rate1 / this.commentInfor.totalRate)*100;
+        this.rate2 = (this.commentInfor.rate2 / this.commentInfor.totalRate) *100;
+        this.rate3 = (this.commentInfor.rate3 / this.commentInfor.totalRate) *100;
+        this.rate4 = (this.commentInfor.rate4 / this.commentInfor.totalRate) *100;
+        this.rate5 = (this.commentInfor.rate5 / this.commentInfor.totalRate) *100;
+        this.setPercentRate()
+        setTimeout((data:any)=>{
+
+        },500)
+      }else{
+        this.toast.error(res.message)
+      }
+      this.changeChooseProduct()
+      console.log(res)
+    }, (error:any) => {
+      this.toast.error("Có lỗi trong quá trính xử lý: ", error.message)
+    })
   }
   changeShowAvatar(item :any){
     this.avatarBook = item;
@@ -305,7 +309,26 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
   }
   goToLibrary(){}
   goToCart(){}
-  addBuyNow(){}
+  addBuyNow(){
+    if(this.currentUser){
+      const productAddCart={
+        userId:this.currentUser?.id,
+        productId:this.queryParam.id,
+        typeProductId:this.typeProduct,
+        sizeProductId:this.sizeProduct,
+        quantity:this.num
+      }
+      this.cartService.createCart(productAddCart).subscribe((res:any)=>{
+        if(res.status==='OK'){
+          this.router.navigateByUrl("/h2shop/cart")
+        }else{
+          this.toast.error(res.message);
+        }
+      })
+    }else{
+      this.toast.warning("Bạn cần đăng nhập đêr thực hiện chức năng này")
+    }
+  }
   decrease() {
     if (this.num > 0) {
       this.num--
@@ -393,6 +416,7 @@ export class DetailProductComponent implements OnInit, AfterViewInit{
         this.detailProduct.uploadComment(this.formImgComment).subscribe((res:any)=>{
           if(res.status === 'OK'){
             this.toast.success("Bình luận thành công")
+            this.search();
             this.matDialog.closeAll()
           }else{
             this.toast.error("Lỗi bình luận")

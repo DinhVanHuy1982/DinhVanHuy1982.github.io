@@ -106,7 +106,7 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div class="col-md-6 col-right" *ngIf="formCreateUpdate.roleId">
+            <div class="col-md-6 col-right" *ngIf="formCreateUpdate.roleId || data.isCreate">
                 <label>Role</label>
                 <ng-select
                         [items]='lstRoles'

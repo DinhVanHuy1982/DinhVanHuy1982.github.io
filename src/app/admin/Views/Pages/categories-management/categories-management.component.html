@@ -41,7 +41,7 @@
       <th class="header-categories" mat-header-cell *matHeaderCellDef>
         <span [style.paddingLeft.px]="40"> Mã danh mục </span>
       </th>
-      <td mat-cell *matCellDef="let data">
+      <td mat-cell [matTooltip]="data.categoriCode" *matCellDef="let data" class="cell-value-tbl">
         <button mat-icon-button
                 [style.visibility]="!data.expandable ? 'hidden' : ''"
                 [style.marginLeft.px]="data.level * 32"
@@ -57,24 +57,24 @@
 
     <ng-container matColumnDef="categoriName">
       <th class="header-categories" mat-header-cell *matHeaderCellDef> Tên danh mục </th>
-      <td mat-cell *matCellDef="let data"> {{data.categoriName}} </td>
+      <td mat-cell  [matTooltip]="data.categoriName"  *matCellDef="let data"> {{data.categoriName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="createTime">
       <th class="header-categories" mat-header-cell *matHeaderCellDef> Thời gian tạo </th>
-      <td mat-cell *matCellDef="let data"> {{data.createTime}} </td>
+      <td mat-cell  [matTooltip]="this.formatDate(data.createTime)"  *matCellDef="let data"> {{this.formatDate(data.createTime)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
       <th  class="header-categories" mat-header-cell *matHeaderCellDef> Trạng thái </th>
-      <td mat-cell *matCellDef="let data">
+      <td mat-cell  *matCellDef="let data">
         <div class="active-status" *ngIf="data.status=='1'">Hoạt động</div>
         <div class="inactive-status" *ngIf="data.status=='0'">Không hoạt động</div>
     </ng-container>
 
     <ng-container matColumnDef="description">
       <th class="header-categories" mat-header-cell *matHeaderCellDef> Mô tả </th>
-      <td mat-cell *matCellDef="let data"> {{data.description}} </td>
+      <td mat-cell  [matTooltip]="data.description"  *matCellDef="let data"> {{data.description}} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">

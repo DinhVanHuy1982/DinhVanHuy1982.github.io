@@ -35,28 +35,40 @@ export class ImportProductManagementComponent {
   columnDef:any = [{
     headerName: 'STT',
     valueGetter: (param:any) => {
-      return (param.node.rowIndex + 1)
+      return ((param.node.rowIndex + 1)+((this.formSearch.page-1)*this.formSearch.pageSize))
     },
     width: 100,
     pinned: 'left',
   },{
     headerName: "Mã sản phẩm",
     field: "productCode",
+    headerTooltip: "Mã sản phẩm",
+    tooltipField: 'productCode'
   },{
     headerName: "Tên sản phẩm",
     field: "productName",
+    headerTooltip: "Tên sản phẩm",
+    tooltipField: 'productName'
   },{
     headerName: "Số lượng",
     field: "quantity",
+    headerTooltip: "Số lượng",
+    tooltipField: 'quantity'
   },{
     headerName: "Giá",
     field: "price",
+    headerTooltip: "Giá",
+    tooltipField: 'price'
   },{
     headerName: "Danh mục",
     field: "categoriesName",
+    headerTooltip: "Danh mục",
+    tooltipField: 'categoriesName'
   },{
     headerName: "Nhãn hiệu",
     field: "brandName",
+    headerTooltip: "Nhãn hiệu",
+    tooltipField: 'brandName'
   },{
     headerName: 'Action',
     cellRenderer: ActionImportProductComponent,
@@ -120,9 +132,8 @@ export class ImportProductManagementComponent {
 
   createProduct(){
     const dialogConfig: MatDialogConfig<{ isCreate: boolean; }> = {
-      height: '80vh',
+      height: '700px',
       width: '60vw',
-      maxHeight: '90vh',
       maxWidth: '90vw',
       disableClose: false,
       hasBackdrop: true,

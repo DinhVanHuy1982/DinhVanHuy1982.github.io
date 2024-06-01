@@ -416,12 +416,12 @@ export class CreateUpdateProductComponent implements OnInit{
   lstAllUrlExpand:any[]=[]
   expandImg(index:number,isFileSerVer:boolean) {
     this.lstAllUrlExpand=[]
-    if(this.lstUrlImgUpdate.length>0){
+    if(this.lstUrlImgUpdate?.length>0){
       this.lstAllUrlExpand = this.lstUrlImgUpdate.map((item:any)=>{
         return this.domainFile + item;
       })
     }
-    if(this.imageUrls.length>0){
+    if(this.imageUrls?.length>0){
       this.lstAllUrlExpand=[...this.lstAllUrlExpand,...this.imageUrls]
     }
 
@@ -429,7 +429,11 @@ export class CreateUpdateProductComponent implements OnInit{
     if(isFileSerVer){
       indexFile = index
     }else{
-      indexFile = this.lstUrlImgUpdate.length + indexFile+1;
+      if(this.lstUrlImgUpdate){
+        indexFile = this.lstUrlImgUpdate?.length + indexFile+1;
+      }else{
+        indexFile=indexFile+1;
+      }
     }
 
 

@@ -115,13 +115,20 @@
 
 }
 :host::ng-deep{
-  .ng-dropdown-panel{
+  .ng-dropdown-panel-items{
     max-height: 200px;
     overflow-y: auto;
   }
   .mat-mdc-dialog-surface.mdc-dialog__surface{
     overflow: hidden !important;
   }
+  mat-tab-group{
+    height: 100% !important;
+    .mat-mdc-tab-body-wrapper{
+      height: 100% !important;
+    }
+  }
+
 }
 .title-infor{
   display: flex;

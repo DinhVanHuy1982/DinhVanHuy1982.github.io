@@ -34,28 +34,40 @@ export class ProductManagementComponent implements OnInit{
   columnDef:any = [{
     headerName: 'STT',
     valueGetter: (param:any) => {
-      return (param.node.rowIndex + 1)
+      return (param.node.rowIndex + 1)+ (this.formSearch.page-1)*10
     },
     width: 100,
     pinned: 'left',
   },{
     headerName: "Mã sản phẩm",
     field: "productCode",
+    headerTooltip: "Mã sản phẩm",
+    tooltipField: 'productCode',
   },{
     headerName: "Tên sản phẩm",
     field: "productName",
+    headerTooltip: "Tên sản phẩm",
+    tooltipField: 'productName',
   },{
     headerName: "Số lượng",
     field: "quantity",
+    headerTooltip: "Số lượng",
+    tooltipField: 'quantity',
   },{
-    headerName: "Giá",
+    headerName: "Giá sản phẩm",
     field: "price",
+    headerTooltip: "Giá sản phẩm",
+    tooltipField: 'price',
   },{
     headerName: "Danh mục",
     field: "categoriesName",
+    headerTooltip: "Danh mục",
+    tooltipField: 'categoriesName',
   },{
     headerName: "Nhãn hiệu",
     field: "brandName",
+    headerTooltip: "Nhãn hiệu",
+    tooltipField: 'brandName',
   },{
     headerName: 'Action',
     cellRenderer: ActionProductComponent,
@@ -111,6 +123,10 @@ export class ProductManagementComponent implements OnInit{
         this.toast.error("Lỗi trong quá trình xử lý");
       }
     })
+  }
+  searchProduct(){
+    this.formSearch.page=1;
+    this.search();
   }
   callInforReview(noaction:any,page: any){
     this.formSearch.page=page;
