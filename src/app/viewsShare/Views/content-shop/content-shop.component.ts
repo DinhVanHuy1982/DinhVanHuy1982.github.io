@@ -7,7 +7,6 @@ import {environment} from "../../../../environment/environment";
 import {BannerService} from "../../../admin/Views/Pages/banner-management/banner.service";
 import {UserService} from "../user.service";
 import {CartService} from "../../../client/cart/cart.service";
-import { formatDistanceToNow } from 'date-fns';
 
 @Component({
   selector: 'app-content-shop',
